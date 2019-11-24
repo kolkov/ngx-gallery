@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxGalleryImageComponent } from './ngx-gallery-image.component';
+import {NgxGalleryAction} from '../ngx-gallery-action';
+import {NgxGalleryBulletsComponent} from '../ngx-gallery-bullets/ngx-gallery-bullets.component';
+import {NgxGalleryArrowsComponent} from '../ngx-gallery-arrows/ngx-gallery-arrows.component';
+import {CommonModule} from '@angular/common';
+import {NgxGalleryService} from '../ngx-gallery.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {NgxGalleryActionComponent} from '../ngx-gallery-action/ngx-gallery-action.component';
+import {Renderer2} from '@angular/core';
 
 describe('NgxGalleryImageComponent', () => {
   let component: NgxGalleryImageComponent;
@@ -8,7 +16,9 @@ describe('NgxGalleryImageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxGalleryImageComponent ]
+      declarations: [ NgxGalleryImageComponent, NgxGalleryActionComponent, NgxGalleryBulletsComponent, NgxGalleryArrowsComponent ],
+      imports: [],
+      providers: [Renderer2, DomSanitizer, NgxGalleryService ],
     })
     .compileComponents();
   }));

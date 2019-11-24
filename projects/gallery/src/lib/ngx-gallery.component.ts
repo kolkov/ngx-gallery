@@ -27,7 +27,7 @@ import {NgxGalleryLayout} from './ngx-gallery-layout';
   providers: [NgxGalleryService]
 })
 export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
-  @Input() options: NgxGalleryOptions[];
+  @Input() options: NgxGalleryOptions[] = [{}];
   @Input() images: NgxGalleryImage[];
 
   @Output() imagesReady = new EventEmitter();
@@ -58,7 +58,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
   @ViewChild(NgxGalleryPreviewComponent, { static: false }) preview: NgxGalleryPreviewComponent;
   @ViewChild(NgxGalleryImageComponent, { static: false }) image: NgxGalleryImageComponent;
-  @ViewChild(NgxGalleryThumbnailsComponent, { static: false }) thubmnails: NgxGalleryThumbnailsComponent;
+  @ViewChild(NgxGalleryThumbnailsComponent, { static: false }) thumbnails: NgxGalleryThumbnailsComponent;
 
   @HostBinding('style.width') width: string;
   @HostBinding('style.height') height: string;
@@ -229,24 +229,24 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   moveThumbnailsRight() {
-    this.thubmnails.moveRight();
+    this.thumbnails.moveRight();
   }
 
   moveThumbnailsLeft() {
-    this.thubmnails.moveLeft();
+    this.thumbnails.moveLeft();
   }
 
   canMoveThumbnailsRight() {
-    return this.thubmnails.canMoveRight();
+    return this.thumbnails.canMoveRight();
   }
 
   canMoveThumbnailsLeft() {
-    return this.thubmnails.canMoveLeft();
+    return this.thumbnails.canMoveLeft();
   }
 
   private resetThumbnails() {
-    if (this.thubmnails) {
-      this.thubmnails.reset(this.currentOptions.startIndex as number);
+    if (this.thumbnails) {
+      this.thumbnails.reset(this.currentOptions.startIndex as number);
     }
   }
 
