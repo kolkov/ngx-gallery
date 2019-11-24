@@ -1,6 +1,6 @@
 # NgxGallery
 [![npm version](https://badge.fury.io/js/%40kolkov%2Fngx-gallery.svg)](https://badge.fury.io/js/%40kolkov%2Fngx-gallery)
-[![demo](https://img.shields.io/badge/demo-StackBlitz-blueviolet.svg)](https://stackblitz.com/edit/ngx-gallery-wysiwyg)
+[![demo](https://img.shields.io/badge/demo-StackBlitz-blueviolet.svg)](https://stackblitz.com/edit/ngx-gallery)
 [![Build Status](https://travis-ci.com/kolkov/ngx-gallery.svg?branch=master)](https://travis-ci.com/kolkov/ngx-gallery)
 [![npm](https://img.shields.io/npm/dw/@kolkov/ngx-gallery.svg)](https://www.npmjs.com/package/@kolkov/ngx-gallery)
 [![](https://data.jsdelivr.com/v1/package/npm/@kolkov/ngx-gallery/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@kolkov/ngx-gallery)
@@ -160,4 +160,4 @@ See [the Releases section of our project](https://github.com/kolkov/ngx-gallery/
 
 [npm]: https://www.npmjs.com/
 [demo]: https://ngx-gallery-wysiwyg.stackblitz.io/
-[example]: https://stackblitz.com/edit/ngx-gallery-wysiwyg
+[example]: https://stackblitz.com/edit/ngx-gallery
