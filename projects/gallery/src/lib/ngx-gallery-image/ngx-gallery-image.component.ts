@@ -43,7 +43,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() bullets: boolean;
 
   // tslint:disable-next-line:no-output-native
-  @Output() click = new EventEmitter();
+  @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
 
   canChangeImage = true;
@@ -144,7 +144,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   handleClick(event: Event, index: number): void {
     if (this.clickable) {
-      this.click.emit(index);
+      this.imageClick.emit(index);
 
       event.stopPropagation();
       event.preventDefault();

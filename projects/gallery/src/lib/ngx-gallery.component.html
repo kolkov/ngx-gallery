@@ -10,7 +10,7 @@
                      [infinityMove]="currentOptions?.imageInfinityMove" [lazyLoading]="currentOptions?.lazyLoading"
                      [actions]="currentOptions?.imageActions" [descriptions]="descriptions"
                      [showDescription]="currentOptions?.imageDescription" [bullets]="currentOptions?.imageBullets"
-                     (click)="openPreview($event)" (activeChange)="selectFromImage($event)"></ngx-gallery-image>
+                     (imageClick)="openPreview($event)" (activeChange)="selectFromImage($event)"></ngx-gallery-image>
 
   <ngx-gallery-thumbnails *ngIf="currentOptions?.thumbnails" [style.marginTop]="getThumbnailsMarginTop()"
                           [style.marginBottom]="getThumbnailsMarginBottom()" [style.height]="getThumbnailsHeight()"
