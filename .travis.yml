@@ -24,7 +24,7 @@ before_deploy:
   - npm run copy:readme
   - npm run copy:changelog
   - npm run copy:license
-  - cd dist/ngx-gallery
+  - cd dist/gallery
 deploy:
   provider: npm
   email: a.kolkov@gmail.com
