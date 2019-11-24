@@ -26,7 +26,7 @@
                           [moveSize]="currentOptions?.thumbnailsMoveSize" [order]="currentOptions?.thumbnailsOrder"
                           [remainingCount]="currentOptions?.thumbnailsRemainingCount"
                           [lazyLoading]="currentOptions?.lazyLoading" [actions]="currentOptions?.thumbnailActions"
-                          (onActiveChange)="selectFromThumbnails($event)"></ngx-gallery-thumbnails>
+                          (activeChange)="selectFromThumbnails($event)"></ngx-gallery-thumbnails>
 
   <ngx-gallery-preview [images]="bigImages" [descriptions]="descriptions"
                        [showDescription]="currentOptions?.previewDescription"
@@ -49,6 +49,7 @@
                        [rotate]="currentOptions?.previewRotate" [rotateLeftIcon]="currentOptions?.rotateLeftIcon"
                        [rotateRightIcon]="currentOptions?.rotateRightIcon" [download]="currentOptions?.previewDownload"
                        [downloadIcon]="currentOptions?.downloadIcon" [bullets]="currentOptions?.previewBullets"
-                       (onClose)="onPreviewClose()" (onOpen)="onPreviewOpen()" (onActiveChange)="previewSelect($event)"
+                       (previewClose)="onPreviewClose()" (previewOpen)="onPreviewOpen()"
+                       (activeChange)="previewSelect($event)"
                        [class.ngx-gallery-active]="previewEnabled"></ngx-gallery-preview>
 </div>

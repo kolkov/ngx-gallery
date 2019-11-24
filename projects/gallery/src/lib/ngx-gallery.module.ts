@@ -27,7 +27,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     NgxGalleryActionComponent,
     NgxGalleryBulletsComponent
   ],
-  imports: [ CommonModule,],
+  imports: [ CommonModule],
   exports: [NgxGalleryComponent],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }

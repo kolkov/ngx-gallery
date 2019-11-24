@@ -38,7 +38,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   @Input() lazyLoading: boolean;
   @Input() actions: NgxGalleryAction[];
 
-  @Output() onActiveChange = new EventEmitter();
+  @Output() activeChange = new EventEmitter();
 
   private index = 0;
 
@@ -110,7 +110,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   handleClick(event: Event, index: number): void {
     if (!this.hasLink(index)) {
       this.selectedIndex = index;
-      this.onActiveChange.emit(index);
+      this.activeChange.emit(index);
 
       event.stopPropagation();
       event.preventDefault();
@@ -177,14 +177,11 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
 
     if (this.order === NgxGalleryOrder.Column) {
       calculatedIndex = index % this.rows;
-    }
-    else if (this.order === NgxGalleryOrder.Page) {
+    } else if (this.order === NgxGalleryOrder.Page) {
       calculatedIndex = Math.floor(index / this.columns) - (Math.floor(index / (this.rows * this.columns)) * this.rows);
-    }
-    else if (this.order === NgxGalleryOrder.Row && this.remainingCount) {
+    } else if (this.order === NgxGalleryOrder.Row && this.remainingCount) {
       calculatedIndex = Math.floor(index / this.columns);
-    }
-    else {
+    } else {
       calculatedIndex = Math.floor(index / Math.ceil(this.images.length / this.rows));
     }
 
@@ -200,7 +197,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   }
 
   setThumbnailsPosition(): void {
-    this.thumbnailsLeft = - ((100 / this.columns) * this.index) + '%'
+    this.thumbnailsLeft = - ((100 / this.columns) * this.index) + '%';
 
     this.thumbnailsMarginLeft = - ((this.margin - (((this.columns - 1)
       * this.margin) / this.columns)) * this.index) + 'px';

@@ -119,7 +119,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         indexes.push(nextIndex);
       }
 
-      return this.images.filter((img, i) => indexes.indexOf(i) != -1);
+      return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;
     }
