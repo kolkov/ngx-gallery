@@ -12,11 +12,11 @@
     "build-watch:lib": "ng build @kolkov/ngx-gallery --watch",
     "test:lib": "ng test @kolkov/ngx-gallery",
     "build:lib": "ng build @kolkov/ngx-gallery",
-    "publish:lib": "npm run copy && npm run copy:changelog && npm run copy:license && npm publish ./dist/ngx-gallery",
-    "copy:readme": "cpx README.md dist/ngx-gallery",
-    "copy:changelog": "cpx CHANGELOG.md dist/ngx-gallery",
-    "copy:license": "cpx LICENSE dist/ngx-gallery",
-    "test-ci": "ng test @kolkov/ngx-gallery --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/gallery/lcov.info | coveralls"
+    "publish:lib": "npm run copy && npm run copy:changelog && npm run copy:license && npm publish ./dist/gallery",
+    "copy:readme": "cpx README.md dist/gallery",
+    "copy:changelog": "cpx CHANGELOG.md dist/gallery",
+    "copy:license": "cpx LICENSE dist/gallery",
+    "test-ci": "ng test @kolkov/ngx-gallery --code-coverage --watch=false --browsers=ChromeHeadless"
   },
   "private": false,
   "dependencies": {
