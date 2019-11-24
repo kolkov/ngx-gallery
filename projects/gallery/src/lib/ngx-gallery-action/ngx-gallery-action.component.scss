@@ -1,0 +1,21 @@
+.ngx-gallery-icon {
+  color: white;
+  font-size: 25px;
+  position: absolute;
+  z-index: 2000;
+  display: inline-block;
+}
+//.ngx-gallery-preview-icons {
+  .ngx-gallery-icon {
+    position: relative;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+//}
+
+.ngx-gallery-icon .ngx-gallery-icon-content {
+  display: block;
+}

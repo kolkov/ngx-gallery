@@ -1,0 +1,106 @@
+:host {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  font-size: 25px;
+}
+
+.ngx-gallery-image-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+}
+
+.ngx-gallery-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+
+  &.ngx-gallery-active {
+    z-index: 1000;
+  }
+}
+
+.ngx-gallery-image-size-cover .ngx-gallery-image {
+  background-size: cover;
+}
+
+.ngx-gallery-image-size-contain .ngx-gallery-image {
+  background-size: contain;
+}
+
+.ngx-gallery-animation-fade {
+  .ngx-gallery-image {
+    left: 0;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+
+    &.ngx-gallery-active {
+      opacity: 1;
+    }
+  }
+}
+
+.ngx-gallery-animation-slide {
+  .ngx-gallery-image {
+    transition: 0.5s ease-in-out;
+
+    &.ngx-gallery-active {
+      left: 0;
+    }
+
+    &.ngx-gallery-inactive-left {
+      left: -100%;
+    }
+
+    &.ngx-gallery-inactive-right {
+      left: 100%;
+    }
+  }
+}
+
+.ngx-gallery-animation-rotate {
+  .ngx-gallery-image {
+    transition: 1s ease;
+    transform: scale(3.5, 3.5) rotate(90deg);
+    left: 0;
+    opacity: 0;
+
+    &.ngx-gallery-active {
+      transform: scale(1, 1) rotate(0deg);
+      opacity: 1;
+    }
+  }
+}
+
+.ngx-gallery-animation-zoom {
+  .ngx-gallery-image {
+    transition: 1s ease;
+    transform: scale(2.5, 2.5);
+    left: 0;
+    opacity: 0;
+
+    &.ngx-gallery-active {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+  }
+}
+
+.ngx-gallery-image-text {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}

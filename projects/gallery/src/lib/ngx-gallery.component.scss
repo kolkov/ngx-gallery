@@ -1,0 +1,82 @@
+:host {
+  display: inline-block;
+
+  & > * {
+    float: left;
+  }
+}
+
+.ngx-gallery-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ngx-gallery-layout.thumbnails-top {
+  ngx-gallery-image {
+    order: 2;
+  }
+
+  ngx-gallery-thumbnails {
+    order: 1;
+  }
+}
+
+.ngx-gallery-layout.thumbnails-bottom {
+  ngx-gallery-image {
+    order: 1;
+  }
+
+  ngx-gallery-thumbnails {
+    order: 2;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.ngx-gallery-icon {
+  color: white;
+  // font-size: 25px;
+  position: absolute;
+  z-index: 2000;
+  display: inline-block;
+
+  .ngx-gallery-icon-content {
+    display: block;
+  }
+}
+
+.ngx-gallery-clickable {
+  cursor: pointer;
+}
+
+.ngx-gallery-icons-wrapper .ngx-gallery-icon {
+  position: relative;
+  margin-right: 5px;
+  margin-top: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ngx-gallery-icons-wrapper {
+  float: right;
+}
+
+/*ngx-gallery-preview {
+  display: none;
+
+}*/
+
+/*.ngx-gallery-active {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: inline-block;
+}*/

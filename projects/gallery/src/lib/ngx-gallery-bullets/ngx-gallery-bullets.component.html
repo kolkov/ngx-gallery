@@ -1,0 +1,2 @@
+<div class="ngx-gallery-bullet" *ngFor="let bullet of getBullets(); let i = index;" (click)="handleChange($event, i)"
+     [ngClass]="{ 'ngx-gallery-active': i == active }"></div>

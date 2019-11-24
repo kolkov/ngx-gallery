@@ -1,0 +1,172 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "@kolkov/ngx-gallery": {
+      "projectType": "library",
+      "root": "projects/gallery",
+      "sourceRoot": "projects/gallery/src",
+      "prefix": "",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/gallery/tsconfig.lib.json",
+            "project": "projects/gallery/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/gallery/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/gallery/src/test.ts",
+            "tsConfig": "projects/gallery/tsconfig.spec.json",
+            "karmaConfig": "projects/gallery/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/gallery/tsconfig.lib.json",
+              "projects/gallery/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "gallery-app": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/gallery-app",
+      "sourceRoot": "projects/gallery-app/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/gallery-app",
+            "index": "projects/gallery-app/src/index.html",
+            "main": "projects/gallery-app/src/main.ts",
+            "polyfills": "projects/gallery-app/src/polyfills.ts",
+            "tsConfig": "projects/gallery-app/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/gallery-app/src/favicon.ico",
+              "projects/gallery-app/src/assets"
+            ],
+            "styles": [
+              "projects/gallery-app/src/styles.scss",
+              "./node_modules/font-awesome/scss/font-awesome.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/gallery-app/src/environments/environment.ts",
+                  "with": "projects/gallery-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "gallery-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "gallery-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "gallery-app:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/gallery-app/src/test.ts",
+            "polyfills": "projects/gallery-app/src/polyfills.ts",
+            "tsConfig": "projects/gallery-app/tsconfig.spec.json",
+            "karmaConfig": "projects/gallery-app/karma.conf.js",
+            "assets": [
+              "projects/gallery-app/src/favicon.ico",
+              "projects/gallery-app/src/assets"
+            ],
+            "styles": [
+              "projects/gallery-app/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/gallery-app/tsconfig.app.json",
+              "projects/gallery-app/tsconfig.spec.json",
+              "projects/gallery-app/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/gallery-app/e2e/protractor.conf.js",
+            "devServerTarget": "gallery-app:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "gallery-app:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "cli": {
+    "analytics": "043a2015-5fc9-475f-8584-ee4f1a29dca6"
+  },
+  "defaultProject": "gallery-app"
+}
