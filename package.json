@@ -16,7 +16,7 @@
     "copy:readme": "cpx README.md dist/ngx-gallery",
     "copy:changelog": "cpx CHANGELOG.md dist/ngx-gallery",
     "copy:license": "cpx LICENSE dist/ngx-gallery",
-    "test-ci": "ng test @kolkov/ngx-gallery --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/ngx-gallery/lcov.info | coveralls"
+    "test-ci": "ng test @kolkov/ngx-gallery --code-coverage --watch=false --browsers=ChromeHeadless && cat ./coverage/gallery/lcov.info | coveralls"
   },
   "private": false,
   "dependencies": {
