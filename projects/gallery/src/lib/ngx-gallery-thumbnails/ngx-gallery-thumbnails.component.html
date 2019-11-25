@@ -9,7 +9,7 @@
        [attr.aria-label]="labels[i]">
       <div class="ngx-gallery-icons-wrapper">
         <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
-                            [titleText]="action.titleText" (click)="action.onClick($event, i)"></ngx-gallery-action>
+                            [titleText]="action.titleText" (closeClick)="action.onClick($event, i)"></ngx-gallery-action>
       </div>
       <div class="ngx-gallery-remaining-count-overlay"
            *ngIf="remainingCount && remainingCountValue && (i == (rows * columns) - 1)">

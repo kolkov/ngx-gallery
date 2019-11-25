@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -20,6 +21,7 @@ import {NgxGalleryAction} from '../ngx-gallery-action';
   templateUrl: './ngx-gallery-preview.component.html',
   styleUrls: ['./ngx-gallery-preview.component.scss'],
   // encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges {
   src: SafeUrl;

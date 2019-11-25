@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -19,7 +20,8 @@ import {NgxGalleryAnimation} from '../ngx-gallery-animation';
 @Component({
   selector: 'ngx-gallery-image',
   templateUrl: './ngx-gallery-image.component.html',
-  styleUrls: ['./ngx-gallery-image.component.scss']
+  styleUrls: ['./ngx-gallery-image.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[];
@@ -42,7 +44,6 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() showDescription: boolean;
   @Input() bullets: boolean;
 
-  // tslint:disable-next-line:no-output-native
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
 

@@ -27,6 +27,20 @@
     background-position: center;
     background-repeat: no-repeat;
     text-decoration: none;
+    border: 1px double black; /* Параметры границы */
+    // background: #fc3; /* Цвет фона */
+    // padding: 10px; /* Поля вокруг текста */
+    .img {
+      /* background-position: center;
+       background-repeat: no-repeat;
+       text-decoration: none;*/
+      background-size: cover;
+      // width: 100%;
+      height: 100%;
+    }
+    &.ngx-gallery-active {
+      border: 1px double #cc4548;
+    }
   }
 }
 

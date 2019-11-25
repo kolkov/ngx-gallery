@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'ngx-gallery-arrows',
   templateUrl: './ngx-gallery-arrows.component.html',
-  styleUrls: ['./ngx-gallery-arrows.component.scss']
+  styleUrls: ['./ngx-gallery-arrows.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryArrowsComponent implements OnInit {
   @Input() prevDisabled: boolean;

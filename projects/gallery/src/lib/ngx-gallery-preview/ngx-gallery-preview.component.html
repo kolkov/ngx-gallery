@@ -4,19 +4,19 @@
 <div class="ngx-gallery-preview-top">
   <div class="ngx-gallery-preview-icons">
     <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
-                        [titleText]="action.titleText" (click)="action.onClick($event, index)"></ngx-gallery-action>
+                        [titleText]="action.titleText" (closeClick)="action.onClick($event, index)"></ngx-gallery-action>
     <a *ngIf="download && src" [href]="src" class="ngx-gallery-icon" aria-hidden="true" download>
       <i class="ngx-gallery-icon-content {{ downloadIcon }}"></i>
     </a>
     <ngx-gallery-action *ngIf="zoom" [icon]="zoomOutIcon" [disabled]="!canZoomOut()"
-                        (click)="zoomOut()"></ngx-gallery-action>
+                        (closeClick)="zoomOut()"></ngx-gallery-action>
     <ngx-gallery-action *ngIf="zoom" [icon]="zoomInIcon" [disabled]="!canZoomIn()"
-                        (click)="zoomIn()"></ngx-gallery-action>
-    <ngx-gallery-action *ngIf="rotate" [icon]="rotateLeftIcon" (click)="rotateLeft()"></ngx-gallery-action>
-    <ngx-gallery-action *ngIf="rotate" [icon]="rotateRightIcon" (click)="rotateRight()"></ngx-gallery-action>
+                        (closeClick)="zoomIn()"></ngx-gallery-action>
+    <ngx-gallery-action *ngIf="rotate" [icon]="rotateLeftIcon" (closeClick)="rotateLeft()"></ngx-gallery-action>
+    <ngx-gallery-action *ngIf="rotate" [icon]="rotateRightIcon" (closeClick)="rotateRight()"></ngx-gallery-action>
     <ngx-gallery-action *ngIf="fullscreen" [icon]="'ngx-gallery-fullscreen ' + fullscreenIcon"
-                        (click)="manageFullscreen()"></ngx-gallery-action>
-    <ngx-gallery-action [icon]="'ngx-gallery-close ' + closeIcon" (click)="close()"></ngx-gallery-action>
+                        (closeClick)="manageFullscreen()"></ngx-gallery-action>
+    <ngx-gallery-action [icon]="'ngx-gallery-close ' + closeIcon" (closeClick)="close()"></ngx-gallery-action>
   </div>
 </div>
 <div class="ngx-spinner-wrapper ngx-gallery-center" [class.ngx-gallery-active]="showSpinner">
@@ -31,7 +31,7 @@
          [class.ngx-gallery-active]="!loading" [class.animation]="animation" [class.ngx-gallery-grab]="canDragOnZoom()"
          [style.transform]="getTransform()" [style.left]="positionLeft + 'px'" [style.top]="positionTop + 'px'"/>
     <ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="index"
-                         (change)="showAtIndex($event)"></ngx-gallery-bullets>
+                         (bulletChange)="showAtIndex($event)"></ngx-gallery-bullets>
   </div>
   <div class="ngx-gallery-preview-text" *ngIf="showDescription && description" [innerHTML]="description"
        (click)="$event.stopPropagation()"></div>

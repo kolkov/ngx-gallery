@@ -8,14 +8,14 @@
     <div class="ngx-gallery-icons-wrapper">
       <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
                           [titleText]="action.titleText"
-                          (click)="action.onClick($event, image.index)"></ngx-gallery-action>
+                          (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
     </div>
     <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
          [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
   </div>
 </div>
 <ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="selectedIndex"
-                     (change)="show($event)"></ngx-gallery-bullets>
+                     (bulletChange)="show($event)"></ngx-gallery-bullets>
 <ngx-gallery-arrows class="ngx-gallery-image-size-{{size}}" *ngIf="arrows" (prevClick)="showPrev()"
                     (nextClick)="showNext()" [prevDisabled]="!canShowPrev()" [nextDisabled]="!canShowNext()"
                     [arrowPrevIcon]="arrowPrevIcon" [arrowNextIcon]="arrowNextIcon"></ngx-gallery-arrows>

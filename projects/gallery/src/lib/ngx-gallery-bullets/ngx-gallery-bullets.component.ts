@@ -1,16 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'ngx-gallery-bullets',
   templateUrl: './ngx-gallery-bullets.component.html',
-  styleUrls: ['./ngx-gallery-bullets.component.scss']
+  styleUrls: ['./ngx-gallery-bullets.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryBulletsComponent implements OnInit {
   @Input() count: number;
   @Input() active = 0;
 
-  // tslint:disable-next-line:no-output-native
-  @Output() change = new EventEmitter();
+  @Output() bulletChange = new EventEmitter();
 
   constructor() { }
 
@@ -22,6 +22,6 @@ export class NgxGalleryBulletsComponent implements OnInit {
   }
 
   handleChange(event: Event, index: number): void {
-    this.change.emit(index);
+    this.bulletChange.emit(index);
   }
 }

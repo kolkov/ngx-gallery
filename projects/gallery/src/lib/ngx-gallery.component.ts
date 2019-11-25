@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  AfterViewInit, ChangeDetectionStrategy,
   Component,
   DoCheck,
   ElementRef, EventEmitter,
@@ -24,7 +24,8 @@ import {NgxGalleryLayout} from './ngx-gallery-layout';
   templateUrl: './ngx-gallery.component.html',
   styleUrls: ['./ngx-gallery.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [NgxGalleryService]
+  providers: [NgxGalleryService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() options: NgxGalleryOptions[] = [{}];
