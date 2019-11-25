@@ -1,4 +1,15 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl, SafeStyle} from '@angular/platform-browser';
 import {NgxGalleryService} from '../ngx-gallery.service';
 import {NgxGalleryAction} from '../ngx-gallery-action';
@@ -7,7 +18,8 @@ import {NgxGalleryOrder} from '../ngx-gallery-order';
 @Component({
   selector: 'ngx-gallery-thumbnails',
   templateUrl: './ngx-gallery-thumbnails.component.html',
-  styleUrls: ['./ngx-gallery-thumbnails.component.scss']
+  styleUrls: ['./ngx-gallery-thumbnails.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   thumbnailsLeft: string;
@@ -156,7 +168,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.index !== 0;
   }
 
-  getThumbnailLeft(index: number): SafeStyle {
+  getThumbnailLeft(index: number): string {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
@@ -172,7 +184,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.getThumbnailPosition(calculatedIndex, this.columns);
   }
 
-  getThumbnailTop(index: number): SafeStyle {
+  getThumbnailTop(index: number): string {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
@@ -188,11 +200,11 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.getThumbnailPosition(calculatedIndex, this.rows);
   }
 
-  getThumbnailWidth(): SafeStyle {
+  getThumbnailWidth(): string {
     return this.getThumbnailDimension(this.columns);
   }
 
-  getThumbnailHeight(): SafeStyle {
+  getThumbnailHeight(): string {
     return this.getThumbnailDimension(this.rows);
   }
 
@@ -244,17 +256,17 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
 
-  private getThumbnailPosition(index: number, count: number): SafeStyle {
-    return this.getSafeStyle('calc(' + ((100 / count) * index) + '% + '
-      + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)');
+  private getThumbnailPosition(index: number, count: number): string {
+    return 'calc(' + ((100 / count) * index) + '% + '
+      + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)';
   }
 
-  private getThumbnailDimension(count: number): SafeStyle {
+  private getThumbnailDimension(count: number): string {
     if (this.margin !== 0) {
-      return this.getSafeStyle('calc(' + (100 / count) + '% - '
-        + (((count - 1) * this.margin) / count) + 'px)');
+      return 'calc(' + (100 / count) + '% - '
+        + (((count - 1) * this.margin) / count) + 'px)';
     } else {
-      return this.getSafeStyle('calc(' + (100 / count) + '% + 1px)');
+      return 'calc(' + (100 / count) + '% + 1px)';
     }
   }
 
