@@ -7,6 +7,12 @@
   table-layout: fixed;
 }
 
+.ngx-gallery-preview-img-wrapper {
+  .ngx-gallery-arrow-wrapper {
+    z-index: 10001;
+  }
+}
+
 .ngx-gallery-arrow-left {
   left: 0;
 }
