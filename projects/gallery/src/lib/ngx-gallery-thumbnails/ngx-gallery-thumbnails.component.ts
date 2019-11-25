@@ -168,7 +168,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.index !== 0;
   }
 
-  getThumbnailLeft(index: number): string {
+  getThumbnailLeft(index: number): SafeStyle {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
@@ -184,7 +184,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.getThumbnailPosition(calculatedIndex, this.columns);
   }
 
-  getThumbnailTop(index: number): string {
+  getThumbnailTop(index: number): SafeStyle {
     let calculatedIndex;
 
     if (this.order === NgxGalleryOrder.Column) {
@@ -256,9 +256,9 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
 
-  private getThumbnailPosition(index: number, count: number): string {
-    return 'calc(' + ((100 / count) * index) + '% + '
-      + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)';
+  private getThumbnailPosition(index: number, count: number): SafeStyle {
+    return this.getSafeStyle('calc(' + ((100 / count) * index) + '% + '
+      + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)');
   }
 
   private getThumbnailDimension(count: number): string {
