@@ -57,9 +57,9 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   private prevBreakpoint: number | undefined = undefined;
   private fullWidthTimeout: any;
 
-  @ViewChild(NgxGalleryPreviewComponent, { static: false }) preview: NgxGalleryPreviewComponent;
-  @ViewChild(NgxGalleryImageComponent, { static: false }) image: NgxGalleryImageComponent;
-  @ViewChild(NgxGalleryThumbnailsComponent, { static: false }) thumbnails: NgxGalleryThumbnailsComponent;
+  @ViewChild(NgxGalleryPreviewComponent) preview: NgxGalleryPreviewComponent;
+  @ViewChild(NgxGalleryImageComponent) image: NgxGalleryImageComponent;
+  @ViewChild(NgxGalleryThumbnailsComponent) thumbnails: NgxGalleryThumbnailsComponent;
 
   @HostBinding('style.width') width: string;
   @HostBinding('style.height') height: string;
