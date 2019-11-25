@@ -27,9 +27,9 @@ before_deploy:
 deploy:
   provider: npm
   email: a.kolkov@gmail.com
-  skip_cleanup: true
   api_token: $NPM_TOKEN
   tag: latest
+  edge: true
   on:
     tags: true
     repo: kolkov/ngx-gallery
