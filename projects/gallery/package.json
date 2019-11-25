@@ -10,9 +10,9 @@
     "url": "https://github.com/kolkov/ngx-gallery/issues"
   },
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14",
-    "tslib": "^1.10.0"
+    "@angular/common": ">8.0.0",
+    "@angular/core": ">8.0.0",
+    "tslib": "^1.9.3"
   },
   "keywords": [
     "angular",
