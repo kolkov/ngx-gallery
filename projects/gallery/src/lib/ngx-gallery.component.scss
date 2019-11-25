@@ -39,13 +39,18 @@
 
 .ngx-gallery-icon {
   color: white;
-  // font-size: 25px;
   position: absolute;
-  z-index: 2000;
   display: inline-block;
 
   .ngx-gallery-icon-content {
     display: block;
+  }
+}
+
+ngx-gallery-preview {
+  font-size:  25px;
+  .ngx-gallery-icon {
+    z-index: 2000;
   }
 }
 
