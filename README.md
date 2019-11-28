@@ -33,7 +33,7 @@ npm install @kolkov/ngx-gallery --save
 
 Import `ngx-gallery` module
 
-```typescript
+```js
 import { HttpClientModule} from '@angular/common/http';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
@@ -50,7 +50,7 @@ Then in HTML
 
 where
 
-```typescript
+```
 import {Component, OnInit} from '@angular/core';
 import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
