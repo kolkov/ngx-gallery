@@ -200,11 +200,11 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.getThumbnailPosition(calculatedIndex, this.rows);
   }
 
-  getThumbnailWidth(): string {
+  getThumbnailWidth(): SafeStyle {
     return this.getThumbnailDimension(this.columns);
   }
 
-  getThumbnailHeight(): string {
+  getThumbnailHeight(): SafeStyle {
     return this.getThumbnailDimension(this.rows);
   }
 
@@ -261,12 +261,12 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
       + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)');
   }
 
-  private getThumbnailDimension(count: number): string {
+  private getThumbnailDimension(count: number): SafeStyle {
     if (this.margin !== 0) {
-      return 'calc(' + (100 / count) + '% - '
-        + (((count - 1) * this.margin) / count) + 'px)';
+      return this.getSafeStyle('calc(' + (100 / count) + '% - '
+        + (((count - 1) * this.margin) / count) + 'px)');
     } else {
-      return 'calc(' + (100 / count) + '% + 1px)';
+      return this.getSafeStyle('calc(' + (100 / count) + '% + 1px)');
     }
   }
 
