@@ -259,8 +259,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   getSafeUrl(image: string): SafeUrl {
-    return image.substr(0, 10) === 'data:image' ?
-      image : this.sanitization.bypassSecurityTrustUrl(image);
+    return this.sanitization.bypassSecurityTrustUrl(image);
   }
 
   zoomIn(): void {
