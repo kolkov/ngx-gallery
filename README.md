@@ -121,6 +121,148 @@ export class AppComponent implements OnInit{
   }
 }
 ```
+## API
+### Inputs
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| [options] | `NgxGalleryOptions[]` | `-` | no | Config options for the Gallery |
+| [images] | `NgxGalleryImage[]` | `-` | no | images array |
+
+### Outputs
+
+| Output  | Description |
+| ------------- | ------------- |
+| (change)  | Triggered on image change |
+| (imagesReady)  | Triggered when images length > 0 |
+| (previewOpen)  |  Triggered on preview open |
+| (previewClose)  |  Triggered on preview close |
+| (previewChange)  |  Triggered on preview image change |
+
+### Methods
+
+ Name  | Description |
+| ------------- | ------------- |
+| show(index: number): void  | Shows image at index |
+| showNext(): void  | Shows next image |
+| showPrev(): void  | Shows prev image |
+| canShowNext(): boolean  | Returns true if there is next image |
+| canShowPrev(): boolean  | Returns true if there is prev image |
+| openPreview(index: number): void  | Opens preview at index |
+| moveThumbnailsLeft(): void  | Moves thumbnails to left |
+| moveThumbnailsRight(): void  | Moves thumbnails to right |
+| canMoveThumbnailsLeft(): boolean  | Returns true if you can move thumbnails to left |
+| canMoveThumbnailsRight(): boolean  | Returns true if you can move thumbnails to right |
+
+### NgxGalleryOptions
+
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| width  | `string` | `500px` | no | Gallery width |
+| height  | `string` | `400px` | no | Gallery height |
+| breakpoint  | `number` | `undefined` | no | Responsive breakpoint, works like media query max-width |
+| fullWidth  | `bolean` | `false` | no | Sets the same width as browser |
+| layout  | `string` | `NgxGalleryLayout.Bottom` | no | Sets thumbnails position |
+| startIndex  | `number` | `0` | no | Sets index of selected image on start |
+| linkTarget  | `string` | `_blank` | no | Sets target attribute of link |
+| lazyLoading  | `boolean` | `true` | no | Enables/disables lazy loading for images |
+| image  | `boolean` | `true` | no | Enables or disables image |
+| imageDescription  | `boolean` | `true` | no | Enables or disables description for images |
+| imagePercent  | `number` | `75` | no | Percentage height |
+| imageArrows  | `boolean` | `true` | no | Enables or disables arrows |
+| imageArrowsAutoHide  | `boolean` | `false` | no | Enables or disables arrows auto hide |
+| imageSwipe  | `boolean` | `false` | no | Enables or disables swipe |
+| imageAnimation  | `string` | `NgxGalleryAnimation.Fade` | no | Animation type |
+| imageSize  | `string` | `NgxGalleryImageSize.Cover` | no | Image size |
+| imageAutoPlay  | `boolean` | `false` | no | Enables or disables auto play |
+| imageAutoPlayInterval  | `number` | `2000` | no | Interval for auto play (ms) |
+| imageAutoPlayPauseOnHover  | `boolean` | `false` | no | Enables or disables pause auto play on hover |
+| imageInfinityMove  | `boolean` | `false` | no | Enables or disables infinity move by arrows |
+| imageActions  | `NgxGalleryAction[]` | `[]` | no | Enables or disables navigation bullets |
+| thumbnails  | `boolean` | `true` | no | Enables or disables thumbnails |
+| thumbnailsColumns  | `number` | `4` | no | Columns count |
+| thumbnailsRows  | `number` | `1` | no | Rows count |
+| thumbnailsPercent  | `number` | `25` | no | Percentage height |
+| thumbnailsMargin  | `number` | `10` | no | Margin between thumbnails and image |
+| thumbnailsArrows  | `boolean` | `true` | no | Enables or disables arrows |
+| thumbnailsArrowsAutoHide  | `boolean` | `false` | no | Enables or disables arrows auto hide |
+| thumbnailsSwipe  | `boolean` | `false` | no | Enables or disables swipe |
+| thumbnailsMoveSize  | `number` | `1` | no | Number of items to move on arrow click |
+| thumbnailsOrder  | `number` | `NgxGalleryOrder.Column` | no | Images order |
+| thumbnailsRemainingCount  | `boolean` | `false` | no | If true arrows are disabled and last item has label with remaining count |
+| thumbnailsAsLinks  | `boolean` | `false` | no | Enables or disables links on thumbnails |
+| thumbnailsAutoHide  | `boolean` | `false` | no | Hides thumbnails if there is only one image |
+| thumbnailMargin  | `number` | `10` | no | Margin between images in thumbnails |
+| thumbnailSize  | `string` | `NgxGalleryImageSize.Cover` | no | Thumbnail size |
+| thumbnailActions  | `NgxGalleryAction[]` | `[]` | no | Array of custom actions |
+| preview  | `boolean` | `true` | no | Enables or disables preview |
+| previewDescription  | `boolean` | `true` | no | Enables or disables description for images |
+| previewArrows  | `boolean` | `true` | no | Enables or disables arrows |
+| previewArrowsAutoHide  | boolean: `string` | `false` | no | Enables or disables arrows auto hide |
+| previewSwipe  | `boolean` | `false` | no | Enables or disables swipe |
+| previewFullscreen  | `boolean` | `false` | no | Enables or disables fullscreen icon |
+| previewForceFullscreen  | `boolean` | `false` | no | Enables or disables opening preview in fullscreen mode |
+| previewCloseOnClick  | `boolean` | `false` | no | Enables or disables closing preview by click |
+| previewCloseOnEsc  | `boolean` | `false` | no | Enables or disables closing preview by esc keyboard |
+| previewKeyboardNavigation  | `boolean` | `false` | no | Enables or disables navigation by keyboard |
+| previewAnimation  | `boolean` | `true` | no | Enables or disables image loading animation |
+| previewAutoPlay  | `boolean` | `false` | no | Enables or disables auto play |
+| previewAutoPlayInterval  | `number` | `2000` | no | Interval for auto play (ms) |
+| previewAutoPlayPauseOnHover  | `boolean` | `false` | no | Enables or disables pouse auto play on hover |
+| previewInfinityMove  | `boolean` | `false` | no | Enables or disables infinity move by arrows |
+| previewZoom  | `boolean` | `false` | no | Enables or disables zoom in and zoom out |
+| previewZoomStep  | `number` | `0.1` | no | Step for zoom change |
+| previewZoomMax  | `number` | `2` | no | Max value for zoom |
+| previewZoomMin  | `number` | `0.5` | no | Min value for zoom |
+| previewRotate  | `boolean` | `false` | no | Enables or disables rotate buttons |
+| previewDownload  | `boolean` | `false` | no | Enables or disables download button |
+| previewBullets  | `boolean` | `false` | no | Enables or disables navigation bullets |
+| arrowPrevIcon  | `string` | `'fa fa-arrow-circle-left'` | no | Icon for prev arrow |
+| arrowNextIcon  | `string` | `'fa fa-arrow-circle-right'` | no | Icon for next arrow |
+| closeIcon  | `string` | `'fa fa-times-circle'` | no | Icon for close button |
+| fullscreenIcon  | `string` | `'fa fa-arrows-alt'` | no | Icon for fullscreen button |
+| spinnerIcon  | `string` | `'fa fa-spinner fa-pulse fa-3x fa-fw'` | no | Icon for spinner |
+| zoomInIcon  | `string` | `'fa fa-search-plus'` | no | Icon for zoom in |
+| zoomOutIcon  | `string` | `'fa fa-search-minus'` | no | Icon for zoom out |
+| rotateLeftIcon  | `string` | `'fa fa-undo'` | no | Icon for rotate left |
+| rotateRightIcon  | `string` | `'fa fa-repeat'` | no | Icon for rotate right |
+| downloadIcon  | `string` | `'fa fa-arrow-circle-down'` | no | Icon for download |
+| actions  | `NgxGalleryAction[]` | `[]` | no | Array of new custom actions that will be added to the left of the current close/zoom/fullscreen icons |
+
+### NgxGalleryImage
+
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| small  | `string/SafeResourceUrl` | `-` | no | Url used in thumbnails |
+| medium  | `string/SafeResourceUrl` | `-` | no | Url used in image |
+| big  | `string/SafeResourceUrl` | `-` | yes | Url used in preview |
+| description  | `string` | `-` | no | Description used in preview |
+| url  | `string` | `-` | no | Url used in link |
+| label  | `string` | `-` | no | Label used for aria-label when thumbnail is a link |
+
+### NgxGalleryAnimation
+- `Fade` (default)
+- `Slide`
+- `Rotate`
+- `Zoom`
+
+### NgxGalleryImageSize
+- `Cover` (default)
+- `Contain`
+
+### NgxGalleryLayout
+- `Top`
+- `Bottom` (default)
+
+### NgxGalleryOrder
+- `Column` (default)
+- `Row`
+- `Page`
+
+### NgxGalleryAction
+- `icon` | Type: `string` - icon for custom action
+- `disabled` | Type: `boolean` | Default value: `false` - if the icon should be disabled
+- `titleText` | Type: `string` | Default value: `''` - text to set the title attribute to
+- `onClick` | Type: `(event: Event, index: number) => void` - Output function to call when custom action icon is clicked
 
 ## What's included
 
@@ -136,9 +278,6 @@ ngx-gallery/
 
 `gallery-app/` - demo application
 
-## Documentation
-
-The documentation for the NgxGallery is hosted at our website [NgxGallery](https://ngx-gallery.kolkov.ru/)
 
 ## Contributing
 
