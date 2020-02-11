@@ -6,7 +6,8 @@ import {ElementRef, Injectable, Renderer2} from '@angular/core';
 export class NgxGalleryService {
   private swipeHandlers: Map<string, (() => void)[]> = new Map<string, (() => void)[]>();
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2) {
+  }
 
   manageSwipe(status: boolean, element: ElementRef, id: string, nextHandler: () => void, prevHandler: () => void): void {
 
@@ -23,7 +24,8 @@ export class NgxGalleryService {
         handlers.map((handler) => handler());
         this.removeSwipeHandlers(id);
       }
-    } catch (e) {}
+    } catch (e) {
+    }
   }
 
   validateUrl(url: string): string {

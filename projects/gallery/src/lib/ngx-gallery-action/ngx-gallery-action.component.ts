@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'ngx-gallery-action',
@@ -13,7 +13,8 @@ export class NgxGalleryActionComponent implements OnInit/*, AfterViewInit*/ {
 
   @Output() closeClick: EventEmitter<Event> = new EventEmitter();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

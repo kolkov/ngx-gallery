@@ -1,11 +1,15 @@
 import {
-  AfterViewInit, ChangeDetectionStrategy,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   DoCheck,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   HostBinding,
-  HostListener, Input,
-  OnInit, Output,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -65,7 +69,8 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   @HostBinding('style.height') height: string;
   @HostBinding('style.left') left: string;
 
-  constructor(private myElement: ElementRef) {}
+  constructor(private myElement: ElementRef) {
+  }
 
   ngOnInit() {
     this.options = this.options.map((opt) => new NgxGalleryOptions(opt));

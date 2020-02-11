@@ -55,7 +55,8 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   private index = 0;
 
   constructor(private sanitization: DomSanitizer, private elementRef: ElementRef,
-              private helperService: NgxGalleryService) { }
+              private helperService: NgxGalleryService) {
+  }
 
   ngOnInit() {
   }
@@ -209,9 +210,9 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   }
 
   setThumbnailsPosition(): void {
-    this.thumbnailsLeft = - ((100 / this.columns) * this.index) + '%';
+    this.thumbnailsLeft = -((100 / this.columns) * this.index) + '%';
 
-    this.thumbnailsMarginLeft = - ((this.margin - (((this.columns - 1)
+    this.thumbnailsMarginLeft = -((this.margin - (((this.columns - 1)
       * this.margin) / this.columns)) * this.index) + 'px';
   }
 

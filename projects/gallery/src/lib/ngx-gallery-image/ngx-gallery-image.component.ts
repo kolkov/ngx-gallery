@@ -3,7 +3,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostBinding,
   HostListener,
   Input,
   OnChanges,
@@ -52,7 +51,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   private timer;
 
   constructor(private sanitization: DomSanitizer,
-              private elementRef: ElementRef, private helperService: NgxGalleryService) { }
+              private elementRef: ElementRef, private helperService: NgxGalleryService) {
+  }
 
   // @HostBinding('style.display') public display = 'inline-block';
   // @HostBinding('style.background-color') public color = 'lime';

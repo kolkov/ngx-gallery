@@ -5,11 +5,14 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input, OnChanges, OnDestroy,
+  Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  Output, Renderer2,
+  Output,
+  Renderer2,
   SimpleChanges,
-  ViewChild, ViewEncapsulation
+  ViewChild
 } from '@angular/core';
 import {DomSanitizer, SafeResourceUrl, SafeStyle, SafeUrl} from '@angular/platform-browser';
 import {NgxGalleryService} from '../ngx-gallery.service';
@@ -88,7 +91,8 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
 
   constructor(private sanitization: DomSanitizer, private elementRef: ElementRef,
               private helperService: NgxGalleryService, private renderer: Renderer2,
-              private changeDetectorRef: ChangeDetectorRef) { }
+              private changeDetectorRef: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
     if (this.arrows && this.arrowsAutoHide) {
@@ -396,7 +400,6 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     return doc.fullscreenElement || doc.webkitFullscreenElement
       || doc.mozFullScreenElement || doc.msFullscreenElement;
   }
-
 
 
   private show(first = false) {
