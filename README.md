@@ -229,7 +229,7 @@ export class AppComponent implements OnInit{
 | downloadIcon  | `string` | `'fa fa-arrow-circle-down'` | no | Icon for download |
 | actions  | `NgxGalleryAction[]` | `[]` | no | Array of new custom actions that will be added to the left of the current close/zoom/fullscreen icons |
 
-## NgxGalleryImage
+### NgxGalleryImage
 
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -240,28 +240,26 @@ export class AppComponent implements OnInit{
 | url  | `string` | `-` | no | Url used in link |
 | label  | `string` | `-` | no | Label used for aria-label when thumbnail is a link |
 
-## NgxGalleryAnimation
+### NgxGalleryAnimation
 - `Fade` (default)
 - `Slide`
 - `Rotate`
 - `Zoom`
 
-## NgxGalleryImageSize
+### NgxGalleryImageSize
 - `Cover` (default)
 - `Contain`
 
-## NgxGalleryLayout
+### NgxGalleryLayout
 - `Top`
 - `Bottom` (default)
 
-## NgxGalleryOrder
+### NgxGalleryOrder
 - `Column` (default)
 - `Row`
 - `Page`
 
-Examples for 
-
-## NgxGalleryAction
+### NgxGalleryAction
 - `icon` | Type: `string` - icon for custom action
 - `disabled` | Type: `boolean` | Default value: `false` - if the icon should be disabled
 - `titleText` | Type: `string` | Default value: `''` - text to set the title attribute to
