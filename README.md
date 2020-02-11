@@ -126,7 +126,7 @@ export class AppComponent implements OnInit{
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | [options] | `NgxGalleryOptions[]` | `-` | no | Config options for the Gallery |
-| [images] | `NgxGalleryImage[]` | `-` | no | images array |
+| [images] | `NgxGalleryImage[]` | `-` | no | Images array |
 
 ### Outputs
 
