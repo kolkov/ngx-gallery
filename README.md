@@ -8,6 +8,7 @@
 [![dependencies Status](https://david-dm.org/kolkov/ngx-gallery/status.svg)](https://david-dm.org/kolkov/ngx-gallery)
 [![devDependencies Status](https://david-dm.org/kolkov/ngx-gallery/dev-status.svg)](https://david-dm.org/kolkov/ngx-gallery?type=dev)
 [![codecov](https://codecov.io/gh/kolkov/ngx-gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/kolkov/ngx-gallery)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
 
 A simple native gallery component for Angular 8+.
 
@@ -154,7 +155,7 @@ export class AppComponent implements OnInit{
 | canMoveThumbnailsRight(): boolean  | Returns true if you can move thumbnails to right |
 
 ### NgxGalleryOptions
-
+#### Layout options
 | Input  | Type | Default | Required | Description |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | width  | `string` | `500px` | no | Gallery width |
@@ -165,6 +166,10 @@ export class AppComponent implements OnInit{
 | startIndex  | `number` | `0` | no | Sets index of selected image on start |
 | linkTarget  | `string` | `_blank` | no | Sets target attribute of link |
 | lazyLoading  | `boolean` | `true` | no | Enables/disables lazy loading for images |
+
+#### Image options
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
 | image  | `boolean` | `true` | no | Enables or disables image |
 | imageDescription  | `boolean` | `true` | no | Enables or disables description for images |
 | imagePercent  | `number` | `75` | no | Percentage height |
@@ -178,6 +183,10 @@ export class AppComponent implements OnInit{
 | imageAutoPlayPauseOnHover  | `boolean` | `false` | no | Enables or disables pause auto play on hover |
 | imageInfinityMove  | `boolean` | `false` | no | Enables or disables infinity move by arrows |
 | imageActions  | `NgxGalleryAction[]` | `[]` | no | Enables or disables navigation bullets |
+
+#### Thumbnails options
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
 | thumbnails  | `boolean` | `true` | no | Enables or disables thumbnails |
 | thumbnailsColumns  | `number` | `4` | no | Columns count |
 | thumbnailsRows  | `number` | `1` | no | Rows count |
@@ -194,6 +203,11 @@ export class AppComponent implements OnInit{
 | thumbnailMargin  | `number` | `10` | no | Margin between images in thumbnails |
 | thumbnailSize  | `string` | `NgxGalleryImageSize.Cover` | no | Thumbnail size |
 | thumbnailActions  | `NgxGalleryAction[]` | `[]` | no | Array of custom actions |
+
+
+#### Preview options
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
 | preview  | `boolean` | `true` | no | Enables or disables preview |
 | previewDescription  | `boolean` | `true` | no | Enables or disables description for images |
 | previewArrows  | `boolean` | `true` | no | Enables or disables arrows |
@@ -216,6 +230,11 @@ export class AppComponent implements OnInit{
 | previewRotate  | `boolean` | `false` | no | Enables or disables rotate buttons |
 | previewDownload  | `boolean` | `false` | no | Enables or disables download button |
 | previewBullets  | `boolean` | `false` | no | Enables or disables navigation bullets |
+
+#### Icons options
+
+| Input  | Type | Default | Required | Description |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
 | arrowPrevIcon  | `string` | `'fa fa-arrow-circle-left'` | no | Icon for prev arrow |
 | arrowNextIcon  | `string` | `'fa fa-arrow-circle-right'` | no | Icon for next arrow |
 | closeIcon  | `string` | `'fa fa-times-circle'` | no | Icon for close button |
@@ -296,6 +315,10 @@ See [the Releases section of our project](https://github.com/kolkov/ngx-gallery/
 **Andrey Kolkov**
 
 * <https://github.com/kolkov>
+
+## Donate
+
+If you like my work you can buy me a :beer: or :pizza: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
 
 [npm]: https://www.npmjs.com/
 [demo]: https://kolkov-ngx-gallery.stackblitz.io/
