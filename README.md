@@ -316,9 +316,14 @@ See [the Releases section of our project](https://github.com/kolkov/ngx-gallery/
 
 * <https://github.com/kolkov>
 
+## Credits
+
+This library is being fully rewritten for next Angular versions from original abandoned library written by Łukasz Gałka. I maintained full compatibility with the original library at the api level.
+<https://github.com/lukasz-galka/ngx-gallery>
+
 ## Donate
 
-If you like my work you can buy me a :beer: or :pizza: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
+If you like my work, and I save your time you can buy me a :beer: or :pizza: [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
 
 [npm]: https://www.npmjs.com/
 [demo]: https://kolkov-ngx-gallery.stackblitz.io/
