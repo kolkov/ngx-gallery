@@ -28,7 +28,7 @@ npm install @kolkov/ngx-gallery --save
 ```
 ### Versions
 
-1.x.x and above - for Angular v8.x.x
+1.x.x and above - for Angular v8+
 
 ### Usage
 
@@ -122,6 +122,8 @@ export class AppComponent implements OnInit{
   }
 }
 ```
+add this class to app CSS `.ngx-gallery { display: inline-block; margin-bottom: 20px; }`
+
 ## API
 ### Inputs
 | Input  | Type | Default | Required | Description |
