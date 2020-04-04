@@ -43,6 +43,7 @@ export interface INgxGalleryOptions {
     thumbnailMargin?: number;
     thumbnailSize?: string;
     thumbnailActions?: NgxGalleryAction[];
+    thumbnailClasses?: string[];
     preview?: boolean;
     previewDescription?: boolean;
     previewArrows?: boolean;
@@ -118,6 +119,7 @@ export class NgxGalleryOptions implements INgxGalleryOptions {
     thumbnailMargin?: number;
     thumbnailSize?: string;
     thumbnailActions?: NgxGalleryAction[];
+    thumbnailClasses?: string[];
     preview?: boolean;
     previewDescription?: boolean;
     previewArrows?: boolean;
@@ -207,6 +209,8 @@ export class NgxGalleryOptions implements INgxGalleryOptions {
             obj.thumbnailActions = obj.thumbnailActions.map(action => new NgxGalleryAction(action));
         }
         this.thumbnailActions = use(obj.thumbnailActions, []);
+        this.thumbnailClasses = use(obj.thumbnailClasses, []);
+
 
         this.preview = use(obj.preview, true);
         this.previewDescription = use(obj.previewDescription, true);

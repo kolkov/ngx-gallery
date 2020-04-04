@@ -26,7 +26,7 @@
                           [moveSize]="currentOptions?.thumbnailsMoveSize" [order]="currentOptions?.thumbnailsOrder"
                           [remainingCount]="currentOptions?.thumbnailsRemainingCount"
                           [lazyLoading]="currentOptions?.lazyLoading" [actions]="currentOptions?.thumbnailActions"
-                          (activeChange)="selectFromThumbnails($event)"></ngx-gallery-thumbnails>
+                          (activeChange)="selectFromThumbnails($event)" [ngClass]="currentOptions?.thumbnailClasses"></ngx-gallery-thumbnails>
 
   <ngx-gallery-preview [images]="bigImages" [descriptions]="descriptions"
                        [showDescription]="currentOptions?.previewDescription"
