@@ -205,6 +205,7 @@ add this class to app CSS `.ngx-gallery { display: inline-block; margin-bottom: 
 | thumbnailMargin  | `number` | `10` | no | Margin between images in thumbnails |
 | thumbnailSize  | `string` | `NgxGalleryImageSize.Cover` | no | Thumbnail size |
 | thumbnailActions  | `NgxGalleryAction[]` | `[]` | no | Array of custom actions |
+| thumbnailClasses  | `string[]` | `[]` | no | Custom classes to add to thumbnail component |
 
 
 #### Preview options
