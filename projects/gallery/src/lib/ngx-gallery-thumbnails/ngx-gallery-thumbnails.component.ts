@@ -257,6 +257,10 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
 
+  getFileType (fileSource: string): string {
+    return this.helperService.getFileType(fileSource);
+  }
+
   private getThumbnailPosition(index: number, count: number): SafeStyle {
     return this.getSafeStyle('calc(' + ((100 / count) * index) + '% + '
       + ((this.margin - (((count - 1) * this.margin) / count)) * index) + 'px)');

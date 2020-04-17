@@ -30,6 +30,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   src: SafeUrl;
   srcIndex: number;
   description: string;
+  type: string;
   showSpinner = false;
   positionLeft = 0;
   positionTop = 0;
@@ -266,6 +267,10 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     return this.sanitization.bypassSecurityTrustUrl(image);
   }
 
+  getFileType (fileSource: string): string {
+    return this.helperService.getFileType(fileSource);
+  }
+
   zoomIn(): void {
     if (this.canZoomIn()) {
       this.zoomValue += this.zoomStep;
@@ -421,16 +426,20 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     this.resetPosition();
 
     this.src = this.getSafeUrl(this.images[this.index] as string);
+    this.type = this.getFileType(this.images[this.index] as string);
     this.srcIndex = this.index;
     this.description = this.descriptions[this.index];
     this.changeDetectorRef.markForCheck();
 
     setTimeout(() => {
-      if (this.isLoaded(this.previewImage.nativeElement)) {
+      if (this.isLoaded(this.previewImage.nativeElement) || this.type == 'video') {
         this.loading = false;
         this.startAutoPlay();
         this.changeDetectorRef.markForCheck();
-      } else {
+      } else if (this.type == 'video') {
+
+      }
+      else {
         setTimeout(() => {
           if (this.loading) {
             this.showSpinner = true;
