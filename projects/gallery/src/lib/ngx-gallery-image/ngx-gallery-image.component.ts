@@ -221,4 +221,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   getSafeUrl(image: string): SafeStyle {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
+
+  getFileType(fileSource: string) {
+    return this.helperService.getFileType(fileSource);
+  }
 }

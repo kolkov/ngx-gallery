@@ -41,6 +41,25 @@ export class NgxGalleryService {
     return 'url(\'' + this.validateUrl(image) + '\')';
   }
 
+  getFileType (fileSource: string): string {
+    if (fileSource.startsWith('data:')) {
+      return fileSource.substr(5, Math.min(fileSource.indexOf(';'), fileSource.indexOf('/')) - 5);
+    }
+    const fileExtension = fileSource.split('.').pop().toLowerCase();
+    if (!fileExtension
+      || fileExtension === 'jpeg' || fileExtension === 'jpg'
+      || fileExtension === 'png' || fileExtension === 'bmp'
+      || fileExtension === 'gif') {
+      return 'image';
+    }
+    else if (fileExtension === 'avi' || fileExtension === 'flv'
+      || fileExtension === 'wmv' || fileExtension === 'mov'
+      || fileExtension === 'mp4') {
+      return 'video';
+    }
+    return 'unknown';
+}
+
   private getSwipeHandlers(id: string): (() => void)[] | undefined {
     return this.swipeHandlers.get(id);
   }

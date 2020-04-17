@@ -30,6 +30,22 @@
     border: 1px double black; /* Параметры границы */
     // background: #fc3; /* Цвет фона */
     // padding: 10px; /* Поля вокруг текста */
+    .ngx-gallery-thumbnail-video::after {
+      content: "\f144";
+      display: block;
+      position: absolute;
+      background: #0000;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: calc(50% - 20px);
+      font-size: 40px;
+      color: white;
+      margin: 0;
+      padding: 0;
+      font-family: fontawesome;
+      text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+    } 
     .img {
       /* background-position: center;
        background-repeat: no-repeat;

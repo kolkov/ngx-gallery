@@ -52,15 +52,15 @@
     transition: 0.5s ease-in-out;
 
     &.ngx-gallery-active {
-      left: 0;
+      transform:translateX(0);
     }
 
     &.ngx-gallery-inactive-left {
-      left: -100%;
+      transform:translateX(-100%);
     }
 
     &.ngx-gallery-inactive-right {
-      left: 100%;
+      transform:translateX(100%);
     }
   }
 }

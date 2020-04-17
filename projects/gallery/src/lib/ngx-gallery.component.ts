@@ -67,9 +67,9 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
   @HostBinding('style.width') width: string;
   @HostBinding('style.height') height: string;
-  @HostBinding('style.left') left: string;
+  @HostBinding('style.transform') left: string;
 
-  constructor(private myElement: ElementRef) {
+  constructor(private myElement: ElementRef, private helperService: NgxGalleryService) {
   }
 
   ngOnInit() {
@@ -268,15 +268,19 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   private checkFullWidth(): void {
     if (this.currentOptions && this.currentOptions.fullWidth) {
       this.width = document.body.clientWidth + 'px';
-      this.left = (-(document.body.clientWidth -
-        this.myElement.nativeElement.parentNode.innerWidth) / 2) + 'px';
+      this.left = 'translateX(' + (-(document.body.clientWidth -
+        this.myElement.nativeElement.parentNode.innerWidth) / 2) + 'px)';
     }
   }
 
   private setImages(): void {
+    this.images.forEach((img) =>
+        img.type = this.helperService.getFileType(img.url as string || img.big as string || img.medium as string || img.small as string || '')
+    );
     this.smallImages = this.images.map((img) => img.small as string);
     this.mediumImages = this.images.map((img, i) => new NgxGalleryOrderedImage({
       src: img.medium,
+      type: img.type,
       index: i
     }));
     this.bigImages = this.images.map((img) => img.big as string);
