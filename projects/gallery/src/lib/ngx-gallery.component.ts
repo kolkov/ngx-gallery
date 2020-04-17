@@ -67,7 +67,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
   @HostBinding('style.width') width: string;
   @HostBinding('style.height') height: string;
-  @HostBinding('style.left') left: string;
+  @HostBinding('style.transform') left: string;
 
   constructor(private myElement: ElementRef) {
   }
@@ -268,8 +268,8 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   private checkFullWidth(): void {
     if (this.currentOptions && this.currentOptions.fullWidth) {
       this.width = document.body.clientWidth + 'px';
-      this.left = (-(document.body.clientWidth -
-        this.myElement.nativeElement.parentNode.innerWidth) / 2) + 'px';
+      this.left = 'translateX(' + (-(document.body.clientWidth -
+        this.myElement.nativeElement.parentNode.innerWidth) / 2) + 'px)';
     }
   }
 
