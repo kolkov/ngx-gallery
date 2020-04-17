@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {NgxGalleryModule} from '@kolkov/ngx-gallery';
+import {NgxGalleryModule} from '../../../gallery/src/public-api';
 
 
 @NgModule({

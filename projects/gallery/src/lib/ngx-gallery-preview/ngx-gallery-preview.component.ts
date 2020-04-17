@@ -427,6 +427,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
 
     this.src = this.getSafeUrl(this.images[this.index] as string);
     this.type = this.getFileType(this.images[this.index] as string);
+    console.log(this.type);
     this.srcIndex = this.index;
     this.description = this.descriptions[this.index];
     this.changeDetectorRef.markForCheck();

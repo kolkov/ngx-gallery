@@ -12,7 +12,7 @@
        style="width: 100%; height: 100%; position:absolute;"></div>
        <video *ngIf="getFileType(image) == 'video'" class="ngx-gallery-thumbnail"
        [ngClass]="{ 'ngx-gallery-active': i == selectedIndex, 'ngx-gallery-clickable': clickable }" 
-       style="width: 100%; height: 100%; position:absolute;">
+       style="width: 100%; height: 100%; position:absolute; left:0; background:#000;">
         <source [src]="image">
           Your browser does not support the video tag.
        </video>
