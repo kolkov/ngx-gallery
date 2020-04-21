@@ -127,7 +127,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   addActive(index, image) {
     setTimeout(()=>{
-      if (this.selectedIndex == index) {
+      if (this.selectedIndex === index) {
         image.classList.add('ngx-gallery-active');
       }
     }, 0);

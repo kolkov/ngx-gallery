@@ -191,14 +191,14 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   }
 
   selectFromImage(indexes) {
-    let index = indexes.selectedIndex;
-    let currentIndex = indexes.currentIndex;
+    const index = indexes.selectedIndex;
+    const currentIndex = indexes.currentIndex;
     this.select(index, currentIndex);
   }
 
   selectFromThumbnails(indexes) {
-    let index = indexes.selectedIndex;
-    let currentIndex = indexes.currentIndex;
+    const index = indexes.selectedIndex;
+    const currentIndex = indexes.currentIndex;
     this.select(index, currentIndex);
 
     if (this.currentOptions && this.currentOptions.thumbnails && this.currentOptions.preview
