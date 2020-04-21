@@ -213,21 +213,15 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   canShowNext(): boolean {
-    console.log(this.images);
-    
-
     if (this.images) {
-      console.log(this.infinityMove || this.selectedIndex < this.images.length - 1);
       return this.infinityMove || this.selectedIndex < this.images.length - 1;
     } else {
-      console.log(false);
       return false;
     }
   }
 
   canShowPrev(): boolean {
     if (this.images) {
-      console.log(this.infinityMove || this.selectedIndex > 0);
       return this.infinityMove || this.selectedIndex > 0;
     } else {
       return false;
