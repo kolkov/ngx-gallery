@@ -160,12 +160,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   show(index: number) {
+    this.currentIndex = this.selectedIndex;
     this.selectedIndex = index;
-    this.activeChange.emit(this.selectedIndex);
+    this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
     this.setChangeTimeout();
   }
 
   showNext(): boolean {
+    this.currentIndex = this.selectedIndex;
     if (this.canShowNext() && this.canChangeImage) {
       this.selectedIndex++;
 
@@ -173,7 +175,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         this.selectedIndex = 0;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
       this.setChangeTimeout();
 
       return true;
@@ -183,6 +185,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   showPrev(): void {
+    this.currentIndex = this.selectedIndex;
     if (this.canShowPrev() && this.canChangeImage) {
       this.selectedIndex--;
 
@@ -190,7 +193,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         this.selectedIndex = this.images.length - 1;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
       this.setChangeTimeout();
     }
   }
@@ -210,15 +213,21 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   canShowNext(): boolean {
+    console.log(this.images);
+    
+
     if (this.images) {
+      console.log(this.infinityMove || this.selectedIndex < this.images.length - 1);
       return this.infinityMove || this.selectedIndex < this.images.length - 1;
     } else {
+      console.log(false);
       return false;
     }
   }
 
   canShowPrev(): boolean {
     if (this.images) {
+      console.log(this.infinityMove || this.selectedIndex > 0);
       return this.infinityMove || this.selectedIndex > 0;
     } else {
       return false;

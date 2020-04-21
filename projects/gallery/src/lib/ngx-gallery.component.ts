@@ -207,9 +207,9 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  // show(index: number): void {
-  //   this.select(index);
-  // }
+  show(index: number): void {
+    this.select(index);
+  }
 
   showNext(): void {
     this.image.showNext();
@@ -261,7 +261,10 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  private select(index: number, currentIndex: number) {
+  private select(index: number, currentIndex?: number) {
+    if (!currentIndex) {
+      this.currentIndex = this.selectedIndex;
+    }
     this.selectedIndex = index;
     this.currentIndex = currentIndex;
 
