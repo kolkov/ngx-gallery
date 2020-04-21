@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
-import {NgxGalleryImage} from '@kolkov/ngx-gallery';
-import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
+import {NgxGalleryOptions} from '../../../gallery/src/public-api';
+import {NgxGalleryImage} from '../../../gallery/src/public-api';
+import {NgxGalleryAnimation} from '../../../gallery/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -62,9 +62,9 @@ export class AppComponent implements OnInit{
         big: 'assets/img/gallery/4-big.jpeg'
       },
       {
-        small: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
-        medium: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
-        big: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4'
+        small: 'assets/video/BigBuckBunny_1.mp4',
+        medium: 'assets/video/BigBuckBunny_1.mp4',
+        big: 'assets/video/BigBuckBunny_1.mp4'
       }
     ];
   }

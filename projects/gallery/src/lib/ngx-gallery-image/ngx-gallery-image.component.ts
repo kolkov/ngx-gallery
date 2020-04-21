@@ -26,6 +26,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[];
   @Input() clickable: boolean;
   @Input() selectedIndex: number;
+  @Input() currentIndex: number;
   @Input() arrows: boolean;
   @Input() arrowsAutoHide: boolean;
   @Input() swipe: boolean;
@@ -101,11 +102,10 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     if (!this.images) {
       return [];
     }
-
     if (this.lazyLoading) {
       const indexes = [this.selectedIndex];
       const prevIndex = this.selectedIndex - 1;
-
+      indexes.push(this.currentIndex);
       if (prevIndex === -1 && this.infinityMove) {
         indexes.push(this.images.length - 1);
       } else if (prevIndex >= 0) {
@@ -119,11 +119,18 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (nextIndex < this.images.length) {
         indexes.push(nextIndex);
       }
-
       return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;
     }
+  }
+
+  addActive(index, image) {
+    setTimeout(()=>{
+      if (this.selectedIndex == index) {
+        image.classList.add('ngx-gallery-active');
+      }
+    }, 0);
   }
 
   startAutoPlay(): void {

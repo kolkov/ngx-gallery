@@ -50,6 +50,15 @@
 .ngx-gallery-animation-slide {
   .ngx-gallery-image {
     transition: 0.5s ease-in-out;
+    transition-delay: 0.0s;
+
+    &.ngx-gallery-active-from-left {
+      transform:translateX(100%);
+    }
+
+    &.ngx-gallery-active-from-right {
+      transform:translateX(-100%);
+    }
 
     &.ngx-gallery-active {
       transform:translateX(0);
@@ -62,6 +71,17 @@
     &.ngx-gallery-inactive-right {
       transform:translateX(100%);
     }
+  }
+  .ngx-gallery-inactive {
+    transition:none;
+  }
+  @keyframes fromLeft {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes fromRight {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
   }
 }
 

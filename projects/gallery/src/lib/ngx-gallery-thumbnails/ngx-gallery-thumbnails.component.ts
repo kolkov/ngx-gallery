@@ -39,6 +39,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   @Input() arrowsAutoHide: boolean;
   @Input() margin: number;
   @Input() selectedIndex: number;
+  @Input() currentIndex: number;
   @Input() clickable: boolean;
   @Input() swipe: boolean;
   @Input() size: string;
@@ -121,9 +122,10 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   }
 
   handleClick(event: Event, index: number): void {
+    this.currentIndex = this.selectedIndex;
     if (!this.hasLink(index)) {
       this.selectedIndex = index;
-      this.activeChange.emit(index);
+      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
 
       event.stopPropagation();
       event.preventDefault();

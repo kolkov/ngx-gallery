@@ -1,6 +1,6 @@
 <div class="ngx-gallery-layout {{currentOptions?.layout}}">
   <ngx-gallery-image *ngIf="currentOptions?.image" [style.height]="getImageHeight()" [images]="mediumImages"
-                     [clickable]="currentOptions?.preview" [selectedIndex]="selectedIndex"
+                     [clickable]="currentOptions?.preview" [selectedIndex]="selectedIndex" [currentIndex]="currentIndex"
                      [arrows]="currentOptions?.imageArrows" [arrowsAutoHide]="currentOptions?.imageArrowsAutoHide"
                      [arrowPrevIcon]="currentOptions?.arrowPrevIcon" [arrowNextIcon]="currentOptions?.arrowNextIcon"
                      [swipe]="currentOptions?.imageSwipe" [animation]="currentOptions?.imageAnimation"
