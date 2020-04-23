@@ -27,6 +27,7 @@
     'ngx-gallery-inactive-left': selectedIndex > image.index,
       'ngx-gallery-inactive-right': selectedIndex < image.index,
       'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
+      'ngx-gallery-unselected': pauseVideo(image.index, curvideo),
       'ngx-gallery-clickable': clickable,
       'ngx-gallery-active': addActive(image.index, curvideo)  }"
     (click)="handleClick($event, image.index)">

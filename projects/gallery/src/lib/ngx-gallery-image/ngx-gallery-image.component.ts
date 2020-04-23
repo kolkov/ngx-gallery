@@ -133,6 +133,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }, 0);
   }
 
+  pauseVideo(index, video) {
+    if (this.selectedIndex !== index) {
+      const element = video.childNodes[0];
+      element.pause();
+      element.currentTime = 0;
+    }
+  }
+
   startAutoPlay(): void {
     this.stopAutoPlay();
 
