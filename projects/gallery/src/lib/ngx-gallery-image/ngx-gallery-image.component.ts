@@ -50,6 +50,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   canChangeImage = true;
 
   private timer;
+  private isAnimating = false;
 
   constructor(private sanitization: DomSanitizer,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
@@ -136,8 +137,10 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   pauseVideo(index, video) {
     if (this.selectedIndex !== index) {
       const element = video.childNodes[0];
-      element.pause();
-      element.currentTime = 0;
+      if (element.duration > 0 && element.paused !== true) {
+        element.pause();
+        element.currentTime = 0;
+      }
     }
   }
 
@@ -175,34 +178,51 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   showNext(): boolean {
-    this.currentIndex = this.selectedIndex;
-    if (this.canShowNext() && this.canChangeImage) {
-      this.selectedIndex++;
+    if (this.isAnimating === false) {
+      this.currentIndex = this.selectedIndex;
+      if (this.canShowNext() && this.canChangeImage) {
+        this.selectedIndex++;
 
-      if (this.selectedIndex === this.images.length) {
-        this.selectedIndex = 0;
+        if (this.selectedIndex === this.images.length) {
+          this.selectedIndex = 0;
+        }
+
+        this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
+        this.setChangeTimeout();
+        this.isAnimating = true;
+        /*
+         * Wait 500 milliseconds (time of animation)
+         */
+        setTimeout(()=>{
+          this.isAnimating = false;
+        }, 500);
+        return true;
+      } else {
+        return false;
       }
-
-      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
-      this.setChangeTimeout();
-
-      return true;
-    } else {
-      return false;
     }
   }
 
   showPrev(): void {
-    this.currentIndex = this.selectedIndex;
-    if (this.canShowPrev() && this.canChangeImage) {
-      this.selectedIndex--;
+    if (this.isAnimating === false) {
+      this.currentIndex = this.selectedIndex;
+      if (this.canShowPrev() && this.canChangeImage) {
+        this.selectedIndex--;
 
-      if (this.selectedIndex < 0) {
-        this.selectedIndex = this.images.length - 1;
+        if (this.selectedIndex < 0) {
+          this.selectedIndex = this.images.length - 1;
+        }
+
+        this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
+        this.setChangeTimeout();
+        this.isAnimating = true;
+        /*
+         * Wait 500 milliseconds (time of animation)
+         */
+        setTimeout(()=>{
+          this.isAnimating = false;
+        }, 500);
       }
-
-      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
-      this.setChangeTimeout();
     }
   }
 

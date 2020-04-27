@@ -54,6 +54,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   @Output() activeChange = new EventEmitter();
 
   private index = 0;
+  private isAnimating = false;
 
   constructor(private sanitization: DomSanitizer, private elementRef: ElementRef,
               private helperService: NgxGalleryService) {
@@ -122,14 +123,22 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   }
 
   handleClick(event: Event, index: number): void {
-    this.currentIndex = this.selectedIndex;
-    if (!this.hasLink(index)) {
-      this.selectedIndex = index;
-      this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
-
-      event.stopPropagation();
-      event.preventDefault();
+    if (this.isAnimating === false) {
+      this.currentIndex = this.selectedIndex;
+      if (!this.hasLink(index)) {
+        this.selectedIndex = index;
+        this.activeChange.emit({selectedIndex: this.selectedIndex, currentIndex: this.currentIndex});
+        this.isAnimating = true;
+        /*
+         * Wait 500 milliseconds (time of animation)
+         */
+        setTimeout(() => {
+          this.isAnimating = false;
+        }, 500);
+      }
     }
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   hasLink(index: number): boolean {

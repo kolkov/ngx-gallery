@@ -1,16 +1,17 @@
 <div class="ngx-gallery-image-wrapper ngx-gallery-animation-{{animation}} ngx-gallery-image-size-{{size}}">
   <div *ngFor="let image of getImages(); let i = index;">
 
-    
+
     <div #curimage *ngIf="image.type === 'image'" class="ngx-gallery-image"
-        [ngClass]="{ 'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
+        [ngClass]="{
+          'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
           'ngx-gallery-active-from-right': selectedIndex < currentIndex && selectedIndex == image.index,
           'ngx-gallery-inactive-left': selectedIndex > image.index,
           'ngx-gallery-inactive-right': selectedIndex < image.index,
           'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
-            'ngx-gallery-clickable': clickable,
-            'ngx-gallery-active': addActive(image.index, curimage) }"
+          'ngx-gallery-clickable': clickable }"
         [style.background-image]="getSafeUrl(image.src)" (click)="handleClick($event, image.index)">
+      {{addActive(image.index, curimage)}}
       <div class="ngx-gallery-icons-wrapper">
         <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
                             [titleText]="action.titleText"
@@ -21,16 +22,17 @@
     </div>
   </div>
   <div *ngFor="let image of getImages(); let i = index;">
-    <div #curvideo *ngIf="image.type === 'video'" class="ngx-gallery-image" 
-    [ngClass]="{ 'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
+    <div #curvideo *ngIf="image.type === 'video'" class="ngx-gallery-image"
+    [ngClass]="{
+    'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
     'ngx-gallery-active-from-right': selectedIndex < currentIndex && selectedIndex == image.index,
     'ngx-gallery-inactive-left': selectedIndex > image.index,
-      'ngx-gallery-inactive-right': selectedIndex < image.index,
-      'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
-      'ngx-gallery-unselected': pauseVideo(image.index, curvideo),
-      'ngx-gallery-clickable': clickable,
-      'ngx-gallery-active': addActive(image.index, curvideo)  }"
+    'ngx-gallery-inactive-right': selectedIndex < image.index,
+    'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
+    'ngx-gallery-clickable': clickable }"
     (click)="handleClick($event, image.index)">
+      {{pauseVideo(image.index, curvideo)}}
+      {{addActive(image.index, curvideo)}}
       <video controls style="width:100%; height:100%; background: #000;">
         <source [src]="image.src">
           Your browser does not support the video tag.
