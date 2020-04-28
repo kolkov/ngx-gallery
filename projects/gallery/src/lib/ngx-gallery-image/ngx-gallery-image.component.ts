@@ -51,9 +51,9 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input()
   set selectedIndex(index: number) {
     if (index > this._selectedIndex) {
-      this.showNext()
+      this.setAction('next');
     } else {
-      this.showPrev()
+      this.setAction('prev');
     }
     this._selectedIndex = index
   }
@@ -189,9 +189,9 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   show(index: number) {
     if (index > this._selectedIndex) {
-      this.showNext()
+      this.setAction('next');
     } else {
-      this.showPrev()
+      this.setAction('prev');
     }
 
     this._selectedIndex = index;
@@ -199,10 +199,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     this.setChangeTimeout();
   }
 
+  setAction(action: Orientation) {
+    this.action = action;
+    this.changeDetectorRef.detectChanges();
+  }
+
   showNext(): boolean {
     if (this.canShowNext() && this.canChangeImage) {
-      this.action = 'next';
-      this.changeDetectorRef.detectChanges();
+     this.setAction('next');
 
       this._selectedIndex++;
 
@@ -221,8 +225,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   showPrev(): void {
     if (this.canShowPrev() && this.canChangeImage) {
-      this.action = 'prev';
-      this.changeDetectorRef.detectChanges();
+      this.setAction('prev');
 
       this._selectedIndex--;
 
