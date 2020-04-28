@@ -52,9 +52,10 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   set selectedIndex(index: number) {
     if (index > this._selectedIndex) {
       this.setAction('next');
-    } else {
+    } else if (index < this._selectedIndex){
       this.setAction('prev');
     }
+
     this._selectedIndex = index
   }
   @Input() arrows: boolean;
@@ -154,7 +155,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (nextIndex < this.images.length) {
         indexes.push(nextIndex);
       }
-
+      // console.log(this._selectedIndex, this.action);
       return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;
