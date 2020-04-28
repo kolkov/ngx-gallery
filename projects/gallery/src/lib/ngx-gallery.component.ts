@@ -53,6 +53,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   oldImagesLength = 0;
 
   selectedIndex = 0;
+  isAnimating: boolean;
   previewEnabled: boolean;
 
   currentOptions: NgxGalleryOptions;
@@ -329,4 +330,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     Object.keys(second).map((val) => first[val] = second[val] !== undefined ? second[val] : first[val]);
   }
 
+  setAnimating(event: boolean) {
+    this.isAnimating = event;
+  }
 }

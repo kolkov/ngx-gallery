@@ -30,6 +30,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   minStopIndex = 0;
 
   @Input() images: string[] | SafeResourceUrl[];
+  @Input() isAnimating: boolean;
   @Input() links: string[];
   @Input() labels: string[];
   @Input() linkTarget: string;
@@ -121,13 +122,12 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
   }
 
   handleClick(event: Event, index: number): void {
-    if (!this.hasLink(index)) {
+    if (!this.hasLink(index) && !this.isAnimating) {
       this.selectedIndex = index;
       this.activeChange.emit(index);
-
-      event.stopPropagation();
-      event.preventDefault();
     }
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   hasLink(index: number): boolean {
