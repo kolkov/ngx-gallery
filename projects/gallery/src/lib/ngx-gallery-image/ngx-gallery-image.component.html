@@ -8,7 +8,6 @@
          [@carouselAnimation]="action"
          (@carouselAnimation.start)="onStart($event)"
          (@carouselAnimation.done)="onDone($event)">
-      >
       <div class="ngx-gallery-icons-wrapper">
         <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
                             [titleText]="action.titleText"
@@ -24,7 +23,7 @@
          (click)="handleClick($event, image.index)"
          [@carouselAnimation]="action"
          (@carouselAnimation.start)="onStart($event)"
-         (@carouselAnimation.done)="onDone($event)">>
+         (@carouselAnimation.done)="onDone($event)">
       <video controls style="width:100%; height:100%; background: #000;">
         <source [src]="image.src">
         Your browser does not support the video tag.
