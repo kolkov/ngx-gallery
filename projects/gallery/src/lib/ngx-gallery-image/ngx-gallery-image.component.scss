@@ -38,7 +38,7 @@
 .ngx-gallery-animation-fade {
   .ngx-gallery-image {
     left: 0;
-    opacity: 0;
+    opacity: 1;
     transition: 0.5s ease-in-out;
 
     &.ngx-gallery-active {
@@ -49,16 +49,7 @@
 
 .ngx-gallery-animation-slide {
   .ngx-gallery-image {
-    transition: 0.5s ease-in-out;
-    transition-delay: 0.0s;
-
-    &.ngx-gallery-active-from-left {
-      transform:translateX(100%);
-    }
-
-    &.ngx-gallery-active-from-right {
-      transform:translateX(-100%);
-    }
+    /*transition: 0.5s ease-in-out;
 
     &.ngx-gallery-active {
       transform:translateX(0);
@@ -70,31 +61,20 @@
 
     &.ngx-gallery-inactive-right {
       transform:translateX(100%);
-    }
-  }
-  .ngx-gallery-inactive {
-    transition:none;
-  }
-  @keyframes fromLeft {
-    from { transform: translateX(100%); }
-    to   { transform: translateX(0); }
-  }
-  @keyframes fromRight {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(0); }
+    }*/
   }
 }
 
 .ngx-gallery-animation-rotate {
   .ngx-gallery-image {
     transition: 1s ease;
-    transform: scale(3.5, 3.5) rotate(90deg);
+    transform: scale(1, 1) rotate(0deg);
     left: 0;
-    opacity: 0;
+    opacity: 1;
 
     &.ngx-gallery-active {
-      transform: scale(1, 1) rotate(0deg);
-      opacity: 1;
+      //transform: scale(1, 1) rotate(0deg);
+      //opacity: 1;
     }
   }
 }
@@ -102,13 +82,13 @@
 .ngx-gallery-animation-zoom {
   .ngx-gallery-image {
     transition: 1s ease;
-    transform: scale(2.5, 2.5);
+    transform: scale(1, 1);
     left: 0;
-    opacity: 0;
+    opacity: 1;
 
     &.ngx-gallery-active {
-      transform: scale(1, 1);
-      opacity: 1;
+      //transform: scale(1, 1);
+      //opacity: 1;
     }
   }
 }

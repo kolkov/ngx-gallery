@@ -1,54 +1,42 @@
 <div class="ngx-gallery-image-wrapper ngx-gallery-animation-{{animation}} ngx-gallery-image-size-{{size}}">
-  <div *ngFor="let image of getImages(); let i = index;">
+  <ng-container *ngFor="let image of getImages(); let i = index;">
 
-
-    <div #curimage *ngIf="image.type === 'image'" class="ngx-gallery-image"
-        [ngClass]="{
-          'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
-          'ngx-gallery-active-from-right': selectedIndex < currentIndex && selectedIndex == image.index,
-          'ngx-gallery-inactive-left': selectedIndex > image.index,
-          'ngx-gallery-inactive-right': selectedIndex < image.index,
-          'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
-          'ngx-gallery-clickable': clickable }"
-        [style.background-image]="getSafeUrl(image.src)" (click)="handleClick($event, image.index)">
-      {{addActive(image.index, curimage)}}
+    <div *ngIf="image.type === 'image' && image.index === _selectedIndex" class="ngx-gallery-image"
+         [ngClass]="{'ngx-gallery-clickable': clickable }"
+         [style.background-image]="getSafeUrl(image.src)"
+         (click)="handleClick($event, image.index)"
+         [@animation]="action">
       <div class="ngx-gallery-icons-wrapper">
         <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
                             [titleText]="action.titleText"
                             (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
       </div>
       <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
-          [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
+           [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
     </div>
-  </div>
-  <div *ngFor="let image of getImages(); let i = index;">
-    <div #curvideo *ngIf="image.type === 'video'" class="ngx-gallery-image"
-    [ngClass]="{
-    'ngx-gallery-active-from-left': selectedIndex > currentIndex && selectedIndex == image.index,
-    'ngx-gallery-active-from-right': selectedIndex < currentIndex && selectedIndex == image.index,
-    'ngx-gallery-inactive-left': selectedIndex > image.index,
-    'ngx-gallery-inactive-right': selectedIndex < image.index,
-    'ngx-gallery-inactive': selectedIndex != image.index && currentIndex != image.index,
-    'ngx-gallery-clickable': clickable }"
-    (click)="handleClick($event, image.index)">
-      {{pauseVideo(image.index, curvideo)}}
-      {{addActive(image.index, curvideo)}}
+
+    <div *ngIf="image.type === 'video' && image.index === _selectedIndex" class="ngx-gallery-image"
+         [ngClass]="{'ngx-gallery-clickable': clickable }"
+         [style.background-image]="getSafeUrl(image.src)"
+         (click)="handleClick($event, image.index)"
+         [@animation]="action">
       <video controls style="width:100%; height:100%; background: #000;">
         <source [src]="image.src">
-          Your browser does not support the video tag.
+        Your browser does not support the video tag.
       </video>
       <div class="ngx-gallery-icons-wrapper">
-      <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
-                          [titleText]="action.titleText"
-                          (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
+        <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
+                            [titleText]="action.titleText"
+                            (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
       </div>
       <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
-          [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
-      </div>
+           [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
     </div>
-  </div>
-<ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="selectedIndex"
-                     (bulletChange)="show($event)"></ngx-gallery-bullets>
-<ngx-gallery-arrows class="ngx-gallery-image-size-{{size}}" *ngIf="arrows" (prevClick)="showPrev()"
-                    (nextClick)="showNext()" [prevDisabled]="!canShowPrev()" [nextDisabled]="!canShowNext()"
-                    [arrowPrevIcon]="arrowPrevIcon" [arrowNextIcon]="arrowNextIcon"></ngx-gallery-arrows>
+
+  </ng-container>
+  <ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="_selectedIndex"
+                       (bulletChange)="show($event)"></ngx-gallery-bullets>
+  <ngx-gallery-arrows class="ngx-gallery-image-size-{{size}}" *ngIf="arrows" (prevClick)="showPrev()"
+                      (nextClick)="showNext()" [prevDisabled]="!canShowPrev()" [nextDisabled]="!canShowNext()"
+                      [arrowPrevIcon]="arrowPrevIcon" [arrowNextIcon]="arrowNextIcon"></ngx-gallery-arrows>
+</div>

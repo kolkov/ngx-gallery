@@ -53,7 +53,6 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   oldImagesLength = 0;
 
   selectedIndex = 0;
-  currentIndex = 0;
   previewEnabled: boolean;
 
   currentOptions: NgxGalleryOptions;
@@ -190,16 +189,12 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  selectFromImage(indexes) {
-    const index = indexes.selectedIndex;
-    const currentIndex = indexes.currentIndex;
-    this.select(index, currentIndex);
+  selectFromImage(index: number) {
+    this.select(index);
   }
 
-  selectFromThumbnails(indexes) {
-    const index = indexes.selectedIndex;
-    const currentIndex = indexes.currentIndex;
-    this.select(index, currentIndex);
+  selectFromThumbnails(index: number) {
+    this.select(index);
 
     if (this.currentOptions && this.currentOptions.thumbnails && this.currentOptions.preview
       && (!this.currentOptions.image || this.currentOptions.thumbnailsRemainingCount)) {
@@ -261,12 +256,8 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
     }
   }
 
-  private select(index: number, currentIndex?: number) {
-    if (!currentIndex) {
-      this.currentIndex = this.selectedIndex;
-    }
+  private select(index: number) {
     this.selectedIndex = index;
-    this.currentIndex = currentIndex;
 
     this.change.emit({
       index,
