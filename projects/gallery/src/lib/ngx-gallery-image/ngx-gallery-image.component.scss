@@ -49,7 +49,7 @@
 
 .ngx-gallery-animation-slide {
   .ngx-gallery-image {
-    transition: 0.5s ease-in-out;
+    /*transition: 0.5s ease-in-out;
 
     &.ngx-gallery-active {
       transform:translateX(0);
@@ -61,7 +61,7 @@
 
     &.ngx-gallery-inactive-right {
       transform:translateX(100%);
-    }
+    }*/
   }
 }
 

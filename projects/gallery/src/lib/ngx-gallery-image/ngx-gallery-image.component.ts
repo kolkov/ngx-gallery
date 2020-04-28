@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -15,17 +16,47 @@ import {NgxGalleryService} from '../ngx-gallery.service';
 import {NgxGalleryOrderedImage} from '../ngx-gallery-ordered-image';
 import {NgxGalleryAction} from '../ngx-gallery-action';
 import {NgxGalleryAnimation} from '../ngx-gallery-animation';
+import {animate, style, transition, trigger} from '@angular/animations';
+
+type Orientation = ('prev' | 'next' | 'none');
 
 @Component({
   selector: 'ngx-gallery-image',
   templateUrl: './ngx-gallery-image.component.html',
   styleUrls: ['./ngx-gallery-image.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('carouselAnimation', [
+      transition('void => prev', [
+        style({transform: 'translateX(-100%)'}),
+        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+      ]),
+      transition('prev => void', [
+        animate('500ms ease-in-out', style({transform: 'translateX(100%)'}))
+      ]),
+      transition('void => next', [
+        style({transform: 'translateX(100%)'}),
+        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+      ]),
+      transition('next => void', [
+        animate('500ms ease-in-out', style({transform: 'translateX(-100%)'}))
+      ])
+    ])
+  ]
 })
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[];
   @Input() clickable: boolean;
-  @Input() selectedIndex: number;
+  _selectedIndex;
+  @Input()
+  set selectedIndex(index: number) {
+    if (index > this._selectedIndex) {
+      this.showNext()
+    } else {
+      this.showPrev()
+    }
+    this._selectedIndex = index
+  }
   @Input() arrows: boolean;
   @Input() arrowsAutoHide: boolean;
   @Input() swipe: boolean;
@@ -47,11 +78,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Output() activeChange = new EventEmitter();
 
   canChangeImage = true;
+  public orientation: Orientation;
 
   private timer;
 
-  constructor(private sanitization: DomSanitizer,
+  constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
+    this.changeDetectorRef = changeDetectorRef;
+    this.orientation = 'none';
   }
 
   // @HostBinding('style.display') public display = 'inline-block';
@@ -94,7 +128,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   reset(index: number): void {
-    this.selectedIndex = index;
+    this._selectedIndex = index;
+    this.orientation = 'none';
   }
 
   getImages(): NgxGalleryOrderedImage[] {
@@ -103,8 +138,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }
 
     if (this.lazyLoading) {
-      const indexes = [this.selectedIndex];
-      const prevIndex = this.selectedIndex - 1;
+      const indexes = [this._selectedIndex];
+      const prevIndex = this._selectedIndex - 1;
 
       if (prevIndex === -1 && this.infinityMove) {
         indexes.push(this.images.length - 1);
@@ -112,7 +147,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         indexes.push(prevIndex);
       }
 
-      const nextIndex = this.selectedIndex + 1;
+      const nextIndex = this._selectedIndex + 1;
 
       if (nextIndex === this.images.length && this.infinityMove) {
         indexes.push(0);
@@ -131,7 +166,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
     this.timer = setInterval(() => {
       if (!this.showNext()) {
-        this.selectedIndex = -1;
+        this._selectedIndex = -1;
         this.showNext();
       }
     }, this.autoPlayInterval);
@@ -153,20 +188,29 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   show(index: number) {
-    this.selectedIndex = index;
-    this.activeChange.emit(this.selectedIndex);
+    if (index > this._selectedIndex) {
+      this.showNext()
+    } else {
+      this.showPrev()
+    }
+
+    this._selectedIndex = index;
+    this.activeChange.emit(this._selectedIndex);
     this.setChangeTimeout();
   }
 
   showNext(): boolean {
     if (this.canShowNext() && this.canChangeImage) {
-      this.selectedIndex++;
+      this.orientation = 'next';
+      this.changeDetectorRef.detectChanges();
 
-      if (this.selectedIndex === this.images.length) {
-        this.selectedIndex = 0;
+      this._selectedIndex++;
+
+      if (this._selectedIndex === this.images.length) {
+        this._selectedIndex = 0;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit(this._selectedIndex);
       this.setChangeTimeout();
 
       return true;
@@ -177,13 +221,16 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   showPrev(): void {
     if (this.canShowPrev() && this.canChangeImage) {
-      this.selectedIndex--;
+      this.orientation = 'prev';
+      this.changeDetectorRef.detectChanges();
 
-      if (this.selectedIndex < 0) {
-        this.selectedIndex = this.images.length - 1;
+      this._selectedIndex--;
+
+      if (this._selectedIndex < 0) {
+        this._selectedIndex = this.images.length - 1;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit(this._selectedIndex);
       this.setChangeTimeout();
     }
   }
@@ -204,7 +251,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowNext(): boolean {
     if (this.images) {
-      return this.infinityMove || this.selectedIndex < this.images.length - 1;
+      return this.infinityMove || this._selectedIndex < this.images.length - 1;
     } else {
       return false;
     }
@@ -212,7 +259,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowPrev(): boolean {
     if (this.images) {
-      return this.infinityMove || this.selectedIndex > 0;
+      return this.infinityMove || this._selectedIndex > 0;
     } else {
       return false;
     }

@@ -8,6 +8,7 @@ import {NgxGalleryActionComponent} from './ngx-gallery-action/ngx-gallery-action
 import {NgxGalleryBulletsComponent} from './ngx-gallery-bullets/ngx-gallery-bullets.component';
 import {CommonModule} from '@angular/common';
 import {HAMMER_GESTURE_CONFIG, HammerGestureConfig} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @Injectable()
 export class CustomHammerConfig extends HammerGestureConfig  {
@@ -28,7 +29,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
     NgxGalleryActionComponent,
     NgxGalleryBulletsComponent
   ],
-  imports: [ CommonModule],
+  imports: [ CommonModule, BrowserAnimationsModule ],
   exports: [NgxGalleryComponent],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
