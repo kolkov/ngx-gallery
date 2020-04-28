@@ -78,14 +78,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Output() activeChange = new EventEmitter();
 
   canChangeImage = true;
-  public orientation: Orientation;
+  public action: Orientation;
 
   private timer;
 
   constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
     this.changeDetectorRef = changeDetectorRef;
-    this.orientation = 'none';
+    this.action = 'none';
   }
 
   // @HostBinding('style.display') public display = 'inline-block';
@@ -129,7 +129,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   reset(index: number): void {
     this._selectedIndex = index;
-    this.orientation = 'none';
+    this.action = 'none';
   }
 
   getImages(): NgxGalleryOrderedImage[] {
@@ -201,7 +201,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   showNext(): boolean {
     if (this.canShowNext() && this.canChangeImage) {
-      this.orientation = 'next';
+      this.action = 'next';
       this.changeDetectorRef.detectChanges();
 
       this._selectedIndex++;
@@ -221,7 +221,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   showPrev(): void {
     if (this.canShowPrev() && this.canChangeImage) {
-      this.orientation = 'prev';
+      this.action = 'prev';
       this.changeDetectorRef.detectChanges();
 
       this._selectedIndex--;
