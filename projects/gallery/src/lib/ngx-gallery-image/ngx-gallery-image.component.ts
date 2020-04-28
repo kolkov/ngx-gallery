@@ -52,12 +52,13 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   set selectedIndex(index: number) {
     if (index > this._selectedIndex) {
       this.setAction('next');
-    } else if (index < this._selectedIndex){
+    } else if (index < this._selectedIndex) {
       this.setAction('prev');
     }
 
-    this._selectedIndex = index
+    this._selectedIndex = index;
   }
+
   @Input() arrows: boolean;
   @Input() arrowsAutoHide: boolean;
   @Input() swipe: boolean;
@@ -77,9 +78,12 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
+  @Output() animating = new EventEmitter();
 
   canChangeImage = true;
   public action: Orientation;
+
+  isAnimating = false;
 
   private timer;
 
@@ -189,6 +193,9 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   show(index: number) {
+    if (this.isAnimating) {
+      return;
+    }
     if (index > this._selectedIndex) {
       this.setAction('next');
     } else {
@@ -206,8 +213,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   showNext(): boolean {
+    if (this.isAnimating) {
+      return;
+    }
     if (this.canShowNext() && this.canChangeImage) {
-     this.setAction('next');
+      this.setAction('next');
 
       this._selectedIndex++;
 
@@ -225,6 +235,9 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   }
 
   showPrev(): void {
+    if (this.isAnimating) {
+      return;
+    }
     if (this.canShowPrev() && this.canChangeImage) {
       this.setAction('prev');
 
@@ -275,5 +288,15 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   getFileType(fileSource: string) {
     return this.helperService.getFileType(fileSource);
+  }
+
+  onStart(event: AnimationEvent) {
+    this.isAnimating = true;
+    this.animating.emit(true)
+  }
+
+  onDone(event: AnimationEvent) {
+    this.isAnimating = false;
+    this.animating.emit(false)
   }
 }

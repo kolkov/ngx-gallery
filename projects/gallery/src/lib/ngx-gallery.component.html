@@ -10,11 +10,11 @@
                      [infinityMove]="currentOptions?.imageInfinityMove" [lazyLoading]="currentOptions?.lazyLoading"
                      [actions]="currentOptions?.imageActions" [descriptions]="descriptions"
                      [showDescription]="currentOptions?.imageDescription" [bullets]="currentOptions?.imageBullets"
-                     (imageClick)="openPreview($event)" (activeChange)="selectFromImage($event)"></ngx-gallery-image>
+                     (imageClick)="openPreview($event)" (activeChange)="selectFromImage($event)" (animating)="setAnimating($event)"></ngx-gallery-image>
 
   <ngx-gallery-thumbnails *ngIf="currentOptions?.thumbnails" [style.marginTop]="getThumbnailsMarginTop()"
                           [style.marginBottom]="getThumbnailsMarginBottom()" [style.height]="getThumbnailsHeight()"
-                          [images]="smallImages" [links]="currentOptions?.thumbnailsAsLinks ? links : []"
+                          [images]="smallImages" [isAnimating]="isAnimating" [links]="currentOptions?.thumbnailsAsLinks ? links : []"
                           [labels]="labels" [linkTarget]="currentOptions?.linkTarget" [selectedIndex]="selectedIndex"
                           [columns]="currentOptions?.thumbnailsColumns" [rows]="currentOptions?.thumbnailsRows"
                           [margin]="currentOptions?.thumbnailMargin" [arrows]="currentOptions?.thumbnailsArrows"
