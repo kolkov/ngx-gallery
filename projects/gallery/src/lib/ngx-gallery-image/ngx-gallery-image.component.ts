@@ -209,8 +209,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }
 
     if (this.lazyLoading) {
-      const indexes = [this.selectedIndex];
-      const prevIndex = this.selectedIndex - 1;
+      const indexes = [this._selectedIndex];
+      const prevIndex = this._selectedIndex - 1;
 
       if (prevIndex === -1 && this.infinityMove) {
         indexes.push(this.images.length - 1);
@@ -218,7 +218,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         indexes.push(prevIndex);
       }
 
-      const nextIndex = this.selectedIndex + 1;
+      const nextIndex = this._selectedIndex + 1;
 
       if (nextIndex === this.images.length && this.infinityMove) {
         indexes.push(0);
@@ -237,7 +237,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
     this.timer = setInterval(() => {
       if (!this.showNext()) {
-        this.selectedIndex = -1;
+        this._selectedIndex = -1;
         this.showNext();
       }
     }, this.autoPlayInterval);
@@ -324,11 +324,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       }
       this.setAction(action);
       this._selectedIndex++;
-      if (this.selectedIndex === this.images.length) {
-        this.selectedIndex = 0;
+      if (this._selectedIndex === this.images.length) {
+        this._selectedIndex = 0;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit(this._selectedIndex);
       this.setChangeTimeout();
 
       return true;
@@ -357,12 +357,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       }
       this.setAction(action);
       this._selectedIndex--;
-
-      if (this.selectedIndex < 0) {
-        this.selectedIndex = this.images.length - 1;
+      if (this._selectedIndex < 0) {
+        this._selectedIndex = this.images.length - 1;
       }
 
-      this.activeChange.emit(this.selectedIndex);
+      this.activeChange.emit(this._selectedIndex);
       this.setChangeTimeout();
     }
   }
@@ -383,7 +382,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowNext(): boolean {
     if (this.images) {
-      return this.infinityMove || this.selectedIndex < this.images.length - 1;
+      return this.infinityMove || this._selectedIndex < this.images.length - 1;
     } else {
       return false;
     }
@@ -391,7 +390,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowPrev(): boolean {
     if (this.images) {
-      return this.infinityMove || this.selectedIndex > 0;
+      return this.infinityMove || this._selectedIndex > 0;
     } else {
       return false;
     }
