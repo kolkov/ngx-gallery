@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -16,9 +15,9 @@ import {NgxGalleryService} from '../ngx-gallery.service';
 import {NgxGalleryOrderedImage} from '../ngx-gallery-ordered-image';
 import {NgxGalleryAction} from '../ngx-gallery-action';
 import {NgxGalleryAnimation} from '../ngx-gallery-animation';
-import {animate, style, transition, trigger} from '@angular/animations';
+import {animate, style, transition, trigger, state} from '@angular/animations';
 
-type Orientation = ('prev' | 'next' | 'none');
+type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotateRight' | 'zoom' | 'none');
 
 @Component({
   selector: 'ngx-gallery-image',
@@ -26,22 +25,63 @@ type Orientation = ('prev' | 'next' | 'none');
   styleUrls: ['./ngx-gallery-image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
-    trigger('carouselAnimation', [
-      transition('void => prev', [
-        style({transform: 'translateX(-100%)'}),
-        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+    trigger('animation', [
+      // ...
+      state('slideRight', style({
+      })),
+      state('slideLeft', style({
+      })),
+      state('fade', style({
+      })),
+      state('rotateLeft', style({
+      })),
+      state('rotateRight', style({
+      })),
+      state('zoom', style({
+      })),
+      transition('slideRight => void', [
+        animate('500ms ease-in-out', style({transform: 'translateX(-100%)'}))
       ]),
-      transition('prev => void', [
-        animate('500ms ease-in-out', style({transform: 'translateX(100%)'}))
-      ]),
-      transition('void => next', [
+      transition('void => slideRight', [
         style({transform: 'translateX(100%)'}),
         animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
       ]),
-      transition('next => void', [
-        animate('500ms ease-in-out', style({transform: 'translateX(-100%)'}))
-      ])
-    ])
+      transition('slideLeft => void', [
+        animate('500ms ease-in-out', style({transform: 'translateX(100%)'}))
+      ]),
+      transition('void => slideLeft', [
+        style({transform: 'translateX(-100%)'}),
+        animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
+      ]),
+      transition('fade => void', [
+        animate('500ms ease-in-out', style({opacity:'0'}))
+      ]),
+      transition('void => fade', [
+        style({opacity: '0'}),
+        animate('500ms ease-in-out', style({opacity: '1'}))
+      ]),
+      transition('rotateLeft => void', [
+        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(-90deg)', opacity: '0'}))
+      ]),
+      transition('void => rotateLeft', [
+        style({transform: 'scale(1, 1) rotate(-90deg)', opacity: '0'}),
+        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(0deg)', opacity: '1'}))
+      ]),
+      transition('rotateRight => void', [
+        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(90deg)', opacity: '0'}))
+      ]),
+      transition('void => rotateRight', [
+        style({transform: 'scale(1, 1) rotate(90deg)', opacity: '0'}),
+        animate('500ms ease-in-out', style({transform: 'scale(1, 1) rotate(0deg)', opacity: '1'}))
+      ]),
+      transition('zoom => void', [
+        animate('500ms ease-in-out', style({transform: 'scale(2.5,2.5)', opacity: '0'}))
+      ]),
+      transition('void => zoom', [
+        style({transform: 'scale(2.5,2.5)', opacity: '0'}),
+        animate('500ms ease-in-out', style({transform: 'scale(1, 1)', opacity: '1'}))
+      ]),
+    ]),
   ]
 })
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
@@ -51,9 +91,35 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input()
   set selectedIndex(index: number) {
     if (index > this._selectedIndex) {
-      this.setAction('next');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
     } else if (index < this._selectedIndex) {
-      this.setAction('prev');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
     }
 
     this._selectedIndex = index;
@@ -78,7 +144,6 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
-  @Output() animating = new EventEmitter();
 
   canChangeImage = true;
   public action: Orientation;
@@ -87,7 +152,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   private timer;
 
-  constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
+  constructor(private sanitization: DomSanitizer,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
     this.changeDetectorRef = changeDetectorRef;
     this.action = 'none';
@@ -143,8 +208,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }
 
     if (this.lazyLoading) {
-      const indexes = [this._selectedIndex];
-      const prevIndex = this._selectedIndex - 1;
+      const indexes = [this.selectedIndex];
+      const prevIndex = this.selectedIndex - 1;
 
       if (prevIndex === -1 && this.infinityMove) {
         indexes.push(this.images.length - 1);
@@ -152,14 +217,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         indexes.push(prevIndex);
       }
 
-      const nextIndex = this._selectedIndex + 1;
+      const nextIndex = this.selectedIndex + 1;
 
       if (nextIndex === this.images.length && this.infinityMove) {
         indexes.push(0);
       } else if (nextIndex < this.images.length) {
         indexes.push(nextIndex);
       }
-      // console.log(this._selectedIndex, this.action);
+
       return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;
@@ -171,7 +236,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
     this.timer = setInterval(() => {
       if (!this.showNext()) {
-        this._selectedIndex = -1;
+        this.selectedIndex = -1;
         this.showNext();
       }
     }, this.autoPlayInterval);
@@ -197,9 +262,35 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       return;
     }
     if (index > this._selectedIndex) {
-      this.setAction('next');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
     } else {
-      this.setAction('prev');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
     }
 
     this._selectedIndex = index;
@@ -217,15 +308,26 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       return;
     }
     if (this.canShowNext() && this.canChangeImage) {
-      this.setAction('next');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateRight';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
 
-      this._selectedIndex++;
-
-      if (this._selectedIndex === this.images.length) {
-        this._selectedIndex = 0;
+      if (this.selectedIndex === this.images.length) {
+        this.selectedIndex = 0;
       }
 
-      this.activeChange.emit(this._selectedIndex);
+      this.activeChange.emit(this.selectedIndex);
       this.setChangeTimeout();
 
       return true;
@@ -239,15 +341,26 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       return;
     }
     if (this.canShowPrev() && this.canChangeImage) {
-      this.setAction('prev');
+      let action;
+      if (this.animation === NgxGalleryAnimation.Slide) {
+        action = 'slideLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Fade) {
+        action = 'fade';
+      }
+      else if (this.animation === NgxGalleryAnimation.Rotate) {
+        action = 'rotateLeft';
+      }
+      else if (this.animation === NgxGalleryAnimation.Zoom) {
+        action = 'zoom';
+      }
+      this.setAction(action);
 
-      this._selectedIndex--;
-
-      if (this._selectedIndex < 0) {
-        this._selectedIndex = this.images.length - 1;
+      if (this.selectedIndex < 0) {
+        this.selectedIndex = this.images.length - 1;
       }
 
-      this.activeChange.emit(this._selectedIndex);
+      this.activeChange.emit(this.selectedIndex);
       this.setChangeTimeout();
     }
   }
@@ -268,7 +381,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowNext(): boolean {
     if (this.images) {
-      return this.infinityMove || this._selectedIndex < this.images.length - 1;
+      return this.infinityMove || this.selectedIndex < this.images.length - 1;
     } else {
       return false;
     }
@@ -276,7 +389,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowPrev(): boolean {
     if (this.images) {
-      return this.infinityMove || this._selectedIndex > 0;
+      return this.infinityMove || this.selectedIndex > 0;
     } else {
       return false;
     }

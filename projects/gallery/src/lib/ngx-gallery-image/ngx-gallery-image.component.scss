@@ -38,7 +38,7 @@
 .ngx-gallery-animation-fade {
   .ngx-gallery-image {
     left: 0;
-    opacity: 0;
+    opacity: 1;
     transition: 0.5s ease-in-out;
 
     &.ngx-gallery-active {
@@ -68,13 +68,13 @@
 .ngx-gallery-animation-rotate {
   .ngx-gallery-image {
     transition: 1s ease;
-    transform: scale(3.5, 3.5) rotate(90deg);
+    transform: scale(1, 1) rotate(0deg);
     left: 0;
-    opacity: 0;
+    opacity: 1;
 
     &.ngx-gallery-active {
-      transform: scale(1, 1) rotate(0deg);
-      opacity: 1;
+      //transform: scale(1, 1) rotate(0deg);
+      //opacity: 1;
     }
   }
 }
@@ -82,13 +82,13 @@
 .ngx-gallery-animation-zoom {
   .ngx-gallery-image {
     transition: 1s ease;
-    transform: scale(2.5, 2.5);
+    transform: scale(1, 1);
     left: 0;
-    opacity: 0;
+    opacity: 1;
 
     &.ngx-gallery-active {
-      transform: scale(1, 1);
-      opacity: 1;
+      //transform: scale(1, 1);
+      //opacity: 1;
     }
   }
 }
