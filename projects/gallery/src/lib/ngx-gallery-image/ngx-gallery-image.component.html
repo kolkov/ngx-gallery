@@ -14,7 +14,7 @@
                             (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
       </div>
       <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
-           [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
+          [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
     </div>
 
     <div *ngIf="image.type === 'video' && image.index === _selectedIndex" class="ngx-gallery-image"
@@ -26,16 +26,17 @@
          (@animation.done)="onDone($event)">
       <video controls style="width:100%; height:100%; background: #000;">
         <source [src]="image.src">
-        Your browser does not support the video tag.
+          Your browser does not support the video tag.
       </video>
       <div class="ngx-gallery-icons-wrapper">
-        <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
-                            [titleText]="action.titleText"
-                            (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
+      <ngx-gallery-action *ngFor="let action of actions" [icon]="action.icon" [disabled]="action.disabled"
+                          [titleText]="action.titleText"
+                          (closeClick)="action.onClick($event, image.index)"></ngx-gallery-action>
       </div>
       <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
-           [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
-    </div>
+          [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
+      </div>
+
 
   </ng-container>
   <ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="_selectedIndex"
