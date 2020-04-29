@@ -1,6 +1,5 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -145,7 +144,6 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
-  @Output() animating = new EventEmitter();
 
   canChangeImage = true;
   public action: Orientation;
@@ -154,7 +152,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   private timer;
 
-  constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
+  constructor(private sanitization: DomSanitizer,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
     this.changeDetectorRef = changeDetectorRef;
     this.action = 'none';
@@ -210,8 +208,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }
 
     if (this.lazyLoading) {
-      const indexes = [this._selectedIndex];
-      const prevIndex = this._selectedIndex - 1;
+      const indexes = [this.selectedIndex];
+      const prevIndex = this.selectedIndex - 1;
 
       if (prevIndex === -1 && this.infinityMove) {
         indexes.push(this.images.length - 1);
@@ -219,14 +217,14 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
         indexes.push(prevIndex);
       }
 
-      const nextIndex = this._selectedIndex + 1;
+      const nextIndex = this.selectedIndex + 1;
 
       if (nextIndex === this.images.length && this.infinityMove) {
         indexes.push(0);
       } else if (nextIndex < this.images.length) {
         indexes.push(nextIndex);
       }
-      // console.log(this._selectedIndex, this.action);
+
       return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;
@@ -238,7 +236,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
     this.timer = setInterval(() => {
       if (!this.showNext()) {
-        this._selectedIndex = -1;
+        this.selectedIndex = -1;
         this.showNext();
       }
     }, this.autoPlayInterval);
@@ -325,13 +323,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       }
       this.setAction(action);
 
-      this._selectedIndex++;
-
-      if (this._selectedIndex === this.images.length) {
-        this._selectedIndex = 0;
+      if (this.selectedIndex === this.images.length) {
+        this.selectedIndex = 0;
       }
 
-      this.activeChange.emit(this._selectedIndex);
+      this.activeChange.emit(this.selectedIndex);
       this.setChangeTimeout();
 
       return true;
@@ -360,13 +356,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       }
       this.setAction(action);
 
-      this._selectedIndex--;
-
-      if (this._selectedIndex < 0) {
-        this._selectedIndex = this.images.length - 1;
+      if (this.selectedIndex < 0) {
+        this.selectedIndex = this.images.length - 1;
       }
 
-      this.activeChange.emit(this._selectedIndex);
+      this.activeChange.emit(this.selectedIndex);
       this.setChangeTimeout();
     }
   }
@@ -387,7 +381,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowNext(): boolean {
     if (this.images) {
-      return this.infinityMove || this._selectedIndex < this.images.length - 1;
+      return this.infinityMove || this.selectedIndex < this.images.length - 1;
     } else {
       return false;
     }
@@ -395,7 +389,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   canShowPrev(): boolean {
     if (this.images) {
-      return this.infinityMove || this._selectedIndex > 0;
+      return this.infinityMove || this.selectedIndex > 0;
     } else {
       return false;
     }
