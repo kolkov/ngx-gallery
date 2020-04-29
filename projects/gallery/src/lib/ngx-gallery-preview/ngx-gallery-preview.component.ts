@@ -78,7 +78,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   @Output() previewClose = new EventEmitter();
   @Output() activeChange = new EventEmitter<number>();
 
-  @ViewChild('previewImage') previewImage: ElementRef;
+  @ViewChild('previewImage') previewImage: any;
 
   private isOpen = false;
   private timer;
@@ -157,6 +157,15 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
 
   close(): void {
     this.isOpen = false;
+    const video = this.previewImage.nativeElement;
+    if (
+      video.currentTime > 0 &&
+      !video.paused &&
+      !video.ended &&
+      video.readyState > 2
+    ) {
+      video.pause();
+    }
     this.closeFullscreen();
     this.previewClose.emit();
 
