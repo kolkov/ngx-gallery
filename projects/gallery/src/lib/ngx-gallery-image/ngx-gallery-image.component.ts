@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -144,6 +144,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   @Output() imageClick = new EventEmitter();
   @Output() activeChange = new EventEmitter();
+  @Output() animating = new EventEmitter();
 
   canChangeImage = true;
   public action: Orientation;
@@ -152,7 +153,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   private timer;
 
-  constructor(private sanitization: DomSanitizer,
+  constructor(private sanitization: DomSanitizer, private changeDetectorRef: ChangeDetectorRef,
               private elementRef: ElementRef, private helperService: NgxGalleryService) {
     this.changeDetectorRef = changeDetectorRef;
     this.action = 'none';

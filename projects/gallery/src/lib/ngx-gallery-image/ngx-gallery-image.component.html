@@ -1,5 +1,5 @@
 <div class="ngx-gallery-image-wrapper ngx-gallery-animation-{{animation}} ngx-gallery-image-size-{{size}}">
-  <div *ngFor="let image of getImages(); let i = index;">
+  <ng-container *ngFor="let image of getImages(); let i = index;">
 
     <div *ngIf="image.type === 'image' && image.index === _selectedIndex" class="ngx-gallery-image"
          [ngClass]="{'ngx-gallery-clickable': clickable }"
@@ -36,7 +36,7 @@
       <div class="ngx-gallery-image-text" *ngIf="showDescription && descriptions[image.index]"
           [innerHTML]="descriptions[image.index]" (click)="$event.stopPropagation()"></div>
       </div>
-    </div>
+
 
   </ng-container>
   <ngx-gallery-bullets *ngIf="bullets" [count]="images.length" [active]="_selectedIndex"
