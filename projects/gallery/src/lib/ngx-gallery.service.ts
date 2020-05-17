@@ -49,7 +49,7 @@ export class NgxGalleryService {
     if (!fileExtension
       || fileExtension === 'jpeg' || fileExtension === 'jpg'
       || fileExtension === 'png' || fileExtension === 'bmp'
-      || fileExtension === 'gif') {
+      || fileExtension === 'gif' || fileExtension === 'webp') {
       return 'image';
     }
     else if (fileExtension === 'avi' || fileExtension === 'flv'
