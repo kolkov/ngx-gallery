@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
         thumbnailsColumns: 4,
         arrowPrevIcon: 'fa fa-chevron-left',
         arrowNextIcon: 'fa fa-chevron-right',
-        imageAnimation: NgxGalleryAnimation.Rotate,
+        imageAnimation: NgxGalleryAnimation.Slide,
         imageSwipe: true
       },
       // max-width 800
