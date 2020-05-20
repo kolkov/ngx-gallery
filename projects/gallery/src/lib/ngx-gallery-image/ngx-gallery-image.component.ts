@@ -29,12 +29,12 @@ import {fadeInOutAnimation, slideInOutAnimation} from '../animations';
   animations: [
     trigger('slideAnimation', [
       transition(':increment', [
-        useAnimation(fadeInOutAnimation, {
+        useAnimation(slideInOutAnimation, {
           params: {from: '100%', to: '-100%', timings: '500ms ease-in-out'}
         })
       ]),
       transition(':decrement', [
-        useAnimation(fadeInOutAnimation, {
+        useAnimation(slideInOutAnimation, {
           params: {from: '-100%', to: '100%', timings: '500ms ease-in-out'}
         })
       ]),
@@ -158,7 +158,7 @@ import {fadeInOutAnimation, slideInOutAnimation} from '../animations';
     ])*/
   ]
 })
-export class NgxGalleryImageComponent implements OnInit, OnChanges {
+export class NgxGalleryImageComponent implements OnInit {
   @Input() images: NgxGalleryOrderedImage[];
   @Input() clickable: boolean;
   _selectedIndex;
@@ -191,8 +191,12 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }*/
 
     this._selectedIndex = index;
-    console.log('Selected index: ', this._selectedIndex);
-    this.changeDetectorRef.detectChanges();
+    console.log('Set Selected index: ', this._selectedIndex);
+    // this.changeDetectorRef.detectChanges();
+  }
+  get selectedIndex(): number {
+    console.log('Get Selected index: ', this._selectedIndex);
+    return this._selectedIndex;
   }
 
   @Input() arrows: boolean;
@@ -244,13 +248,13 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  /*ngOnChanges(changes: SimpleChanges): void {
     if (changes.swipe) {
       this.helperService.manageSwipe(this.swipe, this.elementRef, 'image', () => this.showNext(), () => this.showPrev());
     }
-  }
+  }*/
 
-  @HostListener('mouseenter') onMouseEnter() {
+  /*@HostListener('mouseenter') onMouseEnter() {
     if (this.arrowsAutoHide && !this.arrows) {
       this.arrows = true;
     }
@@ -268,7 +272,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     if (this.autoPlay && this.autoPlayPauseOnHover) {
       this.startAutoPlay();
     }
-  }
+  }*/
 
   reset(index: number): void {
     this._selectedIndex = index;
@@ -297,7 +301,7 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
       } else if (nextIndex < this.images.length) {
         indexes.push(nextIndex);
       }
-
+      // console.log('Selected index: ', this._selectedIndex);
       return this.images.filter((img, i) => indexes.indexOf(i) !== -1);
     } else {
       return this.images;

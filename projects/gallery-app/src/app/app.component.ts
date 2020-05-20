@@ -64,11 +64,11 @@ export class AppComponent implements OnInit{
         medium: 'assets/img/gallery/4-medium.jpeg',
         big: 'assets/img/gallery/4-big.jpeg'
       },
-      {
+/*      {
         small: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
         medium: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
         big: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4'
-      }
+      }*/
     ];
   }
 }

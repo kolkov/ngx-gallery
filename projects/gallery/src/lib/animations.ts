@@ -2,14 +2,14 @@ import {animate, animation, group, query, style} from '@angular/animations';
 
 export const slideInOutAnimation = animation([
   group([
-    query(':enter', [
+    query('.ngx-gallery-image:enter', [
       style({
         transform: 'translateX({{ from }})'
       }),
       animate('{{ timings }}', style(
         {transform: 'translateX(0)'}))
     ], { optional: true }),
-    query(':leave', [
+    query('.ngx-gallery-image:leave', [
       animate('{{ timings }}', style(
         {
           transform: 'translateX({{ to }})'
