@@ -1,4 +1,4 @@
-<div class="ngx-gallery-image-wrapper ngx-gallery-animation-{{animation}} ngx-gallery-image-size-{{size}}"  [@slideAnimation]="selectedIndex">
+<div class="ngx-gallery-image-wrapper  ngx-gallery-image-size-{{size}}" [@slideAnimation]="selectedIndex">
   <div *ngFor="let image of getImages(); let i = index;" >
     <div *ngIf="image.type === 'image' && image.index === selectedIndex" class="ngx-gallery-image"
          [ngClass]="{'ngx-gallery-clickable': clickable }"
