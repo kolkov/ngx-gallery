@@ -45,6 +45,9 @@ export class NgxGalleryService {
     if (fileSource.startsWith('data:')) {
       return fileSource.substr(5, Math.min(fileSource.indexOf(';'), fileSource.indexOf('/')) - 5);
     }
+    if (fileSource.startsWith('blob:')) {
+      return 'image';
+    }
     const fileExtension = fileSource.split('.').pop().toLowerCase();
     if (!fileExtension
       || fileExtension === 'jpeg' || fileExtension === 'jpg'
