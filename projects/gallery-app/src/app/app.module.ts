@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     NgxGalleryModule,
     AppRoutingModule
   ],

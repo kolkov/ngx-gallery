@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
+import {LoaderService} from './loader.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,9 @@ export class AppComponent implements OnInit{
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
 
-  constructor() { }
+  thumbnail: any;
+
+  constructor(private service: LoaderService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.galleryOptions = [
@@ -44,31 +48,42 @@ export class AppComponent implements OnInit{
       }
     ];
 
-    this.galleryImages = [
-      {
-        small: 'assets/img/gallery/1-small.jpeg',
-        medium: 'assets/img/gallery/1-medium.jpeg',
-        big: 'assets/img/gallery/1-big.jpeg'
-      },
-      {
-        small: 'assets/img/gallery/2-small.jpeg',
-        medium: 'assets/img/gallery/2-medium.jpeg',
-        big: 'assets/img/gallery/2-big.jpeg'
-      },
-      {
-        small: 'assets/img/gallery/3-small.jpeg',
-        medium: 'assets/img/gallery/3-medium.jpeg',
-        big: 'assets/img/gallery/3-big.jpeg'
-      },{
-        small: 'assets/img/gallery/4-small.jpeg',
-        medium: 'assets/img/gallery/4-medium.jpeg',
-        big: 'assets/img/gallery/4-big.jpeg'
-      },
-      {
-        small: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
-        medium: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
-        big: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4'
+    this.service.getImage().subscribe(
+      (baseImage: any) => {
+        const objUrl = 'data:image/jpeg;base64,' + baseImage.image;
+        // this.thumbnail = this.sanitizer.bypassSecurityTrustUrl(objUrl);
+        this.galleryImages = [
+          {
+            small: objUrl,
+            medium: objUrl,
+            big: objUrl
+          },
+          {
+            small: 'assets/img/gallery/1-small.jpeg',
+            medium: 'assets/img/gallery/1-medium.jpeg',
+            big: 'assets/img/gallery/1-big.jpeg'
+          },
+          {
+            small: 'assets/img/gallery/2-small.jpeg',
+            medium: 'assets/img/gallery/2-medium.jpeg',
+            big: 'assets/img/gallery/2-big.jpeg'
+          },
+          {
+            small: 'assets/img/gallery/3-small.jpeg',
+            medium: 'assets/img/gallery/3-medium.jpeg',
+            big: 'assets/img/gallery/3-big.jpeg'
+          },{
+            small: 'assets/img/gallery/4-small.jpeg',
+            medium: 'assets/img/gallery/4-medium.jpeg',
+            big: 'assets/img/gallery/4-big.jpeg'
+          },
+          {
+            small: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
+            medium: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4',
+            big: 'https://html5box.com/html5gallery/images/BigBuckBunny_1.mp4'
+          }
+        ];
       }
-    ];
+    );
   }
 }
