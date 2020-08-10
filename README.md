@@ -1,4 +1,6 @@
 # NgxGallery
+A simple native gallery component for Angular 8+.
+
 [![npm version](https://badge.fury.io/js/%40kolkov%2Fngx-gallery.svg)](https://badge.fury.io/js/%40kolkov%2Fngx-gallery)
 [![demo](https://img.shields.io/badge/demo-StackBlitz-blueviolet.svg)](https://stackblitz.com/edit/kolkov-ngx-gallery)
 [![Build Status](https://travis-ci.com/kolkov/ngx-gallery.svg?branch=master)](https://travis-ci.com/kolkov/ngx-gallery)
@@ -9,8 +11,6 @@
 [![devDependencies Status](https://david-dm.org/kolkov/ngx-gallery/dev-status.svg)](https://david-dm.org/kolkov/ngx-gallery?type=dev)
 [![codecov](https://codecov.io/gh/kolkov/ngx-gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/kolkov/ngx-gallery)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
-
-A simple native gallery component for Angular 8+.
 
 ## Demo
 Demo is here [demo][demo]
