@@ -18,7 +18,6 @@ export class CustomHammerConfig extends HammerGestureConfig  {
   } as any;
 }
 
-
 @NgModule({
   declarations: [
     NgxGalleryComponent,
