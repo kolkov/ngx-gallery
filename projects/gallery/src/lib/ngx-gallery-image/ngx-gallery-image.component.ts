@@ -400,8 +400,8 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
 
-  getFileType(fileSource: string) {
-    return this.helperService.getFileType(fileSource);
+  getFileType(fileSource: string, type: string) {
+    return this.helperService.getFileType(fileSource, type);
   }
 
   onStart(event: AnimationEvent) {

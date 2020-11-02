@@ -15,4 +15,21 @@ describe('NgxGalleryService', () => {
  it('should be created', inject([NgxGalleryService], (service: NgxGalleryService) => {
     expect(service).toBeTruthy();
   }));
+
+  it('getFileType should return image', inject([NgxGalleryService], (service: NgxGalleryService) => {
+    expect(service.getFileType('testingFile.jpg', '') === 'image').toBeTruthy();
+  }));
+
+  it('getFileType should return video', inject([NgxGalleryService], (service: NgxGalleryService) => {
+    expect(service.getFileType('testingFile.mkv', '') === 'video').toBeTruthy();
+  }));
+
+  it('getFileType should return image', inject([NgxGalleryService], (service: NgxGalleryService) => {
+    expect(service.getFileType('testingFile.mkv', 'image') === 'image').toBeTruthy();
+  }));
+
+  it('getFileType should return video', inject([NgxGalleryService], (service: NgxGalleryService) => {
+    expect(service.getFileType('testingFile.jpeg', 'video') === 'video').toBeTruthy();
+  }));
+
 });

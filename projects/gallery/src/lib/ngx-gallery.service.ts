@@ -41,14 +41,19 @@ export class NgxGalleryService {
     return 'url(\'' + this.validateUrl(image) + '\')';
   }
 
-  getFileType (fileSource: string): string {
+  getFileType (fileSource: string, type: string): string {
+
+    if(type && type !== 'unknown'){
+      return type;
+    }
+
     if (fileSource.startsWith('data:')) {
       return fileSource.substr(5, Math.min(fileSource.indexOf(';'), fileSource.indexOf('/')) - 5);
     }
     if (fileSource.startsWith('blob:')) {
       return 'image';
     }
-    const fileExtension = fileSource.split('.').pop().toLowerCase();
+    const fileExtension = fileSource.split('.').pop().split(/\W|_/g).shift().toLowerCase();
     if (!fileExtension
       || fileExtension === 'jpeg' || fileExtension === 'jpg'
       || fileExtension === 'png' || fileExtension === 'bmp'
@@ -56,8 +61,8 @@ export class NgxGalleryService {
       return 'image';
     }
     else if (fileExtension === 'avi' || fileExtension === 'flv'
-      || fileExtension === 'wmv' || fileExtension === 'mov'
-      || fileExtension === 'mp4') {
+      || fileExtension === 'wmv' || fileExtension === 'mov' || fileExtension === '3gp'
+      || fileExtension === 'mp4'|| fileExtension === 'mkv') {
       return 'video';
     }
     return 'unknown';
