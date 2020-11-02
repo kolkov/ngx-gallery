@@ -42,9 +42,9 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   @Output() previewClose = new EventEmitter();
   @Output() previewChange = new EventEmitter<{ index: number; image: NgxGalleryImage; }>();
 
-  smallImages: string[] | SafeResourceUrl[];
+  smallImages: NgxGalleryOrderedImage[];
   mediumImages: NgxGalleryOrderedImage[];
-  bigImages: string[] | SafeResourceUrl[];
+  bigImages: NgxGalleryOrderedImage[];
   descriptions: string[];
   links: string[];
   labels: string[];
@@ -276,15 +276,23 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
 
   private setImages(): void {
     this.images.forEach((img) =>
-        img.type = this.helperService.getFileType(img.url as string || img.big as string || img.medium as string || img.small as string || '')
+        img.type = this.helperService.getFileType(img.url as string || img.big as string || img.medium as string || img.small as string || '', img.type as string)
     );
-    this.smallImages = this.images.map((img) => img.small as string);
+    this.smallImages = this.images.map((img, i) => new NgxGalleryOrderedImage({
+      src: img.small,
+      type: img.type,
+      index: i
+    }));
     this.mediumImages = this.images.map((img, i) => new NgxGalleryOrderedImage({
       src: img.medium,
       type: img.type,
       index: i
     }));
-    this.bigImages = this.images.map((img) => img.big as string);
+    this.bigImages = this.images.map((img, i) => new NgxGalleryOrderedImage({
+      src: img.big,
+      type: img.type,
+      index: i
+    }));
     this.descriptions = this.images.map((img) => img.description as string);
     this.links = this.images.map((img) => img.url as string);
     this.labels = this.images.map((img) => img.label as string);

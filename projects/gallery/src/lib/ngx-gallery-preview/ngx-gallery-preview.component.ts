@@ -17,6 +17,7 @@ import {
 import {DomSanitizer, SafeResourceUrl, SafeStyle, SafeUrl} from '@angular/platform-browser';
 import {NgxGalleryService} from '../ngx-gallery.service';
 import {NgxGalleryAction} from '../ngx-gallery-action';
+import { NgxGalleryOrderedImage } from '../../public-api';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
   rotateValue = 0;
   index = 0;
 
-  @Input() images: string[] | SafeResourceUrl[];
+  @Input() images: NgxGalleryOrderedImage[];
   @Input() descriptions: string[];
   @Input() showDescription: boolean;
   @Input() arrows: boolean;
@@ -276,8 +277,8 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     return this.sanitization.bypassSecurityTrustUrl(image);
   }
 
-  getFileType (fileSource: string): string {
-    return this.helperService.getFileType(fileSource);
+  getFileType (fileSource: string, type: string): string {
+    return this.helperService.getFileType(fileSource, type);
   }
 
   zoomIn(): void {
@@ -434,8 +435,8 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     this.rotateValue = 0;
     this.resetPosition();
 
-    this.src = this.getSafeUrl(this.images[this.index] as string);
-    this.type = this.getFileType(this.images[this.index] as string);
+    this.src = this.getSafeUrl(this.images[this.index].src as string);
+    this.type = this.getFileType(this.images[this.index].src as string, this.images[this.index].type as string);
     this.srcIndex = this.index;
     this.description = this.descriptions[this.index];
     this.changeDetectorRef.markForCheck();
