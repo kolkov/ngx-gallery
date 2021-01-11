@@ -151,6 +151,7 @@ add this class to app CSS `.ngx-gallery { display: inline-block; margin-bottom: 
 | canShowNext(): boolean  | Returns true if there is next image |
 | canShowPrev(): boolean  | Returns true if there is prev image |
 | openPreview(index: number): void  | Opens preview at index |
+| closePreview(): void | Closes the preview |
 | moveThumbnailsLeft(): void  | Moves thumbnails to left |
 | moveThumbnailsRight(): void  | Moves thumbnails to right |
 | canMoveThumbnailsLeft(): boolean  | Returns true if you can move thumbnails to left |
