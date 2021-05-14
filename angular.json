@@ -10,7 +10,7 @@
       "prefix": "",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/gallery/tsconfig.lib.json",
             "project": "projects/gallery/ng-package.json"
@@ -62,7 +62,6 @@
             "main": "projects/gallery-app/src/main.ts",
             "polyfills": "projects/gallery-app/src/polyfills.ts",
             "tsConfig": "projects/gallery-app/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/gallery-app/src/favicon.ico",
               "projects/gallery-app/src/assets"
@@ -71,7 +70,13 @@
               "projects/gallery-app/src/styles.scss",
               "./node_modules/font-awesome/scss/font-awesome.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -84,7 +89,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
