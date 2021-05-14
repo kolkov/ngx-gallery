@@ -257,7 +257,7 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
     return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
   }
 
-  getFileType (fileSource: string): string {
+  getFileType(fileSource: string): string {
     return this.helperService.getFileType(fileSource);
   }
 

@@ -54,7 +54,7 @@ type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotate
         animate('500ms ease-in-out', style({transform: 'translateX(0)'}))
       ]),
       transition('fade => void', [
-        animate('500ms ease-in-out', style({opacity:'0'}))
+        animate('500ms ease-in-out', style({opacity: '0'}))
       ]),
       transition('void => fade', [
         style({opacity: '0'}),
@@ -87,6 +87,7 @@ type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotate
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[];
   @Input() clickable: boolean;
+  // tslint:disable-next-line:variable-name
   _selectedIndex;
   @Input()
   set selectedIndex(index: number) {
@@ -406,11 +407,11 @@ export class NgxGalleryImageComponent implements OnInit, OnChanges {
 
   onStart(event: AnimationEvent) {
     this.isAnimating = true;
-    this.animating.emit(true)
+    this.animating.emit(true);
   }
 
   onDone(event: AnimationEvent) {
     this.isAnimating = false;
-    this.animating.emit(false)
+    this.animating.emit(false);
   }
 }

@@ -41,7 +41,7 @@ export class NgxGalleryService {
     return 'url(\'' + this.validateUrl(image) + '\')';
   }
 
-  getFileType (fileSource: string): string {
+  getFileType(fileSource: string): string {
     if (fileSource.startsWith('data:')) {
       return fileSource.substr(5, Math.min(fileSource.indexOf(';'), fileSource.indexOf('/')) - 5);
     }

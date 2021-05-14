@@ -276,7 +276,7 @@ export class NgxGalleryPreviewComponent implements OnInit, OnDestroy, OnChanges 
     return this.sanitization.bypassSecurityTrustUrl(image);
   }
 
-  getFileType (fileSource: string): string {
+  getFileType(fileSource: string): string {
     return this.helperService.getFileType(fileSource);
   }
 
