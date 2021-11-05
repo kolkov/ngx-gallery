@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
         thumbnailsColumns: 4,
         arrowPrevIcon: 'fa fa-chevron-left',
         arrowNextIcon: 'fa fa-chevron-right',
-        imageAnimation: NgxGalleryAnimation.Rotate,
+        imageAnimation: NgxGalleryAnimation.Slide,
         imageSwipe: true
       },
       // max-width 800
@@ -59,7 +59,8 @@ export class AppComponent implements OnInit{
         small: 'assets/img/gallery/3-small.jpeg',
         medium: 'assets/img/gallery/3-medium.jpeg',
         big: 'assets/img/gallery/3-big.jpeg'
-      },{
+      },
+      {
         small: 'assets/img/gallery/4-small.jpeg',
         medium: 'assets/img/gallery/4-medium.jpeg',
         big: 'assets/img/gallery/4-big.jpeg'
