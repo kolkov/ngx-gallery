@@ -25,12 +25,12 @@
 <div class="ngx-gallery-preview-wrapper" (click)="closeOnClick && close()" (mouseup)="mouseUpHandler($event)"
      (mousemove)="mouseMoveHandler($event)" (touchend)="mouseUpHandler($event)" (touchmove)="mouseMoveHandler($event)">
   <div class="ngx-gallery-preview-img-wrapper">
-    <img *ngIf="src && type == 'image'" #previewImage class="ngx-gallery-preview-img ngx-gallery-center" [src]="src"
+    <img *ngIf="src && type === 'image'" #previewImage class="ngx-gallery-preview-img ngx-gallery-center" [src]="src"
          (click)="$event.stopPropagation()" (mouseenter)="imageMouseEnter()" (mouseleave)="imageMouseLeave()"
          (mousedown)="mouseDownHandler($event)" (touchstart)="mouseDownHandler($event)"
          [class.ngx-gallery-active]="!loading" [class.animation]="animation" [class.ngx-gallery-grab]="canDragOnZoom()"
          [style.transform]="getTransform()" [style.left]="positionLeft + 'px'" [style.top]="positionTop + 'px'"/>
-    <video *ngIf="src && type == 'video'"  #previewImage controls style="width: 100%; height: 100%;"
+    <video *ngIf="src && type === 'video'"  #previewImage controls style="width: 100%; height: 100%;"
     class="ngx-gallery-preview-img ngx-gallery-center"
     (click)="$event.stopPropagation()" (mouseenter)="imageMouseEnter()" (mouseleave)="imageMouseLeave()" (mousedown)="mouseDownHandler($event)" (touchstart)="mouseDownHandler($event)"
     [class.ngx-gallery-active]="!loading" [class.animation]="animation" [class.ngx-gallery-grab]="canDragOnZoom()" [style.transform]="getTransform()" [style.left]="positionLeft + 'px'" [style.top]="positionTop + 'px'">

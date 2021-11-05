@@ -6,16 +6,13 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
   styleUrls: ['./ngx-gallery-bullets.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxGalleryBulletsComponent implements OnInit {
+export class NgxGalleryBulletsComponent {
   @Input() count: number;
   @Input() active = 0;
 
   @Output() bulletChange = new EventEmitter();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   getBullets(): number[] {
     return Array(this.count);

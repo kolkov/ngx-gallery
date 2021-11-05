@@ -6,7 +6,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
   styleUrls: ['./ngx-gallery-action.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxGalleryActionComponent implements OnInit/*, AfterViewInit*/ {
+export class NgxGalleryActionComponent {
   @Input() icon: string;
   @Input() disabled = false;
   @Input() titleText = '';
@@ -14,9 +14,6 @@ export class NgxGalleryActionComponent implements OnInit/*, AfterViewInit*/ {
   @Output() closeClick: EventEmitter<Event> = new EventEmitter();
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
   handleClick(event: Event) {

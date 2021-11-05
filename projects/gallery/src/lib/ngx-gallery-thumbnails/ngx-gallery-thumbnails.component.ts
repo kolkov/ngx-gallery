@@ -21,7 +21,7 @@ import {NgxGalleryOrder} from '../ngx-gallery-order';
   styleUrls: ['./ngx-gallery-thumbnails.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
+export class NgxGalleryThumbnailsComponent implements OnChanges {
   thumbnailsLeft: string;
   thumbnailsMarginLeft: string;
   mouseenter: boolean;
@@ -57,9 +57,6 @@ export class NgxGalleryThumbnailsComponent implements OnInit, OnChanges {
 
   constructor(private sanitization: DomSanitizer, private elementRef: ElementRef,
               private helperService: NgxGalleryService) {
-  }
-
-  ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -6,7 +6,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
   styleUrls: ['./ngx-gallery-arrows.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NgxGalleryArrowsComponent implements OnInit {
+export class NgxGalleryArrowsComponent {
   @Input() prevDisabled: boolean;
   @Input() nextDisabled: boolean;
   @Input() arrowPrevIcon: string;
@@ -16,9 +16,6 @@ export class NgxGalleryArrowsComponent implements OnInit {
   @Output() nextClick = new EventEmitter();
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   handlePrevClick(): void {
     this.prevClick.emit();
