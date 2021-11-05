@@ -108,12 +108,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "gallery-app:build",
-            "sourceMap": {
-              "scripts": true,
-              "styles": true,
-              "vendor": true
-            }
+            "browserTarget": "gallery-app:build"
           },
           "configurations": {
             "production": {
