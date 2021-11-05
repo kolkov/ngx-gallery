@@ -36,7 +36,7 @@ export class NgxGalleryComponent implements OnInit, DoCheck, AfterViewInit {
   @Input() images: NgxGalleryImage[];
 
   @Output() imagesReady = new EventEmitter();
-  // tslint:disable-next-line:no-output-native
+  // eslint-disable-next-line @angular-eslint/no-output-native
   @Output() change = new EventEmitter<{ index: number; image: NgxGalleryImage; }>();
   @Output() previewOpen = new EventEmitter();
   @Output() previewClose = new EventEmitter();

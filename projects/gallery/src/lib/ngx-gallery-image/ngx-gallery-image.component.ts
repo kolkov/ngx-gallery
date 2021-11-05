@@ -87,7 +87,7 @@ type Orientation = ('slideLeft' | 'slideRight' | 'fade' | 'rotateLeft' | 'rotate
 export class NgxGalleryImageComponent implements OnInit, OnChanges {
   @Input() images: NgxGalleryOrderedImage[];
   @Input() clickable: boolean;
-  // tslint:disable-next-line:variable-name
+  // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle, id-blacklist, id-match
   _selectedIndex;
   @Input()
   set selectedIndex(index: number) {

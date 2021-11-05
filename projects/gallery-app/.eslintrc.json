@@ -17,22 +17,17 @@
         "createDefaultProgram": true
       },
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "off",
           {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
+            "accessibility": "explicit"
           }
         ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "app",
-            "style": "kebab-case"
-          }
-        ]
+        "arrow-parens": [
+          "off",
+          "always"
+        ],
+        "import/order": "off"
       }
     },
     {
