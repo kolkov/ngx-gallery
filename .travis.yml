@@ -29,7 +29,7 @@ deploy:
   provider: npm
   email: a.kolkov@gmail.com
   api_token: $NPM_TOKEN
-  tag: latest
+  tag: v1.2-lts
   edge: true
   on:
     tags: true
