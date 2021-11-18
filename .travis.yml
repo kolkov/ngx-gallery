@@ -1,7 +1,7 @@
 os: linux
 language: node_js
 node_js:
-  - "14"
+  - "16"
 dist: trusty
 addons:
   chrome: stable
@@ -29,7 +29,7 @@ deploy:
   provider: npm
   email: a.kolkov@gmail.com
   api_token: $NPM_TOKEN
-  tag: v1.2-lts
+  tag: latest
   edge: true
   on:
     tags: true
