@@ -60,11 +60,11 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.selectedIndex) {
+    if (changes['selectedIndex']) {
       this.validateIndex();
     }
 
-    if (changes.swipe) {
+    if (changes['swipe']) {
       this.helperService.manageSwipe(this.swipe, this.elementRef,
         'thumbnails', () => this.moveRight(), () => this.moveLeft());
     }
@@ -128,9 +128,7 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
   }
 
   hasLink(index: number): boolean {
-    if (this.links && this.links.length && this.links[index]) {
-      return true;
-    }
+    return !!(this.links && this.links.length && this.links[index]);
   }
 
   moveRight(): void {
@@ -250,12 +248,12 @@ export class NgxGalleryThumbnailsComponent implements OnChanges {
     }
   }
 
-  getSafeUrl(image: string): SafeStyle {
-    return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image));
+  getSafeUrl(image: string | SafeResourceUrl): SafeStyle {
+    return this.sanitization.bypassSecurityTrustStyle(this.helperService.getBackgroundUrl(image.toString()));
   }
 
-  getFileType(fileSource: string): string {
-    return this.helperService.getFileType(fileSource);
+  getFileType(fileSource: string | SafeResourceUrl): string {
+    return this.helperService.getFileType(fileSource.toString());
   }
 
   private getThumbnailPosition(index: number, count: number): SafeStyle {

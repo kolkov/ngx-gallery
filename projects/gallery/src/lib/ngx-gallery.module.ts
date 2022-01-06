@@ -12,7 +12,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @Injectable()
 export class CustomHammerConfig extends HammerGestureConfig  {
-  overrides = {
+  override overrides = {
     pinch: { enable: false },
     rotate: { enable: false }
   } as any;

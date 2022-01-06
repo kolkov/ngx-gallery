@@ -1,5 +1,5 @@
 # NgxGallery
-A simple native gallery component for Angular 8+.
+A simple native gallery component for Angular 8+ and 13+.
 
 [![npm version](https://badge.fury.io/js/%40kolkov%2Fngx-gallery.svg)](https://badge.fury.io/js/%40kolkov%2Fngx-gallery)
 [![demo](https://img.shields.io/badge/demo-StackBlitz-blueviolet.svg)](https://stackblitz.com/edit/kolkov-ngx-gallery)
@@ -28,6 +28,7 @@ npm install @kolkov/ngx-gallery --save
 ```
 ### Versions
 
+2.x.x and above - for Angular v13+
 1.x.x and above - for Angular v8+
 
 ### Usage

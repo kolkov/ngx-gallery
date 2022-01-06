@@ -36,7 +36,7 @@ export interface INgxGalleryOptions {
     thumbnailsArrowsAutoHide?: boolean;
     thumbnailsSwipe?: boolean;
     thumbnailsMoveSize?: number;
-    thumbnailsOrder?: NgxGalleryOrder;
+    thumbnailsOrder?: number;
     thumbnailsRemainingCount?: boolean;
     thumbnailsAsLinks?: boolean;
     thumbnailsAutoHide?: boolean;
@@ -112,7 +112,7 @@ export class NgxGalleryOptions implements INgxGalleryOptions {
     thumbnailsArrowsAutoHide?: boolean;
     thumbnailsSwipe?: boolean;
     thumbnailsMoveSize?: number;
-    thumbnailsOrder?: NgxGalleryOrder;
+    thumbnailsOrder?: number;
     thumbnailsRemainingCount?: boolean;
     thumbnailsAsLinks?: boolean;
     thumbnailsAutoHide?: boolean;
