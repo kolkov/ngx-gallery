@@ -7,8 +7,6 @@ A simple native gallery component for Angular 8+.
 [![npm](https://img.shields.io/npm/dw/@kolkov/ngx-gallery.svg)](https://www.npmjs.com/package/@kolkov/ngx-gallery)
 [![](https://data.jsdelivr.com/v1/package/npm/@kolkov/ngx-gallery/badge?style=rounded)](https://www.jsdelivr.com/package/npm/@kolkov/ngx-gallery)
 [![Coverage Status](https://coveralls.io/repos/github/kolkov/ngx-gallery/badge.svg?branch=master)](https://coveralls.io/github/kolkov/ngx-gallery?branch=master)
-[![dependencies Status](https://david-dm.org/kolkov/ngx-gallery/status.svg)](https://david-dm.org/kolkov/ngx-gallery)
-[![devDependencies Status](https://david-dm.org/kolkov/ngx-gallery/dev-status.svg)](https://david-dm.org/kolkov/ngx-gallery?type=dev)
 [![codecov](https://codecov.io/gh/kolkov/ngx-gallery/branch/master/graph/badge.svg)](https://codecov.io/gh/kolkov/ngx-gallery)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/AndreyKolkov)
 
