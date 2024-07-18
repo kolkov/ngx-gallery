@@ -1,4 +1,9 @@
 <a name="2.0.0"></a>
+# 3.0.0 (2024-17-07)
+
+* Update to Angular v17
+
+<a name="2.0.0"></a>
 # 2.0.0 (2022-01-06)
 
 * Update to Angular v13 and new Ivy package format
