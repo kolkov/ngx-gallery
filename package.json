@@ -1,68 +1,27 @@
 {
-  "name": "@bernardo-amaral/ngx-gallery",
-  "version": "3.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build-prod": "ng build --configuration production",
-    "test": "ng test",
-    "lint:lib": "ng lint @bernardo-amaral/ngx-gallery",
-    "e2e": "ng e2e",
-    "build-watch:lib": "ng build @bernardo-amaral/ngx-gallery --watch",
-    "test:lib": "ng test @bernardo-amaral/ngx-gallery",
-    "build:lib": "ng build --configuration production @bernardo-amaral/ngx-gallery",
-    "publish:lib": "npm run copy:readme && npm run copy:changelog && npm run copy:license && npm publish ./dist/gallery",
-    "copy:readme": "cpx README.md dist/gallery",
-    "copy:changelog": "cpx CHANGELOG.md dist/gallery",
-    "copy:license": "cpx LICENSE dist/gallery",
-    "test-ci": "ng test @bernardo-amaral/ngx-gallery --code-coverage --no-watch --no-progress --browsers=ChromeHeadless"
-  },
+  "name": "ngx-img-gallery",
+  "version": "3.0.2",
+  "description": "A simple responsive native gallery component for Angular 17+.",
+  "author": "Bernardo Amaral <bernardo.amaral85@gmail.com>",
+  "repository": "https://github.com/bernardo-amaral/ngx-img-gallery",
+  "license": "MIT",
   "private": false,
-  "dependencies": {
-    "@angular/animations": "^17.3.10",
-    "@angular/common": "^17.3.0",
-    "@angular/compiler": "^17.3.0",
-    "@angular/core": "^17.3.0",
-    "@angular/forms": "^17.3.10",
-    "@angular/platform-browser": "^17.3.0",
-    "@angular/platform-browser-dynamic": "^17.3.0",
-    "@angular/router": "^17.3.0",
-    "font-awesome": "^4.7.0",
-    "hammerjs": "^2.0.8",
-    "karma-viewport": "^1.0.9",
-    "rxjs": "^7.8.1",
-    "tslib": "^2.3.1",
-    "zone.js": "~0.14.3"
+  "bugs": {
+    "url": "https://github.com/bernardo-amaral/ngx-img-gallery/issues"
   },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.6",
-    "@angular-eslint/builder": "17.3.0",
-    "@angular-eslint/eslint-plugin": "17.3.0",
-    "@angular-eslint/eslint-plugin-template": "17.3.0",
-    "@angular-eslint/schematics": "17.3.0",
-    "@angular-eslint/template-parser": "17.3.0",
-    "@angular/cli": "^17.3.6",
-    "@angular/compiler-cli": "^17.3.0",
-    "@angular/language-service": "~17.3.0",
-    "@types/jasmine": "~5.1.0",
-    "@types/jasminewd2": "~2.0.13",
-    "@types/node": "^20.14.11",
-    "@typescript-eslint/eslint-plugin": "7.2.0",
-    "@typescript-eslint/parser": "7.2.0",
-    "coveralls": "^3.1.1",
-    "cpx": "^1.5.0",
-    "eslint": "^8.57.0",
-    "jasmine-core": "~5.1.0",
-    "jasmine-spec-reporter": "~7.0.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "ng-packagr": "^17.3.0",
-    "protractor": "~7.0.0",
-    "ts-node": "~10.4.0",
-    "typescript": "~5.4.2"
-  }
+  "peerDependencies": {
+    "@angular/common": ">=17.3.0",
+    "@angular/core": ">=17.3.0",
+    "@angular/animations": ">=17.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.6.3"
+  },
+  "keywords": [
+    "angular",
+    "gallery",
+    "component",
+    "ngx-gallery",
+    "responsive gallery component"
+  ]
 }

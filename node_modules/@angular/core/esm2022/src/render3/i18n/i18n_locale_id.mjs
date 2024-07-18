@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+import { DEFAULT_LOCALE_ID } from '../../i18n/localization';
+import { assertDefined } from '../../util/assert';
+/**
+ * The locale id that the application is currently using (for translations and ICU expressions).
+ * This is the ivy version of `LOCALE_ID` that was defined as an injection token for the view engine
+ * but is now defined as a global value.
+ */
+let LOCALE_ID = DEFAULT_LOCALE_ID;
+/**
+ * Sets the locale id that will be used for translations and ICU expressions.
+ * This is the ivy version of `LOCALE_ID` that was defined as an injection token for the view engine
+ * but is now defined as a global value.
+ *
+ * @param localeId
+ */
+export function setLocaleId(localeId) {
+    ngDevMode && assertDefined(localeId, `Expected localeId to be defined`);
+    if (typeof localeId === 'string') {
+        LOCALE_ID = localeId.toLowerCase().replace(/_/g, '-');
+    }
+}
+/**
+ * Gets the locale id that will be used for translations and ICU expressions.
+ * This is the ivy version of `LOCALE_ID` that was defined as an injection token for the view engine
+ * but is now defined as a global value.
+ */
+export function getLocaleId() {
+    return LOCALE_ID;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaTE4bl9sb2NhbGVfaWQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi8uLi9wYWNrYWdlcy9jb3JlL3NyYy9yZW5kZXIzL2kxOG4vaTE4bl9sb2NhbGVfaWQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7OztHQU1HO0FBRUgsT0FBTyxFQUFDLGlCQUFpQixFQUFDLE1BQU0seUJBQXlCLENBQUM7QUFDMUQsT0FBTyxFQUFDLGFBQWEsRUFBQyxNQUFNLG1CQUFtQixDQUFDO0FBRWhEOzs7O0dBSUc7QUFDSCxJQUFJLFNBQVMsR0FBRyxpQkFBaUIsQ0FBQztBQUVsQzs7Ozs7O0dBTUc7QUFDSCxNQUFNLFVBQVUsV0FBVyxDQUFDLFFBQWdCO0lBQzFDLFNBQVMsSUFBSSxhQUFhLENBQUMsUUFBUSxFQUFFLGlDQUFpQyxDQUFDLENBQUM7SUFDeEUsSUFBSSxPQUFPLFFBQVEsS0FBSyxRQUFRLEVBQUUsQ0FBQztRQUNqQyxTQUFTLEdBQUcsUUFBUSxDQUFDLFdBQVcsRUFBRSxDQUFDLE9BQU8sQ0FBQyxJQUFJLEVBQUUsR0FBRyxDQUFDLENBQUM7SUFDeEQsQ0FBQztBQUNILENBQUM7QUFFRDs7OztHQUlHO0FBQ0gsTUFBTSxVQUFVLFdBQVc7SUFDekIsT0FBTyxTQUFTLENBQUM7QUFDbkIsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogQGxpY2Vuc2VcbiAqIENvcHlyaWdodCBHb29nbGUgTExDIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG4gKlxuICogVXNlIG9mIHRoaXMgc291cmNlIGNvZGUgaXMgZ292ZXJuZWQgYnkgYW4gTUlULXN0eWxlIGxpY2Vuc2UgdGhhdCBjYW4gYmVcbiAqIGZvdW5kIGluIHRoZSBMSUNFTlNFIGZpbGUgYXQgaHR0cHM6Ly9hbmd1bGFyLmlvL2xpY2Vuc2VcbiAqL1xuXG5pbXBvcnQge0RFRkFVTFRfTE9DQUxFX0lEfSBmcm9tICcuLi8uLi9pMThuL2xvY2FsaXphdGlvbic7XG5pbXBvcnQge2Fzc2VydERlZmluZWR9IGZyb20gJy4uLy4uL3V0aWwvYXNzZXJ0JztcblxuLyoqXG4gKiBUaGUgbG9jYWxlIGlkIHRoYXQgdGhlIGFwcGxpY2F0aW9uIGlzIGN1cnJlbnRseSB1c2luZyAoZm9yIHRyYW5zbGF0aW9ucyBhbmQgSUNVIGV4cHJlc3Npb25zKS5cbiAqIFRoaXMgaXMgdGhlIGl2eSB2ZXJzaW9uIG9mIGBMT0NBTEVfSURgIHRoYXQgd2FzIGRlZmluZWQgYXMgYW4gaW5qZWN0aW9uIHRva2VuIGZvciB0aGUgdmlldyBlbmdpbmVcbiAqIGJ1dCBpcyBub3cgZGVmaW5lZCBhcyBhIGdsb2JhbCB2YWx1ZS5cbiAqL1xubGV0IExPQ0FMRV9JRCA9IERFRkFVTFRfTE9DQUxFX0lEO1xuXG4vKipcbiAqIFNldHMgdGhlIGxvY2FsZSBpZCB0aGF0IHdpbGwgYmUgdXNlZCBmb3IgdHJhbnNsYXRpb25zIGFuZCBJQ1UgZXhwcmVzc2lvbnMuXG4gKiBUaGlzIGlzIHRoZSBpdnkgdmVyc2lvbiBvZiBgTE9DQUxFX0lEYCB0aGF0IHdhcyBkZWZpbmVkIGFzIGFuIGluamVjdGlvbiB0b2tlbiBmb3IgdGhlIHZpZXcgZW5naW5lXG4gKiBidXQgaXMgbm93IGRlZmluZWQgYXMgYSBnbG9iYWwgdmFsdWUuXG4gKlxuICogQHBhcmFtIGxvY2FsZUlkXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiBzZXRMb2NhbGVJZChsb2NhbGVJZDogc3RyaW5nKSB7XG4gIG5nRGV2TW9kZSAmJiBhc3NlcnREZWZpbmVkKGxvY2FsZUlkLCBgRXhwZWN0ZWQgbG9jYWxlSWQgdG8gYmUgZGVmaW5lZGApO1xuICBpZiAodHlwZW9mIGxvY2FsZUlkID09PSAnc3RyaW5nJykge1xuICAgIExPQ0FMRV9JRCA9IGxvY2FsZUlkLnRvTG93ZXJDYXNlKCkucmVwbGFjZSgvXy9nLCAnLScpO1xuICB9XG59XG5cbi8qKlxuICogR2V0cyB0aGUgbG9jYWxlIGlkIHRoYXQgd2lsbCBiZSB1c2VkIGZvciB0cmFuc2xhdGlvbnMgYW5kIElDVSBleHByZXNzaW9ucy5cbiAqIFRoaXMgaXMgdGhlIGl2eSB2ZXJzaW9uIG9mIGBMT0NBTEVfSURgIHRoYXQgd2FzIGRlZmluZWQgYXMgYW4gaW5qZWN0aW9uIHRva2VuIGZvciB0aGUgdmlldyBlbmdpbmVcbiAqIGJ1dCBpcyBub3cgZGVmaW5lZCBhcyBhIGdsb2JhbCB2YWx1ZS5cbiAqL1xuZXhwb3J0IGZ1bmN0aW9uIGdldExvY2FsZUlkKCk6IHN0cmluZyB7XG4gIHJldHVybiBMT0NBTEVfSUQ7XG59XG4iXX0=

@@ -1,0 +1,89 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+import { assertParentView } from './assert';
+import { icuContainerIterate } from './i18n/i18n_tree_shaking';
+import { CONTAINER_HEADER_OFFSET, NATIVE } from './interfaces/container';
+import { isLContainer } from './interfaces/type_checks';
+import { DECLARATION_COMPONENT_VIEW, HOST, TVIEW } from './interfaces/view';
+import { assertTNodeType } from './node_assert';
+import { getProjectionNodes } from './node_manipulation';
+import { getLViewParent, unwrapRNode } from './util/view_utils';
+export function collectNativeNodes(tView, lView, tNode, result, isProjection = false) {
+    while (tNode !== null) {
+        // Let declarations don't have corresponding DOM nodes so we skip over them.
+        if (tNode.type === 128 /* TNodeType.LetDeclaration */) {
+            tNode = isProjection ? tNode.projectionNext : tNode.next;
+            continue;
+        }
+        ngDevMode &&
+            assertTNodeType(tNode, 3 /* TNodeType.AnyRNode */ | 12 /* TNodeType.AnyContainer */ | 16 /* TNodeType.Projection */ | 32 /* TNodeType.Icu */);
+        const lNode = lView[tNode.index];
+        if (lNode !== null) {
+            result.push(unwrapRNode(lNode));
+        }
+        // A given lNode can represent either a native node or a LContainer (when it is a host of a
+        // ViewContainerRef). When we find a LContainer we need to descend into it to collect root nodes
+        // from the views in this container.
+        if (isLContainer(lNode)) {
+            collectNativeNodesInLContainer(lNode, result);
+        }
+        const tNodeType = tNode.type;
+        if (tNodeType & 8 /* TNodeType.ElementContainer */) {
+            collectNativeNodes(tView, lView, tNode.child, result);
+        }
+        else if (tNodeType & 32 /* TNodeType.Icu */) {
+            const nextRNode = icuContainerIterate(tNode, lView);
+            let rNode;
+            while ((rNode = nextRNode())) {
+                result.push(rNode);
+            }
+        }
+        else if (tNodeType & 16 /* TNodeType.Projection */) {
+            const nodesInSlot = getProjectionNodes(lView, tNode);
+            if (Array.isArray(nodesInSlot)) {
+                result.push(...nodesInSlot);
+            }
+            else {
+                const parentView = getLViewParent(lView[DECLARATION_COMPONENT_VIEW]);
+                ngDevMode && assertParentView(parentView);
+                collectNativeNodes(parentView[TVIEW], parentView, nodesInSlot, result, true);
+            }
+        }
+        tNode = isProjection ? tNode.projectionNext : tNode.next;
+    }
+    return result;
+}
+/**
+ * Collects all root nodes in all views in a given LContainer.
+ */
+export function collectNativeNodesInLContainer(lContainer, result) {
+    for (let i = CONTAINER_HEADER_OFFSET; i < lContainer.length; i++) {
+        const lViewInAContainer = lContainer[i];
+        const lViewFirstChildTNode = lViewInAContainer[TVIEW].firstChild;
+        if (lViewFirstChildTNode !== null) {
+            collectNativeNodes(lViewInAContainer[TVIEW], lViewInAContainer, lViewFirstChildTNode, result);
+        }
+    }
+    // When an LContainer is created, the anchor (comment) node is:
+    // - (1) either reused in case of an ElementContainer (<ng-container>)
+    // - (2) or a new comment node is created
+    // In the first case, the anchor comment node would be added to the final
+    // list by the code in the `collectNativeNodes` function
+    // (see the `result.push(unwrapRNode(lNode))` line), but the second
+    // case requires extra handling: the anchor node needs to be added to the
+    // final list manually. See additional information in the `createAnchorNode`
+    // function in the `view_container_ref.ts`.
+    //
+    // In the first case, the same reference would be stored in the `NATIVE`
+    // and `HOST` slots in an LContainer. Otherwise, this is the second case and
+    // we should add an element to the final list.
+    if (lContainer[NATIVE] !== lContainer[HOST]) {
+        result.push(lContainer[NATIVE]);
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29sbGVjdF9uYXRpdmVfbm9kZXMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9wYWNrYWdlcy9jb3JlL3NyYy9yZW5kZXIzL2NvbGxlY3RfbmF0aXZlX25vZGVzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7R0FNRztBQUVILE9BQU8sRUFBQyxnQkFBZ0IsRUFBQyxNQUFNLFVBQVUsQ0FBQztBQUMxQyxPQUFPLEVBQUMsbUJBQW1CLEVBQUMsTUFBTSwwQkFBMEIsQ0FBQztBQUM3RCxPQUFPLEVBQUMsdUJBQXVCLEVBQWMsTUFBTSxFQUFDLE1BQU0sd0JBQXdCLENBQUM7QUFHbkYsT0FBTyxFQUFDLFlBQVksRUFBQyxNQUFNLDBCQUEwQixDQUFDO0FBQ3RELE9BQU8sRUFBQywwQkFBMEIsRUFBRSxJQUFJLEVBQVMsS0FBSyxFQUFRLE1BQU0sbUJBQW1CLENBQUM7QUFDeEYsT0FBTyxFQUFDLGVBQWUsRUFBQyxNQUFNLGVBQWUsQ0FBQztBQUM5QyxPQUFPLEVBQUMsa0JBQWtCLEVBQUMsTUFBTSxxQkFBcUIsQ0FBQztBQUN2RCxPQUFPLEVBQUMsY0FBYyxFQUFFLFdBQVcsRUFBQyxNQUFNLG1CQUFtQixDQUFDO0FBRTlELE1BQU0sVUFBVSxrQkFBa0IsQ0FDaEMsS0FBWSxFQUNaLEtBQVksRUFDWixLQUFtQixFQUNuQixNQUFhLEVBQ2IsZUFBd0IsS0FBSztJQUU3QixPQUFPLEtBQUssS0FBSyxJQUFJLEVBQUUsQ0FBQztRQUN0Qiw0RUFBNEU7UUFDNUUsSUFBSSxLQUFLLENBQUMsSUFBSSx1Q0FBNkIsRUFBRSxDQUFDO1lBQzVDLEtBQUssR0FBRyxZQUFZLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUM7WUFDekQsU0FBUztRQUNYLENBQUM7UUFFRCxTQUFTO1lBQ1AsZUFBZSxDQUNiLEtBQUssRUFDTCw0REFBMkMsZ0NBQXVCLHlCQUFnQixDQUNuRixDQUFDO1FBRUosTUFBTSxLQUFLLEdBQUcsS0FBSyxDQUFDLEtBQUssQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNqQyxJQUFJLEtBQUssS0FBSyxJQUFJLEVBQUUsQ0FBQztZQUNuQixNQUFNLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDO1FBQ2xDLENBQUM7UUFFRCwyRkFBMkY7UUFDM0YsZ0dBQWdHO1FBQ2hHLG9DQUFvQztRQUNwQyxJQUFJLFlBQVksQ0FBQyxLQUFLLENBQUMsRUFBRSxDQUFDO1lBQ3hCLDhCQUE4QixDQUFDLEtBQUssRUFBRSxNQUFNLENBQUMsQ0FBQztRQUNoRCxDQUFDO1FBRUQsTUFBTSxTQUFTLEdBQUcsS0FBSyxDQUFDLElBQUksQ0FBQztRQUM3QixJQUFJLFNBQVMscUNBQTZCLEVBQUUsQ0FBQztZQUMzQyxrQkFBa0IsQ0FBQyxLQUFLLEVBQUUsS0FBSyxFQUFFLEtBQUssQ0FBQyxLQUFLLEVBQUUsTUFBTSxDQUFDLENBQUM7UUFDeEQsQ0FBQzthQUFNLElBQUksU0FBUyx5QkFBZ0IsRUFBRSxDQUFDO1lBQ3JDLE1BQU0sU0FBUyxHQUFHLG1CQUFtQixDQUFDLEtBQTBCLEVBQUUsS0FBSyxDQUFDLENBQUM7WUFDekUsSUFBSSxLQUFtQixDQUFDO1lBQ3hCLE9BQU8sQ0FBQyxLQUFLLEdBQUcsU0FBUyxFQUFFLENBQUMsRUFBRSxDQUFDO2dCQUM3QixNQUFNLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDO1lBQ3JCLENBQUM7UUFDSCxDQUFDO2FBQU0sSUFBSSxTQUFTLGdDQUF1QixFQUFFLENBQUM7WUFDNUMsTUFBTSxXQUFXLEdBQUcsa0JBQWtCLENBQUMsS0FBSyxFQUFFLEtBQUssQ0FBQyxDQUFDO1lBQ3JELElBQUksS0FBSyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsRUFBRSxDQUFDO2dCQUMvQixNQUFNLENBQUMsSUFBSSxDQUFDLEdBQUcsV0FBVyxDQUFDLENBQUM7WUFDOUIsQ0FBQztpQkFBTSxDQUFDO2dCQUNOLE1BQU0sVUFBVSxHQUFHLGNBQWMsQ0FBQyxLQUFLLENBQUMsMEJBQTBCLENBQUMsQ0FBRSxDQUFDO2dCQUN0RSxTQUFTLElBQUksZ0JBQWdCLENBQUMsVUFBVSxDQUFDLENBQUM7Z0JBQzFDLGtCQUFrQixDQUFDLFVBQVUsQ0FBQyxLQUFLLENBQUMsRUFBRSxVQUFVLEVBQUUsV0FBVyxFQUFFLE1BQU0sRUFBRSxJQUFJLENBQUMsQ0FBQztZQUMvRSxDQUFDO1FBQ0gsQ0FBQztRQUNELEtBQUssR0FBRyxZQUFZLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUM7SUFDM0QsQ0FBQztJQUVELE9BQU8sTUFBTSxDQUFDO0FBQ2hCLENBQUM7QUFFRDs7R0FFRztBQUNILE1BQU0sVUFBVSw4QkFBOEIsQ0FBQyxVQUFzQixFQUFFLE1BQWE7SUFDbEYsS0FBSyxJQUFJLENBQUMsR0FBRyx1QkFBdUIsRUFBRSxDQUFDLEdBQUcsVUFBVSxDQUFDLE1BQU0sRUFBRSxDQUFDLEVBQUUsRUFBRSxDQUFDO1FBQ2pFLE1BQU0saUJBQWlCLEdBQUcsVUFBVSxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ3hDLE1BQU0sb0JBQW9CLEdBQUcsaUJBQWlCLENBQUMsS0FBSyxDQUFDLENBQUMsVUFBVSxDQUFDO1FBQ2pFLElBQUksb0JBQW9CLEtBQUssSUFBSSxFQUFFLENBQUM7WUFDbEMsa0JBQWtCLENBQUMsaUJBQWlCLENBQUMsS0FBSyxDQUFDLEVBQUUsaUJBQWlCLEVBQUUsb0JBQW9CLEVBQUUsTUFBTSxDQUFDLENBQUM7UUFDaEcsQ0FBQztJQUNILENBQUM7SUFFRCwrREFBK0Q7SUFDL0Qsc0VBQXNFO0lBQ3RFLHlDQUF5QztJQUN6Qyx5RUFBeUU7SUFDekUsd0RBQXdEO0lBQ3hELG1FQUFtRTtJQUNuRSx5RUFBeUU7SUFDekUsNEVBQTRFO0lBQzVFLDJDQUEyQztJQUMzQyxFQUFFO0lBQ0Ysd0VBQXdFO0lBQ3hFLDRFQUE0RTtJQUM1RSw4Q0FBOEM7SUFDOUMsSUFBSSxVQUFVLENBQUMsTUFBTSxDQUFDLEtBQUssVUFBVSxDQUFDLElBQUksQ0FBQyxFQUFFLENBQUM7UUFDNUMsTUFBTSxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztJQUNsQyxDQUFDO0FBQ0gsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogQGxpY2Vuc2VcbiAqIENvcHlyaWdodCBHb29nbGUgTExDIEFsbCBSaWdodHMgUmVzZXJ2ZWQuXG4gKlxuICogVXNlIG9mIHRoaXMgc291cmNlIGNvZGUgaXMgZ292ZXJuZWQgYnkgYW4gTUlULXN0eWxlIGxpY2Vuc2UgdGhhdCBjYW4gYmVcbiAqIGZvdW5kIGluIHRoZSBMSUNFTlNFIGZpbGUgYXQgaHR0cHM6Ly9hbmd1bGFyLmlvL2xpY2Vuc2VcbiAqL1xuXG5pbXBvcnQge2Fzc2VydFBhcmVudFZpZXd9IGZyb20gJy4vYXNzZXJ0JztcbmltcG9ydCB7aWN1Q29udGFpbmVySXRlcmF0ZX0gZnJvbSAnLi9pMThuL2kxOG5fdHJlZV9zaGFraW5nJztcbmltcG9ydCB7Q09OVEFJTkVSX0hFQURFUl9PRkZTRVQsIExDb250YWluZXIsIE5BVElWRX0gZnJvbSAnLi9pbnRlcmZhY2VzL2NvbnRhaW5lcic7XG5pbXBvcnQge1RJY3VDb250YWluZXJOb2RlLCBUTm9kZSwgVE5vZGVUeXBlfSBmcm9tICcuL2ludGVyZmFjZXMvbm9kZSc7XG5pbXBvcnQge1JOb2RlfSBmcm9tICcuL2ludGVyZmFjZXMvcmVuZGVyZXJfZG9tJztcbmltcG9ydCB7aXNMQ29udGFpbmVyfSBmcm9tICcuL2ludGVyZmFjZXMvdHlwZV9jaGVja3MnO1xuaW1wb3J0IHtERUNMQVJBVElPTl9DT01QT05FTlRfVklFVywgSE9TVCwgTFZpZXcsIFRWSUVXLCBUVmlld30gZnJvbSAnLi9pbnRlcmZhY2VzL3ZpZXcnO1xuaW1wb3J0IHthc3NlcnRUTm9kZVR5cGV9IGZyb20gJy4vbm9kZV9hc3NlcnQnO1xuaW1wb3J0IHtnZXRQcm9qZWN0aW9uTm9kZXN9IGZyb20gJy4vbm9kZV9tYW5pcHVsYXRpb24nO1xuaW1wb3J0IHtnZXRMVmlld1BhcmVudCwgdW53cmFwUk5vZGV9IGZyb20gJy4vdXRpbC92aWV3X3V0aWxzJztcblxuZXhwb3J0IGZ1bmN0aW9uIGNvbGxlY3ROYXRpdmVOb2RlcyhcbiAgdFZpZXc6IFRWaWV3LFxuICBsVmlldzogTFZpZXcsXG4gIHROb2RlOiBUTm9kZSB8IG51bGwsXG4gIHJlc3VsdDogYW55W10sXG4gIGlzUHJvamVjdGlvbjogYm9vbGVhbiA9IGZhbHNlLFxuKTogYW55W10ge1xuICB3aGlsZSAodE5vZGUgIT09IG51bGwpIHtcbiAgICAvLyBMZXQgZGVjbGFyYXRpb25zIGRvbid0IGhhdmUgY29ycmVzcG9uZGluZyBET00gbm9kZXMgc28gd2Ugc2tpcCBvdmVyIHRoZW0uXG4gICAgaWYgKHROb2RlLnR5cGUgPT09IFROb2RlVHlwZS5MZXREZWNsYXJhdGlvbikge1xuICAgICAgdE5vZGUgPSBpc1Byb2plY3Rpb24gPyB0Tm9kZS5wcm9qZWN0aW9uTmV4dCA6IHROb2RlLm5leHQ7XG4gICAgICBjb250aW51ZTtcbiAgICB9XG5cbiAgICBuZ0Rldk1vZGUgJiZcbiAgICAgIGFzc2VydFROb2RlVHlwZShcbiAgICAgICAgdE5vZGUsXG4gICAgICAgIFROb2RlVHlwZS5BbnlSTm9kZSB8IFROb2RlVHlwZS5BbnlDb250YWluZXIgfCBUTm9kZVR5cGUuUHJvamVjdGlvbiB8IFROb2RlVHlwZS5JY3UsXG4gICAgICApO1xuXG4gICAgY29uc3QgbE5vZGUgPSBsVmlld1t0Tm9kZS5pbmRleF07XG4gICAgaWYgKGxOb2RlICE9PSBudWxsKSB7XG4gICAgICByZXN1bHQucHVzaCh1bndyYXBSTm9kZShsTm9kZSkpO1xuICAgIH1cblxuICAgIC8vIEEgZ2l2ZW4gbE5vZGUgY2FuIHJlcHJlc2VudCBlaXRoZXIgYSBuYXRpdmUgbm9kZSBvciBhIExDb250YWluZXIgKHdoZW4gaXQgaXMgYSBob3N0IG9mIGFcbiAgICAvLyBWaWV3Q29udGFpbmVyUmVmKS4gV2hlbiB3ZSBmaW5kIGEgTENvbnRhaW5lciB3ZSBuZWVkIHRvIGRlc2NlbmQgaW50byBpdCB0byBjb2xsZWN0IHJvb3Qgbm9kZXNcbiAgICAvLyBmcm9tIHRoZSB2aWV3cyBpbiB0aGlzIGNvbnRhaW5lci5cbiAgICBpZiAoaXNMQ29udGFpbmVyKGxOb2RlKSkge1xuICAgICAgY29sbGVjdE5hdGl2ZU5vZGVzSW5MQ29udGFpbmVyKGxOb2RlLCByZXN1bHQpO1xuICAgIH1cblxuICAgIGNvbnN0IHROb2RlVHlwZSA9IHROb2RlLnR5cGU7XG4gICAgaWYgKHROb2RlVHlwZSAmIFROb2RlVHlwZS5FbGVtZW50Q29udGFpbmVyKSB7XG4gICAgICBjb2xsZWN0TmF0aXZlTm9kZXModFZpZXcsIGxWaWV3LCB0Tm9kZS5jaGlsZCwgcmVzdWx0KTtcbiAgICB9IGVsc2UgaWYgKHROb2RlVHlwZSAmIFROb2RlVHlwZS5JY3UpIHtcbiAgICAgIGNvbnN0IG5leHRSTm9kZSA9IGljdUNvbnRhaW5lckl0ZXJhdGUodE5vZGUgYXMgVEljdUNvbnRhaW5lck5vZGUsIGxWaWV3KTtcbiAgICAgIGxldCByTm9kZTogUk5vZGUgfCBudWxsO1xuICAgICAgd2hpbGUgKChyTm9kZSA9IG5leHRSTm9kZSgpKSkge1xuICAgICAgICByZXN1bHQucHVzaChyTm9kZSk7XG4gICAgICB9XG4gICAgfSBlbHNlIGlmICh0Tm9kZVR5cGUgJiBUTm9kZVR5cGUuUHJvamVjdGlvbikge1xuICAgICAgY29uc3Qgbm9kZXNJblNsb3QgPSBnZXRQcm9qZWN0aW9uTm9kZXMobFZpZXcsIHROb2RlKTtcbiAgICAgIGlmIChBcnJheS5pc0FycmF5KG5vZGVzSW5TbG90KSkge1xuICAgICAgICByZXN1bHQucHVzaCguLi5ub2Rlc0luU2xvdCk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICBjb25zdCBwYXJlbnRWaWV3ID0gZ2V0TFZpZXdQYXJlbnQobFZpZXdbREVDTEFSQVRJT05fQ09NUE9ORU5UX1ZJRVddKSE7XG4gICAgICAgIG5nRGV2TW9kZSAmJiBhc3NlcnRQYXJlbnRWaWV3KHBhcmVudFZpZXcpO1xuICAgICAgICBjb2xsZWN0TmF0aXZlTm9kZXMocGFyZW50Vmlld1tUVklFV10sIHBhcmVudFZpZXcsIG5vZGVzSW5TbG90LCByZXN1bHQsIHRydWUpO1xuICAgICAgfVxuICAgIH1cbiAgICB0Tm9kZSA9IGlzUHJvamVjdGlvbiA/IHROb2RlLnByb2plY3Rpb25OZXh0IDogdE5vZGUubmV4dDtcbiAgfVxuXG4gIHJldHVybiByZXN1bHQ7XG59XG5cbi8qKlxuICogQ29sbGVjdHMgYWxsIHJvb3Qgbm9kZXMgaW4gYWxsIHZpZXdzIGluIGEgZ2l2ZW4gTENvbnRhaW5lci5cbiAqL1xuZXhwb3J0IGZ1bmN0aW9uIGNvbGxlY3ROYXRpdmVOb2Rlc0luTENvbnRhaW5lcihsQ29udGFpbmVyOiBMQ29udGFpbmVyLCByZXN1bHQ6IGFueVtdKSB7XG4gIGZvciAobGV0IGkgPSBDT05UQUlORVJfSEVBREVSX09GRlNFVDsgaSA8IGxDb250YWluZXIubGVuZ3RoOyBpKyspIHtcbiAgICBjb25zdCBsVmlld0luQUNvbnRhaW5lciA9IGxDb250YWluZXJbaV07XG4gICAgY29uc3QgbFZpZXdGaXJzdENoaWxkVE5vZGUgPSBsVmlld0luQUNvbnRhaW5lcltUVklFV10uZmlyc3RDaGlsZDtcbiAgICBpZiAobFZpZXdGaXJzdENoaWxkVE5vZGUgIT09IG51bGwpIHtcbiAgICAgIGNvbGxlY3ROYXRpdmVOb2RlcyhsVmlld0luQUNvbnRhaW5lcltUVklFV10sIGxWaWV3SW5BQ29udGFpbmVyLCBsVmlld0ZpcnN0Q2hpbGRUTm9kZSwgcmVzdWx0KTtcbiAgICB9XG4gIH1cblxuICAvLyBXaGVuIGFuIExDb250YWluZXIgaXMgY3JlYXRlZCwgdGhlIGFuY2hvciAoY29tbWVudCkgbm9kZSBpczpcbiAgLy8gLSAoMSkgZWl0aGVyIHJldXNlZCBpbiBjYXNlIG9mIGFuIEVsZW1lbnRDb250YWluZXIgKDxuZy1jb250YWluZXI+KVxuICAvLyAtICgyKSBvciBhIG5ldyBjb21tZW50IG5vZGUgaXMgY3JlYXRlZFxuICAvLyBJbiB0aGUgZmlyc3QgY2FzZSwgdGhlIGFuY2hvciBjb21tZW50IG5vZGUgd291bGQgYmUgYWRkZWQgdG8gdGhlIGZpbmFsXG4gIC8vIGxpc3QgYnkgdGhlIGNvZGUgaW4gdGhlIGBjb2xsZWN0TmF0aXZlTm9kZXNgIGZ1bmN0aW9uXG4gIC8vIChzZWUgdGhlIGByZXN1bHQucHVzaCh1bndyYXBSTm9kZShsTm9kZSkpYCBsaW5lKSwgYnV0IHRoZSBzZWNvbmRcbiAgLy8gY2FzZSByZXF1aXJlcyBleHRyYSBoYW5kbGluZzogdGhlIGFuY2hvciBub2RlIG5lZWRzIHRvIGJlIGFkZGVkIHRvIHRoZVxuICAvLyBmaW5hbCBsaXN0IG1hbnVhbGx5LiBTZWUgYWRkaXRpb25hbCBpbmZvcm1hdGlvbiBpbiB0aGUgYGNyZWF0ZUFuY2hvck5vZGVgXG4gIC8vIGZ1bmN0aW9uIGluIHRoZSBgdmlld19jb250YWluZXJfcmVmLnRzYC5cbiAgLy9cbiAgLy8gSW4gdGhlIGZpcnN0IGNhc2UsIHRoZSBzYW1lIHJlZmVyZW5jZSB3b3VsZCBiZSBzdG9yZWQgaW4gdGhlIGBOQVRJVkVgXG4gIC8vIGFuZCBgSE9TVGAgc2xvdHMgaW4gYW4gTENvbnRhaW5lci4gT3RoZXJ3aXNlLCB0aGlzIGlzIHRoZSBzZWNvbmQgY2FzZSBhbmRcbiAgLy8gd2Ugc2hvdWxkIGFkZCBhbiBlbGVtZW50IHRvIHRoZSBmaW5hbCBsaXN0LlxuICBpZiAobENvbnRhaW5lcltOQVRJVkVdICE9PSBsQ29udGFpbmVyW0hPU1RdKSB7XG4gICAgcmVzdWx0LnB1c2gobENvbnRhaW5lcltOQVRJVkVdKTtcbiAgfVxufVxuIl19

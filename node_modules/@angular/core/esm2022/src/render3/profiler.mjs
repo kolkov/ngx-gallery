@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+let profilerCallback = null;
+/**
+ * Sets the callback function which will be invoked before and after performing certain actions at
+ * runtime (for example, before and after running change detection).
+ *
+ * Warning: this function is *INTERNAL* and should not be relied upon in application's code.
+ * The contract of the function might be changed in any release and/or the function can be removed
+ * completely.
+ *
+ * @param profiler function provided by the caller or null value to disable profiling.
+ */
+export const setProfiler = (profiler) => {
+    profilerCallback = profiler;
+};
+/**
+ * Profiler function which wraps user code executed by the runtime.
+ *
+ * @param event ProfilerEvent corresponding to the execution context
+ * @param instance component instance
+ * @param hookOrListener lifecycle hook function or output listener. The value depends on the
+ *  execution context
+ * @returns
+ */
+export const profiler = function (event, instance, hookOrListener) {
+    if (profilerCallback != null /* both `null` and `undefined` */) {
+        profilerCallback(event, instance, hookOrListener);
+    }
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvZmlsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9wYWNrYWdlcy9jb3JlL3NyYy9yZW5kZXIzL3Byb2ZpbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7R0FNRztBQUlILElBQUksZ0JBQWdCLEdBQW9CLElBQUksQ0FBQztBQUU3Qzs7Ozs7Ozs7O0dBU0c7QUFDSCxNQUFNLENBQUMsTUFBTSxXQUFXLEdBQUcsQ0FBQyxRQUF5QixFQUFFLEVBQUU7SUFDdkQsZ0JBQWdCLEdBQUcsUUFBUSxDQUFDO0FBQzlCLENBQUMsQ0FBQztBQUVGOzs7Ozs7OztHQVFHO0FBQ0gsTUFBTSxDQUFDLE1BQU0sUUFBUSxHQUFhLFVBQVUsS0FBSyxFQUFFLFFBQVEsRUFBRSxjQUFjO0lBQ3pFLElBQUksZ0JBQWdCLElBQUksSUFBSSxDQUFDLGlDQUFpQyxFQUFFLENBQUM7UUFDL0QsZ0JBQWdCLENBQUMsS0FBSyxFQUFFLFFBQVEsRUFBRSxjQUFjLENBQUMsQ0FBQztJQUNwRCxDQUFDO0FBQ0gsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBAbGljZW5zZVxuICogQ29weXJpZ2h0IEdvb2dsZSBMTEMgQWxsIFJpZ2h0cyBSZXNlcnZlZC5cbiAqXG4gKiBVc2Ugb2YgdGhpcyBzb3VyY2UgY29kZSBpcyBnb3Zlcm5lZCBieSBhbiBNSVQtc3R5bGUgbGljZW5zZSB0aGF0IGNhbiBiZVxuICogZm91bmQgaW4gdGhlIExJQ0VOU0UgZmlsZSBhdCBodHRwczovL2FuZ3VsYXIuaW8vbGljZW5zZVxuICovXG5cbmltcG9ydCB7dHlwZSBQcm9maWxlcn0gZnJvbSAnLi9wcm9maWxlcl90eXBlcyc7XG5cbmxldCBwcm9maWxlckNhbGxiYWNrOiBQcm9maWxlciB8IG51bGwgPSBudWxsO1xuXG4vKipcbiAqIFNldHMgdGhlIGNhbGxiYWNrIGZ1bmN0aW9uIHdoaWNoIHdpbGwgYmUgaW52b2tlZCBiZWZvcmUgYW5kIGFmdGVyIHBlcmZvcm1pbmcgY2VydGFpbiBhY3Rpb25zIGF0XG4gKiBydW50aW1lIChmb3IgZXhhbXBsZSwgYmVmb3JlIGFuZCBhZnRlciBydW5uaW5nIGNoYW5nZSBkZXRlY3Rpb24pLlxuICpcbiAqIFdhcm5pbmc6IHRoaXMgZnVuY3Rpb24gaXMgKklOVEVSTkFMKiBhbmQgc2hvdWxkIG5vdCBiZSByZWxpZWQgdXBvbiBpbiBhcHBsaWNhdGlvbidzIGNvZGUuXG4gKiBUaGUgY29udHJhY3Qgb2YgdGhlIGZ1bmN0aW9uIG1pZ2h0IGJlIGNoYW5nZWQgaW4gYW55IHJlbGVhc2UgYW5kL29yIHRoZSBmdW5jdGlvbiBjYW4gYmUgcmVtb3ZlZFxuICogY29tcGxldGVseS5cbiAqXG4gKiBAcGFyYW0gcHJvZmlsZXIgZnVuY3Rpb24gcHJvdmlkZWQgYnkgdGhlIGNhbGxlciBvciBudWxsIHZhbHVlIHRvIGRpc2FibGUgcHJvZmlsaW5nLlxuICovXG5leHBvcnQgY29uc3Qgc2V0UHJvZmlsZXIgPSAocHJvZmlsZXI6IFByb2ZpbGVyIHwgbnVsbCkgPT4ge1xuICBwcm9maWxlckNhbGxiYWNrID0gcHJvZmlsZXI7XG59O1xuXG4vKipcbiAqIFByb2ZpbGVyIGZ1bmN0aW9uIHdoaWNoIHdyYXBzIHVzZXIgY29kZSBleGVjdXRlZCBieSB0aGUgcnVudGltZS5cbiAqXG4gKiBAcGFyYW0gZXZlbnQgUHJvZmlsZXJFdmVudCBjb3JyZXNwb25kaW5nIHRvIHRoZSBleGVjdXRpb24gY29udGV4dFxuICogQHBhcmFtIGluc3RhbmNlIGNvbXBvbmVudCBpbnN0YW5jZVxuICogQHBhcmFtIGhvb2tPckxpc3RlbmVyIGxpZmVjeWNsZSBob29rIGZ1bmN0aW9uIG9yIG91dHB1dCBsaXN0ZW5lci4gVGhlIHZhbHVlIGRlcGVuZHMgb24gdGhlXG4gKiAgZXhlY3V0aW9uIGNvbnRleHRcbiAqIEByZXR1cm5zXG4gKi9cbmV4cG9ydCBjb25zdCBwcm9maWxlcjogUHJvZmlsZXIgPSBmdW5jdGlvbiAoZXZlbnQsIGluc3RhbmNlLCBob29rT3JMaXN0ZW5lcikge1xuICBpZiAocHJvZmlsZXJDYWxsYmFjayAhPSBudWxsIC8qIGJvdGggYG51bGxgIGFuZCBgdW5kZWZpbmVkYCAqLykge1xuICAgIHByb2ZpbGVyQ2FsbGJhY2soZXZlbnQsIGluc3RhbmNlLCBob29rT3JMaXN0ZW5lcik7XG4gIH1cbn07XG4iXX0=

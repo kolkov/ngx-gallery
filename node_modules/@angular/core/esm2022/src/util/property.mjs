@@ -1,0 +1,29 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+export function getClosureSafeProperty(objWithPropertyToExtract) {
+    for (let key in objWithPropertyToExtract) {
+        if (objWithPropertyToExtract[key] === getClosureSafeProperty) {
+            return key;
+        }
+    }
+    throw Error('Could not find renamed property on target object.');
+}
+/**
+ * Sets properties on a target object from a source object, but only if
+ * the property doesn't already exist on the target object.
+ * @param target The target to set properties on
+ * @param source The source of the property keys and values to set
+ */
+export function fillProperties(target, source) {
+    for (const key in source) {
+        if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
+            target[key] = source[key];
+        }
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvcGVydHkuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi8uLi8uLi9wYWNrYWdlcy9jb3JlL3NyYy91dGlsL3Byb3BlcnR5LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOzs7Ozs7R0FNRztBQUVILE1BQU0sVUFBVSxzQkFBc0IsQ0FBSSx3QkFBMkI7SUFDbkUsS0FBSyxJQUFJLEdBQUcsSUFBSSx3QkFBd0IsRUFBRSxDQUFDO1FBQ3pDLElBQUksd0JBQXdCLENBQUMsR0FBRyxDQUFDLEtBQU0sc0JBQThCLEVBQUUsQ0FBQztZQUN0RSxPQUFPLEdBQUcsQ0FBQztRQUNiLENBQUM7SUFDSCxDQUFDO0lBQ0QsTUFBTSxLQUFLLENBQUMsbURBQW1ELENBQUMsQ0FBQztBQUNuRSxDQUFDO0FBRUQ7Ozs7O0dBS0c7QUFDSCxNQUFNLFVBQVUsY0FBYyxDQUFDLE1BQStCLEVBQUUsTUFBK0I7SUFDN0YsS0FBSyxNQUFNLEdBQUcsSUFBSSxNQUFNLEVBQUUsQ0FBQztRQUN6QixJQUFJLE1BQU0sQ0FBQyxjQUFjLENBQUMsR0FBRyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsY0FBYyxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUM7WUFDOUQsTUFBTSxDQUFDLEdBQUcsQ0FBQyxHQUFHLE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUM1QixDQUFDO0lBQ0gsQ0FBQztBQUNILENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBsaWNlbnNlXG4gKiBDb3B5cmlnaHQgR29vZ2xlIExMQyBBbGwgUmlnaHRzIFJlc2VydmVkLlxuICpcbiAqIFVzZSBvZiB0aGlzIHNvdXJjZSBjb2RlIGlzIGdvdmVybmVkIGJ5IGFuIE1JVC1zdHlsZSBsaWNlbnNlIHRoYXQgY2FuIGJlXG4gKiBmb3VuZCBpbiB0aGUgTElDRU5TRSBmaWxlIGF0IGh0dHBzOi8vYW5ndWxhci5pby9saWNlbnNlXG4gKi9cblxuZXhwb3J0IGZ1bmN0aW9uIGdldENsb3N1cmVTYWZlUHJvcGVydHk8VD4ob2JqV2l0aFByb3BlcnR5VG9FeHRyYWN0OiBUKTogc3RyaW5nIHtcbiAgZm9yIChsZXQga2V5IGluIG9ialdpdGhQcm9wZXJ0eVRvRXh0cmFjdCkge1xuICAgIGlmIChvYmpXaXRoUHJvcGVydHlUb0V4dHJhY3Rba2V5XSA9PT0gKGdldENsb3N1cmVTYWZlUHJvcGVydHkgYXMgYW55KSkge1xuICAgICAgcmV0dXJuIGtleTtcbiAgICB9XG4gIH1cbiAgdGhyb3cgRXJyb3IoJ0NvdWxkIG5vdCBmaW5kIHJlbmFtZWQgcHJvcGVydHkgb24gdGFyZ2V0IG9iamVjdC4nKTtcbn1cblxuLyoqXG4gKiBTZXRzIHByb3BlcnRpZXMgb24gYSB0YXJnZXQgb2JqZWN0IGZyb20gYSBzb3VyY2Ugb2JqZWN0LCBidXQgb25seSBpZlxuICogdGhlIHByb3BlcnR5IGRvZXNuJ3QgYWxyZWFkeSBleGlzdCBvbiB0aGUgdGFyZ2V0IG9iamVjdC5cbiAqIEBwYXJhbSB0YXJnZXQgVGhlIHRhcmdldCB0byBzZXQgcHJvcGVydGllcyBvblxuICogQHBhcmFtIHNvdXJjZSBUaGUgc291cmNlIG9mIHRoZSBwcm9wZXJ0eSBrZXlzIGFuZCB2YWx1ZXMgdG8gc2V0XG4gKi9cbmV4cG9ydCBmdW5jdGlvbiBmaWxsUHJvcGVydGllcyh0YXJnZXQ6IFJlY29yZDxzdHJpbmcsIHVua25vd24+LCBzb3VyY2U6IFJlY29yZDxzdHJpbmcsIHVua25vd24+KSB7XG4gIGZvciAoY29uc3Qga2V5IGluIHNvdXJjZSkge1xuICAgIGlmIChzb3VyY2UuaGFzT3duUHJvcGVydHkoa2V5KSAmJiAhdGFyZ2V0Lmhhc093blByb3BlcnR5KGtleSkpIHtcbiAgICAgIHRhcmdldFtrZXldID0gc291cmNlW2tleV07XG4gICAgfVxuICB9XG59XG4iXX0=

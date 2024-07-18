@@ -1,0 +1,72 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+import { ɵɵinject as inject } from '../../di/injector_compatibility';
+import { ɵɵdefineInjectable as defineInjectable } from '../../di/interface/defs';
+import { internalImportProvidersFrom } from '../../di/provider_collection';
+import { EnvironmentInjector } from '../../di/r3_injector';
+import { performanceMarkFeature } from '../../util/performance';
+import { createEnvironmentInjector } from '../ng_module_ref';
+/**
+ * A service used by the framework to create instances of standalone injectors. Those injectors are
+ * created on demand in case of dynamic component instantiation and contain ambient providers
+ * collected from the imports graph rooted at a given standalone component.
+ */
+class StandaloneService {
+    constructor(_injector) {
+        this._injector = _injector;
+        this.cachedInjectors = new Map();
+    }
+    getOrCreateStandaloneInjector(componentDef) {
+        if (!componentDef.standalone) {
+            return null;
+        }
+        if (!this.cachedInjectors.has(componentDef)) {
+            const providers = internalImportProvidersFrom(false, componentDef.type);
+            const standaloneInjector = providers.length > 0
+                ? createEnvironmentInjector([providers], this._injector, `Standalone[${componentDef.type.name}]`)
+                : null;
+            this.cachedInjectors.set(componentDef, standaloneInjector);
+        }
+        return this.cachedInjectors.get(componentDef);
+    }
+    ngOnDestroy() {
+        try {
+            for (const injector of this.cachedInjectors.values()) {
+                if (injector !== null) {
+                    injector.destroy();
+                }
+            }
+        }
+        finally {
+            this.cachedInjectors.clear();
+        }
+    }
+    /** @nocollapse */
+    static { this.ɵprov = defineInjectable({
+        token: StandaloneService,
+        providedIn: 'environment',
+        factory: () => new StandaloneService(inject(EnvironmentInjector)),
+    }); }
+}
+/**
+ * A feature that acts as a setup code for the {@link StandaloneService}.
+ *
+ * The most important responsibility of this feature is to expose the "getStandaloneInjector"
+ * function (an entry points to a standalone injector creation) on a component definition object. We
+ * go through the features infrastructure to make sure that the standalone injector creation logic
+ * is tree-shakable and not included in applications that don't use standalone components.
+ *
+ * @codeGenApi
+ */
+export function ɵɵStandaloneFeature(definition) {
+    performanceMarkFeature('NgStandalone');
+    definition.getStandaloneInjector = (parentInjector) => {
+        return parentInjector.get(StandaloneService).getOrCreateStandaloneInjector(definition);
+    };
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic3RhbmRhbG9uZV9mZWF0dXJlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vLi4vLi4vcGFja2FnZXMvY29yZS9zcmMvcmVuZGVyMy9mZWF0dXJlcy9zdGFuZGFsb25lX2ZlYXR1cmUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7OztHQU1HO0FBQ0gsT0FBTyxFQUFDLFFBQVEsSUFBSSxNQUFNLEVBQUMsTUFBTSxpQ0FBaUMsQ0FBQztBQUNuRSxPQUFPLEVBQUMsa0JBQWtCLElBQUksZ0JBQWdCLEVBQUMsTUFBTSx5QkFBeUIsQ0FBQztBQUMvRSxPQUFPLEVBQUMsMkJBQTJCLEVBQUMsTUFBTSw4QkFBOEIsQ0FBQztBQUN6RSxPQUFPLEVBQUMsbUJBQW1CLEVBQUMsTUFBTSxzQkFBc0IsQ0FBQztBQUV6RCxPQUFPLEVBQUMsc0JBQXNCLEVBQUMsTUFBTSx3QkFBd0IsQ0FBQztBQUU5RCxPQUFPLEVBQUMseUJBQXlCLEVBQUMsTUFBTSxrQkFBa0IsQ0FBQztBQUUzRDs7OztHQUlHO0FBQ0gsTUFBTSxpQkFBaUI7SUFHckIsWUFBb0IsU0FBOEI7UUFBOUIsY0FBUyxHQUFULFNBQVMsQ0FBcUI7UUFGbEQsb0JBQWUsR0FBRyxJQUFJLEdBQUcsRUFBcUQsQ0FBQztJQUUxQixDQUFDO0lBRXRELDZCQUE2QixDQUFDLFlBQW1DO1FBQy9ELElBQUksQ0FBQyxZQUFZLENBQUMsVUFBVSxFQUFFLENBQUM7WUFDN0IsT0FBTyxJQUFJLENBQUM7UUFDZCxDQUFDO1FBRUQsSUFBSSxDQUFDLElBQUksQ0FBQyxlQUFlLENBQUMsR0FBRyxDQUFDLFlBQVksQ0FBQyxFQUFFLENBQUM7WUFDNUMsTUFBTSxTQUFTLEdBQUcsMkJBQTJCLENBQUMsS0FBSyxFQUFFLFlBQVksQ0FBQyxJQUFJLENBQUMsQ0FBQztZQUN4RSxNQUFNLGtCQUFrQixHQUN0QixTQUFTLENBQUMsTUFBTSxHQUFHLENBQUM7Z0JBQ2xCLENBQUMsQ0FBQyx5QkFBeUIsQ0FDdkIsQ0FBQyxTQUFTLENBQUMsRUFDWCxJQUFJLENBQUMsU0FBUyxFQUNkLGNBQWMsWUFBWSxDQUFDLElBQUksQ0FBQyxJQUFJLEdBQUcsQ0FDeEM7Z0JBQ0gsQ0FBQyxDQUFDLElBQUksQ0FBQztZQUNYLElBQUksQ0FBQyxlQUFlLENBQUMsR0FBRyxDQUFDLFlBQVksRUFBRSxrQkFBa0IsQ0FBQyxDQUFDO1FBQzdELENBQUM7UUFFRCxPQUFPLElBQUksQ0FBQyxlQUFlLENBQUMsR0FBRyxDQUFDLFlBQVksQ0FBRSxDQUFDO0lBQ2pELENBQUM7SUFFRCxXQUFXO1FBQ1QsSUFBSSxDQUFDO1lBQ0gsS0FBSyxNQUFNLFFBQVEsSUFBSSxJQUFJLENBQUMsZUFBZSxDQUFDLE1BQU0sRUFBRSxFQUFFLENBQUM7Z0JBQ3JELElBQUksUUFBUSxLQUFLLElBQUksRUFBRSxDQUFDO29CQUN0QixRQUFRLENBQUMsT0FBTyxFQUFFLENBQUM7Z0JBQ3JCLENBQUM7WUFDSCxDQUFDO1FBQ0gsQ0FBQztnQkFBUyxDQUFDO1lBQ1QsSUFBSSxDQUFDLGVBQWUsQ0FBQyxLQUFLLEVBQUUsQ0FBQztRQUMvQixDQUFDO0lBQ0gsQ0FBQztJQUVELGtCQUFrQjthQUNYLFVBQUssR0FBNkIsZ0JBQWdCLENBQUM7UUFDeEQsS0FBSyxFQUFFLGlCQUFpQjtRQUN4QixVQUFVLEVBQUUsYUFBYTtRQUN6QixPQUFPLEVBQUUsR0FBRyxFQUFFLENBQUMsSUFBSSxpQkFBaUIsQ0FBQyxNQUFNLENBQUMsbUJBQW1CLENBQUMsQ0FBQztLQUNsRSxDQUFDLEFBSlUsQ0FJVDs7QUFHTDs7Ozs7Ozs7O0dBU0c7QUFDSCxNQUFNLFVBQVUsbUJBQW1CLENBQUMsVUFBaUM7SUFDbkUsc0JBQXNCLENBQUMsY0FBYyxDQUFDLENBQUM7SUFDdkMsVUFBVSxDQUFDLHFCQUFxQixHQUFHLENBQUMsY0FBbUMsRUFBRSxFQUFFO1FBQ3pFLE9BQU8sY0FBYyxDQUFDLEdBQUcsQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDLDZCQUE2QixDQUFDLFVBQVUsQ0FBQyxDQUFDO0lBQ3pGLENBQUMsQ0FBQztBQUNKLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBsaWNlbnNlXG4gKiBDb3B5cmlnaHQgR29vZ2xlIExMQyBBbGwgUmlnaHRzIFJlc2VydmVkLlxuICpcbiAqIFVzZSBvZiB0aGlzIHNvdXJjZSBjb2RlIGlzIGdvdmVybmVkIGJ5IGFuIE1JVC1zdHlsZSBsaWNlbnNlIHRoYXQgY2FuIGJlXG4gKiBmb3VuZCBpbiB0aGUgTElDRU5TRSBmaWxlIGF0IGh0dHBzOi8vYW5ndWxhci5pby9saWNlbnNlXG4gKi9cbmltcG9ydCB7ybXJtWluamVjdCBhcyBpbmplY3R9IGZyb20gJy4uLy4uL2RpL2luamVjdG9yX2NvbXBhdGliaWxpdHknO1xuaW1wb3J0IHvJtcm1ZGVmaW5lSW5qZWN0YWJsZSBhcyBkZWZpbmVJbmplY3RhYmxlfSBmcm9tICcuLi8uLi9kaS9pbnRlcmZhY2UvZGVmcyc7XG5pbXBvcnQge2ludGVybmFsSW1wb3J0UHJvdmlkZXJzRnJvbX0gZnJvbSAnLi4vLi4vZGkvcHJvdmlkZXJfY29sbGVjdGlvbic7XG5pbXBvcnQge0Vudmlyb25tZW50SW5qZWN0b3J9IGZyb20gJy4uLy4uL2RpL3IzX2luamVjdG9yJztcbmltcG9ydCB7T25EZXN0cm95fSBmcm9tICcuLi8uLi9pbnRlcmZhY2UvbGlmZWN5Y2xlX2hvb2tzJztcbmltcG9ydCB7cGVyZm9ybWFuY2VNYXJrRmVhdHVyZX0gZnJvbSAnLi4vLi4vdXRpbC9wZXJmb3JtYW5jZSc7XG5pbXBvcnQge0NvbXBvbmVudERlZn0gZnJvbSAnLi4vaW50ZXJmYWNlcy9kZWZpbml0aW9uJztcbmltcG9ydCB7Y3JlYXRlRW52aXJvbm1lbnRJbmplY3Rvcn0gZnJvbSAnLi4vbmdfbW9kdWxlX3JlZic7XG5cbi8qKlxuICogQSBzZXJ2aWNlIHVzZWQgYnkgdGhlIGZyYW1ld29yayB0byBjcmVhdGUgaW5zdGFuY2VzIG9mIHN0YW5kYWxvbmUgaW5qZWN0b3JzLiBUaG9zZSBpbmplY3RvcnMgYXJlXG4gKiBjcmVhdGVkIG9uIGRlbWFuZCBpbiBjYXNlIG9mIGR5bmFtaWMgY29tcG9uZW50IGluc3RhbnRpYXRpb24gYW5kIGNvbnRhaW4gYW1iaWVudCBwcm92aWRlcnNcbiAqIGNvbGxlY3RlZCBmcm9tIHRoZSBpbXBvcnRzIGdyYXBoIHJvb3RlZCBhdCBhIGdpdmVuIHN0YW5kYWxvbmUgY29tcG9uZW50LlxuICovXG5jbGFzcyBTdGFuZGFsb25lU2VydmljZSBpbXBsZW1lbnRzIE9uRGVzdHJveSB7XG4gIGNhY2hlZEluamVjdG9ycyA9IG5ldyBNYXA8Q29tcG9uZW50RGVmPHVua25vd24+LCBFbnZpcm9ubWVudEluamVjdG9yIHwgbnVsbD4oKTtcblxuICBjb25zdHJ1Y3Rvcihwcml2YXRlIF9pbmplY3RvcjogRW52aXJvbm1lbnRJbmplY3Rvcikge31cblxuICBnZXRPckNyZWF0ZVN0YW5kYWxvbmVJbmplY3Rvcihjb21wb25lbnREZWY6IENvbXBvbmVudERlZjx1bmtub3duPik6IEVudmlyb25tZW50SW5qZWN0b3IgfCBudWxsIHtcbiAgICBpZiAoIWNvbXBvbmVudERlZi5zdGFuZGFsb25lKSB7XG4gICAgICByZXR1cm4gbnVsbDtcbiAgICB9XG5cbiAgICBpZiAoIXRoaXMuY2FjaGVkSW5qZWN0b3JzLmhhcyhjb21wb25lbnREZWYpKSB7XG4gICAgICBjb25zdCBwcm92aWRlcnMgPSBpbnRlcm5hbEltcG9ydFByb3ZpZGVyc0Zyb20oZmFsc2UsIGNvbXBvbmVudERlZi50eXBlKTtcbiAgICAgIGNvbnN0IHN0YW5kYWxvbmVJbmplY3RvciA9XG4gICAgICAgIHByb3ZpZGVycy5sZW5ndGggPiAwXG4gICAgICAgICAgPyBjcmVhdGVFbnZpcm9ubWVudEluamVjdG9yKFxuICAgICAgICAgICAgICBbcHJvdmlkZXJzXSxcbiAgICAgICAgICAgICAgdGhpcy5faW5qZWN0b3IsXG4gICAgICAgICAgICAgIGBTdGFuZGFsb25lWyR7Y29tcG9uZW50RGVmLnR5cGUubmFtZX1dYCxcbiAgICAgICAgICAgIClcbiAgICAgICAgICA6IG51bGw7XG4gICAgICB0aGlzLmNhY2hlZEluamVjdG9ycy5zZXQoY29tcG9uZW50RGVmLCBzdGFuZGFsb25lSW5qZWN0b3IpO1xuICAgIH1cblxuICAgIHJldHVybiB0aGlzLmNhY2hlZEluamVjdG9ycy5nZXQoY29tcG9uZW50RGVmKSE7XG4gIH1cblxuICBuZ09uRGVzdHJveSgpIHtcbiAgICB0cnkge1xuICAgICAgZm9yIChjb25zdCBpbmplY3RvciBvZiB0aGlzLmNhY2hlZEluamVjdG9ycy52YWx1ZXMoKSkge1xuICAgICAgICBpZiAoaW5qZWN0b3IgIT09IG51bGwpIHtcbiAgICAgICAgICBpbmplY3Rvci5kZXN0cm95KCk7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9IGZpbmFsbHkge1xuICAgICAgdGhpcy5jYWNoZWRJbmplY3RvcnMuY2xlYXIoKTtcbiAgICB9XG4gIH1cblxuICAvKiogQG5vY29sbGFwc2UgKi9cbiAgc3RhdGljIMm1cHJvdiA9IC8qKiBAcHVyZU9yQnJlYWtNeUNvZGUgKi8gZGVmaW5lSW5qZWN0YWJsZSh7XG4gICAgdG9rZW46IFN0YW5kYWxvbmVTZXJ2aWNlLFxuICAgIHByb3ZpZGVkSW46ICdlbnZpcm9ubWVudCcsXG4gICAgZmFjdG9yeTogKCkgPT4gbmV3IFN0YW5kYWxvbmVTZXJ2aWNlKGluamVjdChFbnZpcm9ubWVudEluamVjdG9yKSksXG4gIH0pO1xufVxuXG4vKipcbiAqIEEgZmVhdHVyZSB0aGF0IGFjdHMgYXMgYSBzZXR1cCBjb2RlIGZvciB0aGUge0BsaW5rIFN0YW5kYWxvbmVTZXJ2aWNlfS5cbiAqXG4gKiBUaGUgbW9zdCBpbXBvcnRhbnQgcmVzcG9uc2liaWxpdHkgb2YgdGhpcyBmZWF0dXJlIGlzIHRvIGV4cG9zZSB0aGUgXCJnZXRTdGFuZGFsb25lSW5qZWN0b3JcIlxuICogZnVuY3Rpb24gKGFuIGVudHJ5IHBvaW50cyB0byBhIHN0YW5kYWxvbmUgaW5qZWN0b3IgY3JlYXRpb24pIG9uIGEgY29tcG9uZW50IGRlZmluaXRpb24gb2JqZWN0LiBXZVxuICogZ28gdGhyb3VnaCB0aGUgZmVhdHVyZXMgaW5mcmFzdHJ1Y3R1cmUgdG8gbWFrZSBzdXJlIHRoYXQgdGhlIHN0YW5kYWxvbmUgaW5qZWN0b3IgY3JlYXRpb24gbG9naWNcbiAqIGlzIHRyZWUtc2hha2FibGUgYW5kIG5vdCBpbmNsdWRlZCBpbiBhcHBsaWNhdGlvbnMgdGhhdCBkb24ndCB1c2Ugc3RhbmRhbG9uZSBjb21wb25lbnRzLlxuICpcbiAqIEBjb2RlR2VuQXBpXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiDJtcm1U3RhbmRhbG9uZUZlYXR1cmUoZGVmaW5pdGlvbjogQ29tcG9uZW50RGVmPHVua25vd24+KSB7XG4gIHBlcmZvcm1hbmNlTWFya0ZlYXR1cmUoJ05nU3RhbmRhbG9uZScpO1xuICBkZWZpbml0aW9uLmdldFN0YW5kYWxvbmVJbmplY3RvciA9IChwYXJlbnRJbmplY3RvcjogRW52aXJvbm1lbnRJbmplY3RvcikgPT4ge1xuICAgIHJldHVybiBwYXJlbnRJbmplY3Rvci5nZXQoU3RhbmRhbG9uZVNlcnZpY2UpLmdldE9yQ3JlYXRlU3RhbmRhbG9uZUluamVjdG9yKGRlZmluaXRpb24pO1xuICB9O1xufVxuIl19
