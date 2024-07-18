@@ -1,4 +1,5 @@
-# Gallery
+# NgxGallery
+A simple native gallery component for Angular 8+ and 13+.
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli)
 
