@@ -1,7 +1,7 @@
 {
-  "root": true,
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
-    "projects/**/*"
+    "!**/*"
   ],
   "overrides": [
     {
@@ -10,40 +10,44 @@
       ],
       "parserOptions": {
         "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
+          "projects/gallery/tsconfig.lib.json",
+          "projects/gallery/tsconfig.spec.json"
         ],
         "createDefaultProgram": true
       },
-      "extends": [
-        "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
-            "prefix": "app",
-            "style": "kebab-case",
-            "type": "element"
+            "type": "element",
+            "prefix": "ngx",
+            "style": "kebab-case"
           }
         ],
         "@angular-eslint/directive-selector": [
           "error",
           {
-            "prefix": "app",
-            "style": "camelCase",
-            "type": "attribute"
+            "type": "attribute",
+            "prefix": "ngx",
+            "style": "camelCase"
           }
-        ]
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "off",
+          {
+            "accessibility": "explicit"
+          }
+        ],
+        "arrow-parens": [
+          "off",
+          "always"
+        ],
+        "import/order": "off"
       }
     },
     {
       "files": [
         "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
     }
